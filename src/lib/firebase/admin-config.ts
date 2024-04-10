@@ -7,13 +7,20 @@ import { SessionCookieOptions, getAuth } from "firebase-admin/auth";
 
 const firebaseAdminConfig = {
   credential: cert({
-    projectId: "frontend2024-9ebcb",
-    clientEmail:
-      "firebase-adminsdk-xbpao@frontend2024-9ebcb.iam.gserviceaccount.com",
-    privateKey:
-      "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC6nPDFzWg+Eeug\nLi5znjQso8yQlqncwze9Ve4xi4MX6r1Cj08Rx4yqJO4wBtfsYetOMyyMYF23t32J\nS/EMgCfqGHQhVdh9vH73clDj0xRtmuEfmv3qRXneaVF+wmjuRoRoAqza/KNDeyPv\nQBA/tmwfSKeiVLkHLMw0TtqrMujiNnLziZbF5Us2GhU8UxojjF4+tKDZ/hJrefIs\ngChVc/7h29zWaQL8uBfDL4CptpxGuFCVKOIUzLOiKvrmPIrivF9tg3cGJrQB+orS\nOH6669mCNuH1ka0jmZMjoJiwGJG0z54jkqjNocHfRfdUliDO9qZZRxbcRmLbL3rK\ncbRqUgfnAgMBAAECggEADihR6+/FdNAPPDvEsmjSNIDIyD9l66Wz2N1oEMIw0+Ov\nMBmHOiYVeeMLXwFl6D0ViP1A5/V3prR5Ba2JQBWI8a2hQdYtcnyWdVdq453j8tzJ\nL4imsttKf6El2aQOKeWXrfxl+Mcp67iv5TrLAMpqMYVlkl8zGmQ/qchBtrNKD79I\na+/GHPahyGoBvUKvxrhPq8yVT0ahm31SLWf6olWvRqb+teWdxGfSVQNz2+llvxBQ\nrVqCrfcS0fr0P10WYLnpQDMoGAYdQ9cKUA+mWh4LjUoxIYK2NY44kVSl4w81yo4y\nN9+MZ9Gk8IAs97x4MVoEBNW3D6kFDdxVGmke3e9p4QKBgQDxxwmzeCrIUysoGmjF\nxUPnRrFGv0pCtNFUDtB37U/EwVxvpp5No7CHcUEwgwtD5JcETyQZzkmF6QRhLA8m\nEirS1mQlh83y64k9YBAIYLED5/VqemIJfOzameUfo4RI9+O3oaTaTIOV+hX547RQ\n4vIhfmIeH6BvdrsA9PPUC3vBhQKBgQDFlyxfCyrSBYtXB7zCr9YJmhXUp18efARj\nEqjj+2G5Y4WI8ch1z17z9V2wXS6oebVkSLznJNoM7CLHVF4ddiPhVZuy86BcEeVZ\nb/9adTBzZaXY6ZXOecE09PiuZ/dNy8Ayz0bDnxTdUQyyRcOKbAHFYKzAcNpunDJr\nEe1v9/LpewKBgDDKEooV4MRGDDpugeAO+7HrEREOvwSRCoDk8GqTB/rTbjzVqbJP\nKutaDmakuxw7P8JN2iIe/7U3HXwicPgkyGF9g/4S1puDrlElVnbqVC5Om7ad9bSm\ncgF29saYr7Qt2dUPmH243QDh05d2vMdp1KSvpUsg5LY5hmkeBSowGwwlAoGAFWEF\nAQehS3YkHHeO2fXSj9lnMUomxZKfmuSi93/0k+2LvkSC7xRP7s+GopWCfeIlWUNx\nhQT8vtcx8CVVxZRJz5DGtvcbS7r3+NRgabYyVtoRtsWXWu7bk9JJsf03yegY1KaO\nvo3Q4R1q5UMdJDYJfwS1zGCpkbw+zEz1Rt8qHk8CgYAf+ujWGqPlJJqslFlQCcJV\nxnWat3yXDYXi4kMmoboo4ujx9aUu8Vfhv+Sv/8jjpLGLvED6sofnbKaEqxa1VBVn\nHDSFlIoB4WYqkBZsj+Xgik7ESpOpk+MCWh1q0cNQyvSW8WJaY/+Zym74BPZsNe0l\nl0oBqaZi8VgaEXm9CWmKhg==\n-----END PRIVATE KEY-----\n",
+    projectId: process.env.NEXT_FIREBASE_ADMIN_PROJECT_ID,
+    clientEmail: process.env.NEXT_FIREBASE_ADMIN_CLIENT_EMAIL,
+    privateKey: process.env.NEXT_FIREBASE_ADMIN_PRIVATE_KEY,
   }),
 };
+// const firebaseAdminConfig = {
+//   credential: cert({
+//     projectId: "frontend2024-9ebcb",
+//     clientEmail:
+//       "firebase-adminsdk-xbpao@frontend2024-9ebcb.iam.gserviceaccount.com",
+//     privateKey:
+//       "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC6nPDFzWg+Eeug\nLi5znjQso8yQlqncwze9Ve4xi4MX6r1Cj08Rx4yqJO4wBtfsYetOMyyMYF23t32J\nS/EMgCfqGHQhVdh9vH73clDj0xRtmuEfmv3qRXneaVF+wmjuRoRoAqza/KNDeyPv\nQBA/tmwfSKeiVLkHLMw0TtqrMujiNnLziZbF5Us2GhU8UxojjF4+tKDZ/hJrefIs\ngChVc/7h29zWaQL8uBfDL4CptpxGuFCVKOIUzLOiKvrmPIrivF9tg3cGJrQB+orS\nOH6669mCNuH1ka0jmZMjoJiwGJG0z54jkqjNocHfRfdUliDO9qZZRxbcRmLbL3rK\ncbRqUgfnAgMBAAECggEADihR6+/FdNAPPDvEsmjSNIDIyD9l66Wz2N1oEMIw0+Ov\nMBmHOiYVeeMLXwFl6D0ViP1A5/V3prR5Ba2JQBWI8a2hQdYtcnyWdVdq453j8tzJ\nL4imsttKf6El2aQOKeWXrfxl+Mcp67iv5TrLAMpqMYVlkl8zGmQ/qchBtrNKD79I\na+/GHPahyGoBvUKvxrhPq8yVT0ahm31SLWf6olWvRqb+teWdxGfSVQNz2+llvxBQ\nrVqCrfcS0fr0P10WYLnpQDMoGAYdQ9cKUA+mWh4LjUoxIYK2NY44kVSl4w81yo4y\nN9+MZ9Gk8IAs97x4MVoEBNW3D6kFDdxVGmke3e9p4QKBgQDxxwmzeCrIUysoGmjF\nxUPnRrFGv0pCtNFUDtB37U/EwVxvpp5No7CHcUEwgwtD5JcETyQZzkmF6QRhLA8m\nEirS1mQlh83y64k9YBAIYLED5/VqemIJfOzameUfo4RI9+O3oaTaTIOV+hX547RQ\n4vIhfmIeH6BvdrsA9PPUC3vBhQKBgQDFlyxfCyrSBYtXB7zCr9YJmhXUp18efARj\nEqjj+2G5Y4WI8ch1z17z9V2wXS6oebVkSLznJNoM7CLHVF4ddiPhVZuy86BcEeVZ\nb/9adTBzZaXY6ZXOecE09PiuZ/dNy8Ayz0bDnxTdUQyyRcOKbAHFYKzAcNpunDJr\nEe1v9/LpewKBgDDKEooV4MRGDDpugeAO+7HrEREOvwSRCoDk8GqTB/rTbjzVqbJP\nKutaDmakuxw7P8JN2iIe/7U3HXwicPgkyGF9g/4S1puDrlElVnbqVC5Om7ad9bSm\ncgF29saYr7Qt2dUPmH243QDh05d2vMdp1KSvpUsg5LY5hmkeBSowGwwlAoGAFWEF\nAQehS3YkHHeO2fXSj9lnMUomxZKfmuSi93/0k+2LvkSC7xRP7s+GopWCfeIlWUNx\nhQT8vtcx8CVVxZRJz5DGtvcbS7r3+NRgabYyVtoRtsWXWu7bk9JJsf03yegY1KaO\nvo3Q4R1q5UMdJDYJfwS1zGCpkbw+zEz1Rt8qHk8CgYAf+ujWGqPlJJqslFlQCcJV\nxnWat3yXDYXi4kMmoboo4ujx9aUu8Vfhv+Sv/8jjpLGLvED6sofnbKaEqxa1VBVn\nHDSFlIoB4WYqkBZsj+Xgik7ESpOpk+MCWh1q0cNQyvSW8WJaY/+Zym74BPZsNe0l\nl0oBqaZi8VgaEXm9CWmKhg==\n-----END PRIVATE KEY-----\n",
+//   }),
+// };
 // const firebaseAdminConfig = {
 //   credential: cert({
 //     projectId: "auth-1ae84",
