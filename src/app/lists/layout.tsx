@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -16,8 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <>
+      <header className="fixed z-[2] w-full">lists layout</header>
+      <main className="lg:mx-28 md:mx-6 pt-[7%]">{children}</main>
+      <footer className="z-[1] w-full mt-[5%]"></footer>
+    </>
   );
 }

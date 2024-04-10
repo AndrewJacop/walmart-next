@@ -1,0 +1,40 @@
+import React from 'react'
+
+
+
+type Adprops={
+    imgLink:string;
+    title:string;
+    description:string;
+}
+export default function SmAdCard(props:Adprops) {
+  return (<>
+  
+  <div className="my-8">
+                        <div
+                          className="max-w-sm md:h-[310px] xl:h-[400px]  rounded-[16px] overflow-hidden shadow-md"
+                        >
+                          <img
+                            className="w-full"
+                            src={props.imgLink}
+                            alt="Sunset in the mountains"
+                          />
+                          <div className="px-6 py-4">
+                            <div className="font-bold text-xl mb-2">
+                              {props.title}
+                            </div>
+                            <p className="text-gray-700 text-sm">
+                              {props.description}
+                            </p>
+                          </div>
+                          <div className="px-6 pt-1  pb-5">
+                            <button className="border-[1px] font-bold  rounded-[25px] border-[black] py-2 px-4">
+                              Shop Now
+                            </button>
+                          </div>
+                        </div>
+                  </div>
+  
+  </>
+  )
+}
