@@ -1,4 +1,4 @@
-import AdBar from "@/components/ads/AdBar";
+import { AdBar } from "@/components/ads/AdBar";
 import { AdCard } from "@/components/ads/AdCard";
 import { VideoAdCard } from "@/components/ads/VideoAdCard";
 import CartItem from "@/components/cart/CartItem";
@@ -103,7 +103,8 @@ const testCat: Category[] = [
 const testProd: Product[] = [
   {
     id: "dbd86be64e58faa2c3a05fb916818a7f",
-    title: 'Anagram International A11957001 Sesame Street 1st Birthday Foil Balloon, 18", Multicolor',
+    title:
+      'Anagram International A11957001 Sesame Street 1st Birthday Foil Balloon, 18", Multicolor',
     images: [
       "https://images-na.ssl-images-amazon.com/images/I/31D-X5aC1fL.jpg",
       "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
@@ -126,7 +127,7 @@ const testProd: Product[] = [
     productDimensions: "",
     warrenty: "",
     reviews: [],
-    variants: []
+    variants: [],
   },
   {
     id: "b48da67f0a050112a8874a42ed6fb341",
@@ -153,7 +154,7 @@ const testProd: Product[] = [
     productDimensions: "",
     warrenty: "",
     reviews: [],
-    variants: []
+    variants: [],
   },
   {
     id: "63f33269bd408e3cfa627e90785a6560",
@@ -183,7 +184,7 @@ const testProd: Product[] = [
     productDimensions: "",
     warrenty: "",
     reviews: [],
-    variants: []
+    variants: [],
   },
   {
     id: "9e118f3be1a2f0dd14e50e0507827302",
@@ -211,7 +212,7 @@ const testProd: Product[] = [
     productDimensions: "",
     warrenty: "",
     reviews: [],
-    variants: []
+    variants: [],
   },
 ];
 
