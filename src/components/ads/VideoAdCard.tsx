@@ -1,6 +1,7 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
-import {useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   MdOutlinePlayCircleFilled,
   MdOutlinePauseCircleFilled,
@@ -39,12 +40,14 @@ export function VideoAdCard() {
           )}
         </button>
       </div>
-      <Link href={""}>
-        <img
-          
+      <Link href={"/"}>
+        <Image
+          alt="video ad vard"
+          height={447}
+          width={794}
           className="relative w-full object-cover -z-10"
-         
-          src="https://i5.walmartimages.com/dfw/4ff9c6c9-a305/k2-_d0659449-43f8-4acc-9610-40fdc8747db8.v1.jpg?odnHeight=447&odnWidth=794&odnBg=&odnDynImageQuality=70"/>
+          src="https://i5.walmartimages.com/dfw/4ff9c6c9-a305/k2-_d0659449-43f8-4acc-9610-40fdc8747db8.v1.jpg?odnDynImageQuality=70"
+        />
       </Link>
     </div>
   );

@@ -11,8 +11,8 @@ function AdBarLarge(props: { title: string; imgLink: string }) {
   const { title, imgLink } = props;
   return (
     <>
-      <div className="flex justify-center px-6 py-11 w-11/12 relative flex justify-center ">
-        <div className="absolute flex justify-center   flex-col">
+      <div className="flex justify-center px-6 py-11 w-11/12 relative">
+        <div className="absolute flex justify-center flex-col">
           <h4 className="font-bold text-2xl mt-9">
             {title} Celebration ,Offers up to 50%
           </h4>

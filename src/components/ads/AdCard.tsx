@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import { WRoundedButton } from "../ui/wRoundedButton";
 
 type AdProps = {
@@ -14,13 +13,13 @@ type AdProps = {
 export function AdCard(ad: AdProps) {
   const myAd = ad.adData;
   return (
-    <div className=" xl:mt-1 mt-4 rounded-lg bg-green-600 relative w-fit">
+    <div className="xl:mt-1 mt-4 rounded-lg bg-green-600 relative w-fit">
       <img
         src={myAd.imgLink}
         alt="ad card image"
         className="bg-white rounded-lg"
       />
-      <div className="xl:py-6 py-4 overflow-hidden justify-start flex rounded-lg  absolute top-0">
+      <div className="xl:py-6 py-4 overflow-hidden justify-start flex rounded-lg absolute top-0">
         <div className="z-0 xl:pl-6 pl-4 w-2/3 justify-start items-start flex flex-wrap ">
           <h1 className="lg:text-2xl text-xl sm:text-md w-full font-bold">
             {myAd.title}
@@ -44,7 +43,7 @@ export function AdCard(ad: AdProps) {
 export function AdCardWithButton(ad: AdProps) {
   const myAd = ad.adData;
   return (
-    <div className=" xl:mt-6 mt-4 rounded-lg bg-green-600 relative w-fit">
+    <div className="xl:mt-6 mt-4 rounded-lg bg-green-600 relative w-fit">
       <img
         src={myAd.imgLink}
         alt="ad card image"
