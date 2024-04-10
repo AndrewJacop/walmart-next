@@ -6,7 +6,7 @@ type Adprops = {
 
 /**
  *
- * @breif SmAdCard
+ * @breif AdCardSmall
  * this component is a small ad card that has img on the top and mini description .
  * @param Adprops imgLink , title , description
  */

@@ -1,45 +1,60 @@
-const Shopping = () => {
+const shippingOptions = [
+  {
+    id: 1,
+    optionName: "shipping",
+    deliver: " within 3 days",
+    imgLink:
+      "https://i5.walmartimages.com/dfwrs/76316474-f13c/k2-_d4e8ebb4-9d70-46b4-8f2b-ecc4ac774e07.v1.png",
+  },
+  {
+    id: 2,
+    optionName: "Pickup",
+    deliver: "Check nearby",
+    imgLink:
+      "https://i5.walmartimages.com/dfwrs/76316474-8720/k2-_d747b89f-5900-404d-a101-1a3452480882.v1.png",
+  },
+  {
+    id: 3,
+    optionName: "Delivery",
+    deliver: "Not available",
+    imgLink:
+      "https://i5.walmartimages.com/dfwrs/76316474-39c2/k2-_8deea800-0d44-4984-b1ce-5a3f12b192b7.v1.png",
+  },
+];
+
+/**
+ * @brief ShippingOption
+ *
+ * this component is  3 of shiping options (shipping , Pickup , delivery) 
+ */
+const ShippingOption = () => {
   return (
-    <div className="flex grid grid-cols-3">
-      <div className="flex-auto border-[2px]  border-[#babbbe] items-center rounded-[10px] w-300 h-[100%] m-2">
-      <button className="w-full h-full  font-bold py-2 px-4  flex-col items-center">
-          <img
-            src="https://i5.walmartimages.com/dfwrs/76316474-f13c/k2-_d4e8ebb4-9d70-46b4-8f2b-ecc4ac774e07.v1.png"
-            alt="Your Image"
-            
-            className="mx-auto w-[33.3%] " // Center the image horizontally
-          />
-          <div className="mt-3 font-normal lg:text-sm md:text-xs">Shipping</div>
-          <div className="font-normal  lg:text-xs xl:text-sm">Arrives Mar 14</div>
+    <div className="flex  items-center  ">
+      {shippingOptions.map((option: any) => (
+        <button
+          key={option.id}
+          className="m-2 rounded-lg border border-[2px] border-[#babbbe] w-full h-full font-bold py-2 px-4"
+        >
+          {option.deliver === "Not available" ? (
+            <img
+              src={option.imgLink}
+              alt="Your Image"
+              className="mx-auto w-10   grayscale"
+            />
+          ) : (
+            <img
+              src={option.imgLink}
+              alt="shipping option Image"
+              className="mx-auto w-10 h-10"
+            />
+          )}
+          <p className="mt-3 font-normal lg:text-sm md:text-xs">
+            {option.optionName}
+          </p>
+          <p className="font-normal lg:text-xs">{option.deliver}</p>
         </button>
-      </div>
-      <div className="flex-auto  border-[2px]  border-[#babbbe]  items-center rounded-[10px] w-300  h-[100%] m-2">
-      <button className="w-full h-full  font-bold py-2 px-4 rounded flex-col items-center">
-          <img
-            src="https://i5.walmartimages.com/dfwrs/76316474-8720/k2-_d747b89f-5900-404d-a101-1a3452480882.v1.png"
-            alt="Your Image"
-          
-        
-            className="mx-auto w-[33.3%]" // Center the image horizontally
-          />
-          <div className="mt-3 font-normal lg:text-sm md:text-xs">Pickup</div>
-          <div className="font-normal lg:text-sm md:text-xs">Not available</div>
-        </button>
-      </div>
-      <div className="flex border-[2px]  border-[#babbbe]  items-center w-300 h-[100%]  m-2 rounded-[12px]">
-        <button className="w-full h-full  font-bold py-2 px-4 rounded flex-col items-center">
-          <img
-            src="https://i5.walmartimages.com/dfwrs/76316474-39c2/k2-_8deea800-0d44-4984-b1ce-5a3f12b192b7.v1.png"
-            alt="Your Image"
-            
-            className="mx-auto w-[33.3%]" // Center the image horizontally
-          />
-          <div className="mt-3 font-normal lg:text-sm md:text-xs">Delivery</div>
-          <div className="font-normal lg:text-sm md:text-xs">Not available</div>
-        </button>
-      </div>
+      ))}
     </div>
   );
 };
-
-export default Shopping;
+export default ShippingOption;

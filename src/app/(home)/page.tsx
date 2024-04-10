@@ -1,11 +1,13 @@
 import AdBar from "@/components/ads/AdBar";
 import { AdCard } from "@/components/ads/AdCard";
 import { VideoAdCard } from "@/components/ads/VideoAdCard";
+import CartItem from "@/components/cart/CartItem";
 import { CategoryCarousel } from "@/components/category/CategoryCarousel";
 import { ProductCarousel } from "@/components/product/ProductCarousel";
-import { getCurrentUser } from "@/lib/firebase/admin-config";
-import { getAdsData, getUserByUid } from "@/lib/supabase/fetch-data";
+import { getAdsData } from "@/lib/supabase/fetch-data";
 
+
+const cartd:CartItem={id:90,price:90,productId:"",quantity:32}
 const testAd: Ad[] = [
   {
     id: 10,
@@ -228,7 +230,6 @@ export default async function HomePage() {
             {mytestAdsData.map((data) => (
               <div key={data.id} className="mb-4">
                 <AdCard adData={data} />
-
               </div>
             ))}
           </div>
@@ -314,6 +315,8 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
+
+<CartItem CartItemData={cartd}/>
       </section>
     </>
   );
