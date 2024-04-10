@@ -12,4 +12,13 @@ type Product = {
   returnPolicy: number;
   isGiftable: boolean;
   quantity: number;
+  modelNumber: string;
+  aboutProduct: string;
+  productSpecification: string;
+  technicalDetails: string;
+  shippingWeight: string;
+  productDimensions: string;
+  warrenty: string;
+  reviews: number[];
+  variants: string[];
 };

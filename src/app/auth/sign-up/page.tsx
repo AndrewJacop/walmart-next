@@ -23,7 +23,7 @@ import { addNewUser } from "@/lib/supabase/fetch-data";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
-export const fetchCache = "no-store";
+export const fetchCache = "force-no-store";
 
 const FormSchema = z.object({
   firstName: z.string().min(1, {

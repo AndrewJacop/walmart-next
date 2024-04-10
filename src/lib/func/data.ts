@@ -146,6 +146,8 @@ export const getUsers = async () => {
       paymentMethod: user.paymentMethod,
       phoneNumber: user.phoneNumber,
       userListsIds: user.phoneNumber,
+      isSeller: user.isSeller,
+      cart: [],
     };
     usersData.push(newUser);
   });

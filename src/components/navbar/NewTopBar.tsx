@@ -14,7 +14,7 @@ import AccountButton from "./AccountButton";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
-export const fetchCache = "no-store";
+export const fetchCache = "force-no-store";
 
 async function getData() {
   const firebaseUser = await getCurrentUser();

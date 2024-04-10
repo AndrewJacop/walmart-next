@@ -30,7 +30,7 @@ import { signMeIn } from "@/lib/firebase/auth";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
-export const fetchCache = "no-store";
+export const fetchCache = "force-no-store";
 
 const FormSchema = z.object({
   type: z.enum(["code", "pass"], {
