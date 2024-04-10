@@ -15,7 +15,7 @@ type AccordionProps = {
  * @brief Category Accordion
  *
  * this component is a Category Accordion dropdown used in the side bar
- * @param adData string : the ad data {id,title,imgLink,href,query}
+ * @param categoryData string : the ad data {id,title,imgLink,href,query}
  */
 
 export default async function CategoryAccordion(cat: AccordionProps) {

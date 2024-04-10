@@ -1,10 +1,13 @@
 import Image from "next/image";
-
+/**
+ * @breif Ad Bar
+ * this component is Ad bar for credits with offer description and credit img 
+ */
 export default function AdBar() {
   return (
     <main className="flex  flex-col p-0 px-6 mb-6">
       <div className="text-center justify-center  flex items-center bg-blue-50 rounded-lg py-2 w-full px-20 ">
-        <img
+        <Image
           src="https://i5.walmartimages.com/dfw/4ff9c6c9-5626/k2-_9f1ca88f-5819-4c4c-8ae1-e15a46420d9b.v1.png?odnHeight=64&odnWidth=107&odnBg=FFFFFF"
           alt="Your Image"
           width={80}

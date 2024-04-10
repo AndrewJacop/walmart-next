@@ -101,8 +101,7 @@ const testCat: Category[] = [
 const testProd: Product[] = [
   {
     id: "dbd86be64e58faa2c3a05fb916818a7f",
-    title:
-      'Anagram International A11957001 Sesame Street 1st Birthday Foil Balloon, 18", Multicolor',
+    title: 'Anagram International A11957001 Sesame Street 1st Birthday Foil Balloon, 18", Multicolor',
     images: [
       "https://images-na.ssl-images-amazon.com/images/I/31D-X5aC1fL.jpg",
       "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
@@ -117,6 +116,15 @@ const testProd: Product[] = [
     originalPrice: "6.99",
     returnPolicy: 2,
     isGiftable: false,
+    modelNumber: "",
+    aboutProduct: "",
+    productSpecification: "",
+    technicalDetails: "",
+    shippingWeight: "",
+    productDimensions: "",
+    warrenty: "",
+    reviews: [],
+    variants: []
   },
   {
     id: "b48da67f0a050112a8874a42ed6fb341",
@@ -135,6 +143,15 @@ const testProd: Product[] = [
     originalPrice: "8.69",
     returnPolicy: 0,
     isGiftable: false,
+    modelNumber: "",
+    aboutProduct: "",
+    productSpecification: "",
+    technicalDetails: "",
+    shippingWeight: "",
+    productDimensions: "",
+    warrenty: "",
+    reviews: [],
+    variants: []
   },
   {
     id: "63f33269bd408e3cfa627e90785a6560",
@@ -156,6 +173,15 @@ const testProd: Product[] = [
     originalPrice: "4.99",
     returnPolicy: 2,
     isGiftable: false,
+    modelNumber: "",
+    aboutProduct: "",
+    productSpecification: "",
+    technicalDetails: "",
+    shippingWeight: "",
+    productDimensions: "",
+    warrenty: "",
+    reviews: [],
+    variants: []
   },
   {
     id: "9e118f3be1a2f0dd14e50e0507827302",
@@ -175,6 +201,15 @@ const testProd: Product[] = [
     originalPrice: "5.61",
     returnPolicy: 1,
     isGiftable: false,
+    modelNumber: "",
+    aboutProduct: "",
+    productSpecification: "",
+    technicalDetails: "",
+    shippingWeight: "",
+    productDimensions: "",
+    warrenty: "",
+    reviews: [],
+    variants: []
   },
 ];
 
@@ -193,6 +228,7 @@ export default async function HomePage() {
             {mytestAdsData.map((data) => (
               <div key={data.id} className="mb-4">
                 <AdCard adData={data} />
+
               </div>
             ))}
           </div>

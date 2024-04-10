@@ -47,6 +47,7 @@ export async function addNewUser(newUser: User) {
   const { error } = await supabase.from("users").insert(newUser);
   if (error) console.log(error);
 }
+
 export async function getUserByUid(id: string) {
   const supabase = await createClient();
   const { data, error } = await supabase.from("users").select().eq("id", id);
