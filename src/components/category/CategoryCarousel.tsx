@@ -13,14 +13,16 @@ import {CategoryCard} from "./CategoryCard";
 
 
 type CarouselProps = {
-    testCat:Category[]
+    categoryData:Category[]
 };
-
-
-
+/**
+ * @brief Category Carousel
+ *
+ * this component Carousel of Categories with its img and name
+ * @param 
+ */
 export function CategoryCarousel(props:CarouselProps) {
-//   const ItemclassName = `pl-0 md:basis-1/4 lg:basis-${basis}`;
-//   const CuroselClassname=`w-${maxWidth}`
+
   return (
     <Carousel
       opts={{
@@ -28,13 +30,13 @@ export function CategoryCarousel(props:CarouselProps) {
       }}
       className="max-w-8xl mb-6"
     >
-      <CarouselContent className="w-[147%]">
-        {props.testCat.map((cat, index) => (
+      <CarouselContent >
+        {props.categoryData.map((cat, index) => (
           <CarouselItem key={index} className="pl-0 md:basis-1/4 lg:basis-1/12">
-            <div className="p-0 m-0 flex">
-              <Card className="border-0 shadow-none">
+            <div >
+              <Card className="border-0  shadow-none">
                 <CardContent className="flex aspect-square items-center  justify-center p-0">
-                    <CategoryCard catData={cat}/>
+                    <CategoryCard categoryData={cat}/>
                 </CardContent>
               </Card>
             </div>

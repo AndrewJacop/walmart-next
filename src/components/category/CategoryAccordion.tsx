@@ -21,8 +21,8 @@ type AccordionProps = {
 export default async function CategoryAccordion(cat: AccordionProps) {
   const category = cat.categoryData;
   const subCat = await getSubCatData();
-  let subList: string[] = [];
-  const subCategoriesIndexes: [] = [];
+  let subList: number[] = [];
+  const subCategoriesIndexes: number[] = [];
 
   subCat.map((sub) => subList.push(sub.id));
 

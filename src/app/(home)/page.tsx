@@ -3,6 +3,8 @@ import { AdCard } from "@/components/ads/AdCard";
 import { VideoAdCard } from "@/components/ads/VideoAdCard";
 import CartItem from "@/components/cart/CartItem";
 import { CategoryCarousel } from "@/components/category/CategoryCarousel";
+import DepartmentCard from "@/components/category/DepartmentCard";
+import SubCategoryItem from "@/components/category/SubCategoryItem";
 import { ProductCarousel } from "@/components/product/ProductCarousel";
 import { getAdsData } from "@/lib/supabase/fetch-data";
 
@@ -35,6 +37,70 @@ const testAd: Ad[] = [
   },
 ];
 const testCat: Category[] = [
+  {
+    id: 1,
+    title: "Grocery",
+    imgLink:
+      "https://i5.walmartimages.com/dfw/4ff9c6c9-6406/k2-_987b6e28-ac24-4c30-a150-afe57033daf2.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+    subCategories: [],
+    barLink: "",
+  },
+  {
+    barLink: "",
+    id: 2,
+    title: "Fashion",
+    imgLink:
+      "https://i5.walmartimages.com/dfw/4ff9c6c9-48f6/k2-_7aed4b13-f076-4785-8b0c-2a8343c2b70c.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+    subCategories: [],
+  },
+  {
+    barLink: "",
+    id: 3,
+    title: "Electronics",
+    imgLink:
+      "https://i5.walmartimages.com/dfw/4ff9c6c9-9674/k2-_cd6b8be4-8bfb-47bc-9843-49e8ed571106.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+    subCategories: [],
+  },
+  {
+    barLink: "",
+    id: 4,
+    title: "Home",
+    imgLink:
+      "https://i5.walmartimages.com/dfw/4ff9c6c9-8370/k2-_15a0a4d2-1619-4914-94cd-774567d41404.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+    subCategories: [],
+  },
+  {
+    barLink: "",
+    id: 5,
+    title: "Pation & Gardin",
+    imgLink:
+      "https://i5.walmartimages.com/dfw/4ff9c6c9-16a3/k2-_f9b2f53c-a2c0-40bf-8e25-692c544b3baf.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+    subCategories: [],
+  },
+  {
+    id: 6,
+    title: "Home Improvement",
+    barLink: "",
+    imgLink:
+      "https://i5.walmartimages.com/dfw/4ff9c6c9-a077/k2-_02b361d9-ab7b-45e9-95fb-3060dd6be190.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+    subCategories: [],
+  },
+  {
+    id: 15,
+    title: "Baby",
+    imgLink:
+      "https://i5.walmartimages.com/dfw/4ff9c6c9-648f/k2-_c76e7139-cecb-4d48-893d-686d9bbbbfbe.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+    subCategories: [],
+    barLink: "",
+  },
+  {
+    id: 14,
+    title: "Toys",
+    barLink: "",
+    imgLink:
+      "https://i5.walmartimages.com/dfw/4ff9c6c9-6897/k2-_9d771225-ddc0-4ae4-8302-1921a8ace961.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+    subCategories: [],
+  },
   {
     id: 1,
     title: "Grocery",
@@ -215,6 +281,8 @@ const testProd: Product[] = [
     variants: [],
   },
 ];
+const testSubCat:SubCategory= { id: 0, title: "Toys & Games", imgLink: "https://i5.walmartimages.com/dfw/4ff9c6c9-6897/k2-_9d771225-ddc0-4ae4-8302-1921a8ace961.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF", queries: [] }
+
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -226,6 +294,7 @@ export default async function HomePage() {
   return (
     <>
       <section>
+        <SubCategoryItem subCatData={testSubCat}/>
         <div className="flex flex-col">
           <div className="w-1/4 mx-6 mt-3 mb-8  ">
             {mytestAdsData.map((data) => (
@@ -280,7 +349,7 @@ export default async function HomePage() {
               {" "}
               Get it all right here
             </p>
-            <CategoryCarousel testCat={testCat} />
+            <CategoryCarousel categoryData={testCat} />
           </div>
           <AdBar />
 
@@ -317,7 +386,6 @@ export default async function HomePage() {
           </div>
         </div>
 
-<CartItem CartItemData={cartd}/>
       </section>
     </>
   );
