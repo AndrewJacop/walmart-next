@@ -6,8 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
 import SubCategoryItem from "@/components/category/SubCategoryItem";
-import { getSubCatData } from "@/lib/func/data";
+import { getSubCategoriesData } from "@/lib/supabase/fetch-data";
 
 type AccordionProps = {
   categoryData: Category;
@@ -21,7 +22,7 @@ type AccordionProps = {
 
 export default async function CategoryAccordion(cat: AccordionProps) {
   const category = cat.categoryData;
-  const subCat = await getSubCatData();
+  const subCat = await getSubCategoriesData();
   let subList: number[] = [];
   const subCategoriesIndexes: number[] = [];
 

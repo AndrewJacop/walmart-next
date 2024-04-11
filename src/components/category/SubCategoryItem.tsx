@@ -4,10 +4,11 @@ type SubCatItemProps = {
   subCatData: SubCategory;
 };
 /**
- * @brief Category Accordion
+ * @brief SubCategory Accordion
  *
- * this component is a Category Accordion dropdown used in the side bar
- * @param adData string : the ad data {id,title,imgLink,href,query}
+ * this component is a subCategory item appear on side bar of categries 
+ * has its img and name
+ * @param subCatData use here {title,imgLink}
  */
 
 export default function SubCategoryItem(subCat: SubCatItemProps) {

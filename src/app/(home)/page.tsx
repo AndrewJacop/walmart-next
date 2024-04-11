@@ -1,14 +1,13 @@
 import { AdBar } from "@/components/ads/AdBar";
 import { AdCard } from "@/components/ads/AdCard";
 import { VideoAdCard } from "@/components/ads/VideoAdCard";
-import CartItem from "@/components/cart/CartItem";
 import ShippingOption from "@/components/cart/ShippingOption";
+import CategoryAccordion from "@/components/category/CategoryAccordion";
 import { CategoryCarousel } from "@/components/category/CategoryCarousel";
 import DepartmentCard from "@/components/category/DepartmentCard";
 import SubCategoryItem from "@/components/category/SubCategoryItem";
 import { ProductCarousel } from "@/components/product/ProductCarousel";
 import { getAdsData } from "@/lib/supabase/fetch-data";
-
 const cartd: CartItem = { id: 90, price: 90, productId: "", quantity: 32 };
 const testAd: Ad[] = [
   {
@@ -42,7 +41,7 @@ const testCat: Category[] = [
     title: "Grocery",
     imgLink:
       "https://i5.walmartimages.com/dfw/4ff9c6c9-6406/k2-_987b6e28-ac24-4c30-a150-afe57033daf2.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
-    subCategories: [],
+    subCategories: [2,4,6,8,9],
     barLink: "",
   },
   {
@@ -321,6 +320,8 @@ export default async function HomePage() {
             <p className="text-[gray] font-light text-xs mb-5">
               {" "}
               Up to 65% off
+          <CategoryAccordion categoryData={testCat[0]}/>{" "}
+
             </p>
             <div>
               <ProductCarousel
@@ -392,7 +393,9 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
+
         </div>
+
       </section>
     </>
   );

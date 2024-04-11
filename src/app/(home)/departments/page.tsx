@@ -1,9 +1,5 @@
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import DepartmentCard from "@/components/category/DepartmentCard";
+
 import { createClient } from "@/lib/supabase/client";
 
 const explore = {
@@ -42,42 +38,28 @@ async function getDepartments() {
   return data as Department[];
 }
 
-export default async function DepartmentCard() {
-  const depList = await getDepartments();
+async function getCtegoryData() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("categories")
+    .select()
+    .order("id");
 
+  return data as Category[];
+}
+export default async function Departments() {
+  const depList = await getDepartments();
   return (
-    <div>
-      <h1 className="flex  container mt-10 font-bold text-2xl">
+    <div className="mx-32">
+      <h1 className="flex  container  mb-3 font-bold text-2xl">
         Browse Departments
       </h1>
+      <hr />
 
-      <div className="flex items-center justify-center container">
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10 ">
-          {depList.map((dep) => (
-            <div key={dep.id}>
-              <Card className=" flex flex-row w-full h-full shadow-lg ">
-                <CardHeader className="flex flex-col">
-                  <CardTitle className="py-2">{dep.title}</CardTitle>
-                  <CardDescription>
-                    <span>
-                      {dep.queries.map((c) => (
-                        <a
-                          className="flex cursor-pointer  hover:underline"
-                          key={c.query}>
-                          {c.title}
-                        </a>
-                      ))}
-                    </span>
-                  </CardDescription>
-                </CardHeader>
-                <div>
-                  {" "}
-                  <img src={dep.imgLink} alt="" />
-                </div>
-              </Card>
-            </div>
-          ))}
-        </div>
+      <div className="container mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10 ">
+        {depList.map((department) => (
+          <DepartmentCard depatmentData={department} />
+        ))}
       </div>
       <div className="flex flex-col  container mt-5 ">
         <h1 className="text-base font-bold">{explore.title}</h1>
@@ -91,30 +73,4 @@ export default async function DepartmentCard() {
       </div>
     </div>
   );
-  // "className="flex items-center justify-center min-h-screen container mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-white gap-5""
-  // return (
-  //     <Card className=" flex flex-row w-96 ">
-  //         <CardHeader className="flex flex-col">
-  //             <CardTitle className="py-2">
-  //                 {departmentGrocery.title}
-  //             </CardTitle>
-  //             <CardDescription>
-  //                 <div>
-  //                     {departmentGrocery.categories.map((c) => (
-  //                         <div
-  //                             className="cursor-pointer"
-  //                             key={departmentGrocery.id}
-  //                         >
-  //                             {c}
-  //                         </div>
-  //                     ))}
-  //                 </div>
-  //             </CardDescription>
-  //         </CardHeader>
-  //         <div>
-  //             {" "}
-  //             <img src={departmentGrocery.icon} alt="" />
-  //         </div>
-  //     </Card>
-  // );
 }

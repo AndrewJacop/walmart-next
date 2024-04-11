@@ -6,6 +6,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+
+
 import { CategoryCard } from "@/components/category/CategoryCard";
 
 type CarouselProps = {

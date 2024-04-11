@@ -54,3 +54,25 @@ export async function getUserByUid(id: string) {
   if (error) console.log(error);
   if (data) return data[0] as User;
 }
+
+//categories
+export async function getCategoriesData(){
+  const supabase=await createClient();
+  const {data,error}=await supabase
+  .from("categories")
+  .select()
+  .order("id");
+  if (error) console.log(error)
+  return data as Category[];
+}
+
+//subCategories
+export async function getSubCategoriesData(){
+  const supabase= await createClient()
+  const {data,error}=await supabase
+  .from("subcategories")
+  .select()
+  .order("id")
+  if(error) console.log(error)
+  return data as SubCategory[];
+}
