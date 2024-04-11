@@ -1,7 +1,3 @@
-'use client'
-import * as React from "react";
-import ProductCardSmall from "./ProductCardSmall";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -10,12 +6,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
-import { redirect, useRouter } from "next/navigation";
 
+import ProductCardSmall from "./ProductCardSmall";
+import { Card, CardContent } from "@/components/ui/card";
 
-//   maxWidth:string
-
-// }
 
 type CarouselProps = {
   basisClass: string;
@@ -23,9 +17,7 @@ type CarouselProps = {
 };
 
 export function ProductCarousel(props: CarouselProps) {
-  // const ItemclassName = `pl-0 md:basis-1/4 lg:basis-${basis}`;
-  // const CuroselClassname=`w-${maxWidth}`
-  const router=useRouter()
+
   return (
     <Carousel
       opts={{
@@ -37,7 +29,7 @@ export function ProductCarousel(props: CarouselProps) {
             <div className="p-0 m-0 flex">
               <Card className="border-0 shadow-none">
                 <CardContent className="flex aspect-square items-center justify-center p-0">
-                <span  className="cursor-pointer"> <ProductCardSmall cardData={product} /></span> 
+             <ProductCardSmall productData={product} />
                 </CardContent>
               </Card>
             </div>

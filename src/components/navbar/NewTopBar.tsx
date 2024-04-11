@@ -33,7 +33,7 @@ export default async function NewTopNavBar() {
   const currentUser = await getData();
 
   return (
-    <div className="flex justify-center items-center px-4 py-6 bg-blue-600 gap-1 z-10">
+    <div className="flex justify-center items-center px-4 py-6 bg-[#0071dc] gap-1 z-10">
       {/* Logo */}
       <Button
         variant="ghost"

@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 
 export const handleAddToCart = (product: Product) => {
   let finalPrice =
-    Number(product.originalPrice) * ((100 - product.discount) / 100);
+    Number(product.originalPrice) * ((100 - Number(product.discount)) / 100);
   const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
   const existingItemIndex = cartData.findIndex(
     (item) => item.productId === product.id

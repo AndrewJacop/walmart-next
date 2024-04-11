@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 
 import NewTopNavBar from "@/components/navbar/NewTopBar";
 import SimpleFooter from "@/components/footer/SimpleFooter";
+import NewBottomBar from "@/components/navbar/NewBottomBar";
 
 export const metadata: Metadata = {
   title: "Walmart",
@@ -21,9 +22,8 @@ export default function RootLayout({
       <header className="fixed z-[2] w-full">
         <NewTopNavBar />
       </header>
-      <main className="lg:mx-28 md:mx-6 pt-[7%]">{children}</main>
+      <main className="lg:mx-28 md:mx-6 pt-[9%]">{children}</main>
       <footer className="z-[1] w-full mt-[5%]">
-        <SimpleFooter/>
       </footer>
     </>
   );

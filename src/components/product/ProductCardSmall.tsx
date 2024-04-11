@@ -1,12 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { CiHeart } from "react-icons/ci";
 import Link from "next/link";
+import { IoMdHeart } from "react-icons/io";
+import { CiHeart } from "react-icons/ci";
+
 import { handleAddToCart, removeFromCart } from "@/lib/func/cart";
+import { addToFavorites, removeFromFavorites } from "@/lib/func/list";
+
+
+
 
 type CardProps = {
-  cardData: Product;
+  productData: Product;
 };
 
 /**
@@ -16,22 +22,44 @@ type CardProps = {
  * @param cardData string : the CardProduct data {id,title,imgLink,href,query}
  */
 export default function ProductSmall(card: CardProps) {
-  const product = card.cardData;
+  const product = card.productData;
   const finalPrice =
-    Number(product.originalPrice) * ((100 - product.discount) / 100);
+    Number(product.originalPrice) * ((100 - Number(product.discount)) / 100);
+
+     
   const [isAdded, setIsAdded] = useState(false); // State to track whether the product is added to cart
+  const [isFav, setIsFav] = useState(false); // State to track whether the product is added to Favorite List
   const subDescreption =
     product.title.length > 20
       ? product.title.substring(0, 40) + "..."
       : product.title;
-
+      const handleAddToFav = () => {
+        setIsFav(true);
+        addToFavorites(product);
+      };
+      const handleRemoveFromFav = () => {
+        setIsFav(false);
+        removeFromFavorites(product);
+      };
+    
   return (
     <div className="container w-[212px] px-4">
-      <div>
-        <span className="relative ">
-          <button className="absolute  mt-2 left-36 bg-[white] border-[1px] rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	">
-            <CiHeart className="text-[black] text-2xl " />
-          </button>
+      <div className="relative mb-5">
+      {!isFav ? (
+               <button
+               className="absolute  mt-2 left-36 bg-[white] border-[1px] rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
+               onClick={handleAddToFav}
+             >
+               <CiHeart className="text-[black] text-2xl " />
+             </button>
+           ) : (
+             <button
+               className="absolute  mt-2 left-36 bg-[white] border-[1px] rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
+               onClick={handleRemoveFromFav}
+             >
+               <IoMdHeart className="text-2xl text-blue-600" />
+             </button>
+          )}
           <img
             className="h-[175px]"
             src={product.images[0]}
@@ -39,13 +67,11 @@ export default function ProductSmall(card: CardProps) {
             width={175}
             height={175}
           />
-        </span>
       </div>
-      <div className="h-6"></div>
 
       <div className="mb-1">
         <div className="me-2">
-          {product.discount > 0 ? (
+          {Number(product.discount) > 0 ? (
             <>
               <span className="text-lg font-bold text-[green] me-1">
                 Now ${finalPrice.toFixed(2)}{" "}
@@ -68,7 +94,7 @@ export default function ProductSmall(card: CardProps) {
           <>
             {!isAdded ? ( // Render Add button only if the product is not added to cart
               <button
-                className=" border-[1px] border-[#46474a] px-4 py-1 font-semibold text-sm rounded-[18px] hover:border-[2px]"
+                className=" border-[1px] border-[#46474a]  w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2"
                 onClick={() => {
                   setIsAdded(true);
                   handleAddToCart(product);
@@ -99,7 +125,7 @@ export default function ProductSmall(card: CardProps) {
           </>
         ) : (
           <Link href={`/product/${product.id}`}>
-            <button className=" border-[1px] border-[#46474a] px-4 py-1 font-semibold text-sm rounded-[18px] hover:border-[2px]">
+            <button className=" border-[1px] border-[#46474a]  w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2">
               {" "}
               Options{" "}
             </button>

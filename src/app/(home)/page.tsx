@@ -300,6 +300,7 @@ export default async function HomePage() {
     <>
       <section>
         <FilterBar />
+
         <div className="w-3/5">
           <ShippingOption />
         </div>
@@ -395,8 +396,6 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-
-       
       </section>
     </>
   );

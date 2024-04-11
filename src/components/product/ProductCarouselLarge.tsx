@@ -1,6 +1,3 @@
-import * as React from "react";
-import ProductCardSmall from "./ProductCardSmall";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -8,13 +5,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
+
 import { cn } from "@/lib/utils";
 import ProductCard from "./ProductCard";
 
-
-//   maxWidth:string
-
-// }
 
 type CarouselProps = {
   basisClass: string;
@@ -22,8 +17,7 @@ type CarouselProps = {
 };
 
 export function ProductCarouselLarge(props: CarouselProps) {
-  // const ItemclassName = `pl-0 md:basis-1/4 lg:basis-${basis}`;
-  // const CuroselClassname=`w-${maxWidth}`
+
   return (
     <Carousel
       opts={{
@@ -35,7 +29,7 @@ export function ProductCarouselLarge(props: CarouselProps) {
             <div className="p-0 m-0  flex">
               <Card className="border-0 shadow-none">
               <CardContent className="flex aspect-square items-center justify-center p-0">
-                  <ProductCard cardData={product} style="" />
+                  <ProductCard productData={product} style="" />
                 </CardContent>
               </Card>
             </div>

@@ -1,9 +1,7 @@
-"use client";
-
-import Image from "next/image";
-import { Heart, LogOut, ScrollText, UserRound } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
+import { Heart, LogOut, ScrollText, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

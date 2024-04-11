@@ -1,5 +1,6 @@
-import { Gift, Heart, RotateCcwSquare } from "lucide-react";
+import Link from "next/link";
 
+import { Gift, Heart, RotateCcwSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,7 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Link from "next/link";
 
 export default function MyItemsButton() {
   return (
