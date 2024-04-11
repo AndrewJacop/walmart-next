@@ -21,6 +21,7 @@ export default function RootLayout({
     <>
       <header className="fixed z-[2] w-full">
         <NewTopNavBar />
+        <NewBottomBar/>
       </header>
       <main className="lg:mx-28 md:mx-6 pt-[9%]">{children}</main>
       <footer className="z-[1] w-full mt-[5%]">
