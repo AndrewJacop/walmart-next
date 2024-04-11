@@ -1,29 +1,33 @@
 import Link from "next/link";
 
-const RelatedLinks = (props: { linkName: string; urlLink: string }) => {
-  const { linkName, urlLink } = props;
-  return (
-    <>
-      <Link href={urlLink} className="underline pr-72 text-sm pt-10">
-        {linkName}
-      </Link>
-    </>
-  );
-};
 
+const linksList=[
+  {href:"#",title:"Shop by Brand"},
+  {href:"#",title:"All Food"},
+  {href:"#",title:"New Food Items"},
+  {href:"#",title:"Seasonal Grocery"},
+  {href:"#",title:"Food & Grocery"},
+  {href:"#",title:"Fresh Produce"},
+  {href:"#",title:"Carrots"},
+  {href:"#",title:"Potatoes"},
+  {href:"#",title:"Organic Produce"},
+  {href:"#",title:"Squash & Eggplant"},
+  {href:"#",title:"Spring Produce"},
+]
+/** 
+ * @breif Related Pages 
+ * this components has group of links on the bottom of the screens
+ */
 function RelatedPage() {
   return (
-    <div className="ml-10 w-11/12 related">
-      <h1 className="text-2xl font-bold">Related pages</h1>
-      <div className="pt-7">
-        <RelatedLinks linkName={"Shop by Brand"} urlLink={"#"} />
-        <RelatedLinks linkName={"All Food"} urlLink={"#"} />
-        <RelatedLinks linkName={"New Food Items"} urlLink={"#"} />
+    <div className="ml-10 w-11/12 ">
+      <h1 className="text-2xl font-bold text-[#2e2f32]">Related pages</h1>
+      <div className=" pt-7 grid grid-cols-3">
+        {linksList.map((link)=>(
+        <Link className="underline py-2 hover:no-underline" href={link.href}>{link.title} </Link>
+      ))}
       </div>
-      <div className="pt-5">
-        <RelatedLinks linkName={"Seasonal Grocery"} urlLink={"#"} />
-        <RelatedLinks linkName={"Food & Grocery"} urlLink={"#"} />
-      </div>
+     
     </div>
   );
 }

@@ -55,7 +55,7 @@ export async function getUserByUid(id: string) {
   if (data) return data[0] as User;
 }
 
-//categories
+// Categories
 export async function getCategoriesData(){
   const supabase=await createClient();
   const {data,error}=await supabase
@@ -66,7 +66,7 @@ export async function getCategoriesData(){
   return data as Category[];
 }
 
-//subCategories
+// SubCategories
 export async function getSubCategoriesData(){
   const supabase= await createClient()
   const {data,error}=await supabase
