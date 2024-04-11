@@ -2,14 +2,14 @@ import { AdBar } from "@/components/ads/AdBar";
 import { AdCard } from "@/components/ads/AdCard";
 import { VideoAdCard } from "@/components/ads/VideoAdCard";
 import CartItem from "@/components/cart/CartItem";
+import ShippingOption from "@/components/cart/ShippingOption";
 import { CategoryCarousel } from "@/components/category/CategoryCarousel";
 import DepartmentCard from "@/components/category/DepartmentCard";
 import SubCategoryItem from "@/components/category/SubCategoryItem";
 import { ProductCarousel } from "@/components/product/ProductCarousel";
 import { getAdsData } from "@/lib/supabase/fetch-data";
 
-
-const cartd:CartItem={id:90,price:90,productId:"",quantity:32}
+const cartd: CartItem = { id: 90, price: 90, productId: "", quantity: 32 };
 const testAd: Ad[] = [
   {
     id: 10,
@@ -281,8 +281,13 @@ const testProd: Product[] = [
     variants: [],
   },
 ];
-const testSubCat:SubCategory= { id: 0, title: "Toys & Games", imgLink: "https://i5.walmartimages.com/dfw/4ff9c6c9-6897/k2-_9d771225-ddc0-4ae4-8302-1921a8ace961.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF", queries: [] }
-
+const testSubCat: SubCategory = {
+  id: 0,
+  title: "Toys & Games",
+  imgLink:
+    "https://i5.walmartimages.com/dfw/4ff9c6c9-6897/k2-_9d771225-ddc0-4ae4-8302-1921a8ace961.v1.jpg?odnHeight=120&odnWidth=120&odnBg=FFFFFF",
+  queries: [],
+};
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -294,7 +299,10 @@ export default async function HomePage() {
   return (
     <>
       <section>
-        <SubCategoryItem subCatData={testSubCat}/>
+        <div className="w-3/5">
+          <ShippingOption />
+        </div>
+        <SubCategoryItem subCatData={testSubCat} />
         <div className="flex flex-col">
           <div className="w-1/4 mx-6 mt-3 mb-8  ">
             {mytestAdsData.map((data) => (
@@ -385,7 +393,6 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
-
       </section>
     </>
   );

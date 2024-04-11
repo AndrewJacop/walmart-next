@@ -1,6 +1,6 @@
 "use client";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { ReactNode, useRef, useState } from "react";
 import {
   MdOutlinePlayCircleFilled,
   MdOutlinePauseCircleFilled,

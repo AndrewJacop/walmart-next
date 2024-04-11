@@ -1,11 +1,12 @@
+import Link from "next/link";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import SubCategoryItem from "./SubCategoryItem";
-import Link from "next/link";
+import SubCategoryItem from "@/components/category/SubCategoryItem";
 import { getSubCatData } from "@/lib/func/data";
 
 type AccordionProps = {
