@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { IoMdHeart } from "react-icons/io";
 import { CiHeart } from "react-icons/ci";
 
 import { handleAddToCart, removeFromCart } from "@/lib/func/cart";
 import { addToFavorites, removeFromFavorites } from "@/lib/func/list";
-
-
-
 
 type CardProps = {
   productData: Product;
@@ -26,75 +24,67 @@ export default function ProductSmall(card: CardProps) {
   const finalPrice =
     Number(product.originalPrice) * ((100 - Number(product.discount)) / 100);
 
-     
   const [isAdded, setIsAdded] = useState(false); // State to track whether the product is added to cart
   const [isFav, setIsFav] = useState(false); // State to track whether the product is added to Favorite List
-  const subDescreption =
-    product.title.length > 20
-      ? product.title.substring(0, 40) + "..."
-      : product.title;
-      const handleAddToFav = () => {
-        setIsFav(true);
-        addToFavorites(product);
-      };
-      const handleRemoveFromFav = () => {
-        setIsFav(false);
-        removeFromFavorites(product);
-      };
-    
+  const subDescreption = product.title;
+  const handleAddToFav = () => {
+    setIsFav(true);
+    addToFavorites(product);
+  };
+  const handleRemoveFromFav = () => {
+    setIsFav(false);
+    removeFromFavorites(product);
+  };
+
   return (
-    <div className="container w-[212px] px-4">
+    <div className="container w-56 px-4">
       <div className="relative mb-5">
-      {!isFav ? (
-               <button
-               className="absolute  mt-2 left-36 bg-[white] border-[1px] rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
-               onClick={handleAddToFav}
-             >
-               <CiHeart className="text-[black] text-2xl " />
-             </button>
-           ) : (
-             <button
-               className="absolute  mt-2 left-36 bg-[white] border-[1px] rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
-               onClick={handleRemoveFromFav}
-             >
-               <IoMdHeart className="text-2xl text-blue-600" />
-             </button>
-          )}
-          <img
-            className="h-[175px]"
-            src={product.images[0]}
-            alt="card img"
-            width={175}
-            height={175}
-          />
+        {!isFav ? (
+          <button
+            className="absolute mt-2 left-36 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
+            onClick={handleAddToFav}>
+            <CiHeart className="text-black text-2xl " />
+          </button>
+        ) : (
+          <button
+            className="absolute mt-2 left-36 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
+            onClick={handleRemoveFromFav}>
+            <IoMdHeart className="text-2xl text-blue-600" />
+          </button>
+        )}
+        <Image
+          src={product.images[0]}
+          alt="card img"
+          width={175}
+          height={175}
+        />
       </div>
 
       <div className="mb-1">
         <div className="me-2">
           {Number(product.discount) > 0 ? (
             <>
-              <span className="text-lg font-bold text-[green] me-1">
+              <span className="text-lg font-bold text-green-700 me-1">
                 Now ${finalPrice.toFixed(2)}{" "}
               </span>
-              <span className="font-base text-[14px] text-[#46474a]">
+              <span className="text-sm text-gray-700">
                 <del> ${product.originalPrice}</del>
               </span>
             </>
           ) : (
-            <span className="font-bold text-lg ">
-              {" "}
-              ${finalPrice.toFixed(2)}
-            </span>
+            <span className="font-bold text-lg"> ${finalPrice.toFixed(2)}</span>
           )}
         </div>
-        <span className="text-sm text-[#2e2f32]">{subDescreption}</span>
+        <span className="text-sm text-gray-800 text-ellipsis">
+          {subDescreption}
+        </span>
       </div>
       <div>
         {product.colors ? (
           <>
             {!isAdded ? ( // Render Add button only if the product is not added to cart
               <button
-                className=" border-[1px] border-[#46474a]  w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2"
+                className="border border-gray-700 w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2"
                 onClick={() => {
                   setIsAdded(true);
                   handleAddToCart(product);
@@ -105,7 +95,7 @@ export default function ProductSmall(card: CardProps) {
             ) : (
               <div className="flex grid grid-cols-2  w-full mx-1  text-center items-center py-1 rounded-full">
                 <span
-                  className="cursor-pointer text-2xl bg-[#bfbfbf] rounded-full   text-[white]  me-14"
+                  className="cursor-pointer text-2xl bg-gray-300 rounded-full text-white me-14"
                   onClick={() => {
                     removeFromCart(product);
                   }}>
@@ -114,7 +104,7 @@ export default function ProductSmall(card: CardProps) {
                 {/* <p className="font-bold"></p> */}
 
                 <span
-                  className="cursor-pointer text-2xl bg-[#bfbfbf] rounded-full  ms-14 text-[white]"
+                  className="cursor-pointer text-2xl bg-gray-300 rounded-full ms-14 text-white"
                   onClick={() => {
                     handleAddToCart(product);
                   }}>
@@ -125,7 +115,7 @@ export default function ProductSmall(card: CardProps) {
           </>
         ) : (
           <Link href={`/product/${product.id}`}>
-            <button className=" border-[1px] border-[#46474a]  w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2">
+            <button className=" border border-gray-700 w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2">
               {" "}
               Options{" "}
             </button>

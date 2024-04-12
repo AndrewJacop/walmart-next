@@ -14,7 +14,7 @@ export default function CartToggle() {
           <ShoppingCart className="h-6 w-6" />
           <Badge
             variant="custom"
-            className="bg-yellow-500 border-[1px] border-black text-black w-4 h-4 p-[3px] justify-center absolute right-[-3px] top-[-5px]">
+            className="bg-yellow-500 border border-black text-black w-4 h-4 p-[3px] justify-center absolute right-[-3px] top-[-5px]">
             0
           </Badge>
           <p className="font-normal text-[10px]">$0.00</p>

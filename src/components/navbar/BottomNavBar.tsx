@@ -311,7 +311,7 @@ export default function BottmNavBar() {
       <div className="relative ">
         <button
           onClick={toggleDropdown}
-          className="inline-flex text-base	 items-center justify-center px-3 py-1 font-bold   text-[#002d58] bg-[#F2F8FF]  rounded-2xl  hover:border-[1px] hover:border-[#002d58] focus:border-[1px] focus:border-[#002d58] ">
+          className="inline-flex text-base	 items-center justify-center px-3 py-1 font-bold   text-[#002d58] bg-[#F2F8FF]  rounded-2xl  hover:border hover:border-[#002d58] focus:border focus:border-[#002d58] ">
           <IoGridOutline className="-mr-1 w-4 text-[20px] ml-1 text-[#002d58] me-1 " />{" "}
           Departments
           <IoIosArrowDown className="ms-2" />
@@ -407,7 +407,7 @@ export default function BottmNavBar() {
                 </li>
               </ul>
             </div>
-            <div className=" bg-[white] p-3  w-1/3 items-center content-center	 ">
+            <div className=" bg-white p-3  w-1/3 items-center content-center	 ">
               <Image
                 src="../../../public/add1.jpg"
                 width={150}
@@ -3015,7 +3015,7 @@ export default function BottmNavBar() {
       <div className="relative ml-4">
         <button
           onClick={toggleDropdown2}
-          className="inline-flex text-base 	 items-center justify-center px-3 py-1 font-bold   text-[#002d58] bg-[#F2F8FF]  rounded-2xl  hover:border-[1px] hover:border-[#002d58] focus:border-[1px] focus:border-[#002d58] ">
+          className="inline-flex text-base 	 items-center justify-center px-3 py-1 font-bold   text-[#002d58] bg-[#F2F8FF]  rounded-2xl  hover:border hover:border-[#002d58] focus:border focus:border-[#002d58] ">
           <HiOutlineViewGrid className="-mr-1 w-4 text-[20px]   text-[#002d58] me-2 " />{" "}
           Services
           <IoIosArrowDown className="ms-2" />

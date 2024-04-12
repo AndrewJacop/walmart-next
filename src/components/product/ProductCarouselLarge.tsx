@@ -6,18 +6,15 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-
 import { cn } from "@/lib/utils";
-import ProductCard from "./ProductCard";
-
+import ProductCard from "@/components/product/ProductCard";
 
 type CarouselProps = {
   basisClass: string;
-  testProduct:Product[]
+  testProduct: Product[];
 };
 
 export function ProductCarouselLarge(props: CarouselProps) {
-
   return (
     <Carousel
       opts={{
@@ -28,7 +25,7 @@ export function ProductCarouselLarge(props: CarouselProps) {
           <CarouselItem key={index} className={(cn("pl-0"), props.basisClass)}>
             <div className="p-0 m-0  flex">
               <Card className="border-0 shadow-none">
-              <CardContent className="flex aspect-square items-center justify-center p-0">
+                <CardContent className="flex aspect-square items-center justify-center p-0">
                   <ProductCard productData={product} style="" />
                 </CardContent>
               </Card>
@@ -36,8 +33,8 @@ export function ProductCarouselLarge(props: CarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-4 border-[1px] w-10 h-10  border-[black] top-28" />
-      <CarouselNext className="absolute right-14 top-28 border-[1px] w-10 h-10  border-[black]" />
+      <CarouselPrevious className="absolute left-4 border w-10 h-10 border-black top-28" />
+      <CarouselNext className="absolute right-14 top-28 border w-10 h-10 border-black" />
     </Carousel>
   );
 }

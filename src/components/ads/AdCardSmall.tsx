@@ -24,7 +24,7 @@ export default function AdCardSmall(props: Adprops) {
           <p className="text-gray-700 text-sm">{props.description}</p>
         </div>
         <div className="px-6 pt-1 pb-5">
-          <button className="border-[1px] font-bold  rounded-[25px] border-[black] py-2 px-4">
+          <button className="border font-bold  rounded-[25px] border-black py-2 px-4">
             Shop Now
           </button>
         </div>

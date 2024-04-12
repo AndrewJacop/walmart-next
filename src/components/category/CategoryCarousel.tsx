@@ -7,7 +7,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-
 import { CategoryCard } from "@/components/category/CategoryCard";
 
 type CarouselProps = {
@@ -39,8 +38,8 @@ export function CategoryCarousel(props: CarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-2 border-[1px] w-8 h-8 border-[black] top-16" />
-      <CarouselNext className="absolute right-14 top-16 border-[1px] w-8 h-8 border-[black]" />
+      <CarouselPrevious className="absolute left-2 border w-8 h-8 border-black top-16" />
+      <CarouselNext className="absolute right-14 top-16 border w-8 h-8 border-black" />
     </Carousel>
   );
 }

@@ -22,21 +22,19 @@ const faqList = [
   },
 ];
 
-
-
-/** 
- * @breif FAQ 
+/**
+ * @breif FAQ
  * this components is just an accordion on the bottom of the screens
  */
 function FAQ() {
   return (
-    <div className="flex flex-col mx-8 my-1 ">
+    <div className="flex flex-col mx-8 my-1">
       <div>
-        <h1 className="font-bold text-2xl text-[#46474a]">FAQ</h1>
+        <h1 className="font-bold text-2xl text-gray-700">FAQ</h1>
       </div>
       <Accordion type="single" collapsible>
-        {faqList.map((faq) => (
-          <AccordionItem value="item-1">
+        {faqList.map((faq, index) => (
+          <AccordionItem value="item-1" key={index}>
             <AccordionTrigger>{faq.question}</AccordionTrigger>
             <AccordionContent>{faq.answ}</AccordionContent>
           </AccordionItem>

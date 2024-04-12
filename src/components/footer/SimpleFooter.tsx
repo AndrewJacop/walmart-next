@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import PrivacyIcon from "../../../public/privacy_rights.png";
 
 export default function SimpleFooter() {
