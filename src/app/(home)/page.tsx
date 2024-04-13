@@ -8,7 +8,7 @@ import DepartmentCard from "@/components/category/DepartmentCard";
 import SubCategoryItem from "@/components/category/SubCategoryItem";
 import FilterBar from "@/components/filter/FilterBar";
 import { ProductCarousel } from "@/components/product/ProductCarousel";
-import { getAdsData } from "@/lib/supabase/fetch-data";
+import { getAdsData,getProductsData } from "@/lib/supabase/fetch-data";
 const cartd: CartItem = { id: 90, price: 90, productId: "", quantity: 32 };
 const testAd: Ad[] = [
   {
@@ -166,121 +166,121 @@ const testCat: Category[] = [
     subCategories: [],
   },
 ];
-const testProd: Product[] = [
-  {
-    id: "dbd86be64e58faa2c3a05fb916818a7f",
-    title:
-      'Anagram International A11957001 Sesame Street 1st Birthday Foil Balloon, 18", Multicolor',
-    images: [
-      "https://images-na.ssl-images-amazon.com/images/I/31D-X5aC1fL.jpg",
-      "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
-    ],
-    brand: 70,
-    colors: [],
-    seller: 70,
-    isBestSeller: false,
-    quantity: 7,
-    subCatergory: [0, 1, 2],
-    discount: 0,
-    originalPrice: "6.99",
-    returnPolicy: 2,
-    isGiftable: false,
-    modelNumber: "",
-    aboutProduct: "",
-    productSpecification: "",
-    technicalDetails: "",
-    shippingWeight: "",
-    productDimensions: "",
-    warrenty: "",
-    reviews: [],
-    variants: [],
-  },
-  {
-    id: "b48da67f0a050112a8874a42ed6fb341",
-    title: "Eat More Pie Dessert Plates 7",
-    images: [
-      "https://images-na.ssl-images-amazon.com/images/I/51nAxFmWv5L.jpg",
-      "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
-    ],
-    brand: 11,
-    colors: [],
-    seller: 48,
-    isBestSeller: false,
-    quantity: 4,
-    subCatergory: [0, 1],
-    discount: 0,
-    originalPrice: "8.69",
-    returnPolicy: 0,
-    isGiftable: false,
-    modelNumber: "",
-    aboutProduct: "",
-    productSpecification: "",
-    technicalDetails: "",
-    shippingWeight: "",
-    productDimensions: "",
-    warrenty: "",
-    reviews: [],
-    variants: [],
-  },
-  {
-    id: "63f33269bd408e3cfa627e90785a6560",
-    title: "Beistle CN038 Tropical Breeze Confetti",
-    images: [
-      "https://images-na.ssl-images-amazon.com/images/I/61VF9CnU--L.jpg",
-      "https://images-na.ssl-images-amazon.com/images/I/61keSYOJc3L.jpg",
-      "https://images-na.ssl-images-amazon.com/images/I/41U7cljeWfL.jpg",
-      "https://images-na.ssl-images-amazon.com/images/I/41Ju74o4BIL.jpg",
-      "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
-    ],
-    brand: 3,
-    colors: [],
-    seller: 59,
-    isBestSeller: false,
-    quantity: 2,
-    subCatergory: [3],
-    discount: 0,
-    originalPrice: "4.99",
-    returnPolicy: 2,
-    isGiftable: false,
-    modelNumber: "",
-    aboutProduct: "",
-    productSpecification: "",
-    technicalDetails: "",
-    shippingWeight: "",
-    productDimensions: "",
-    warrenty: "",
-    reviews: [],
-    variants: [],
-  },
-  {
-    id: "9e118f3be1a2f0dd14e50e0507827302",
-    title: "Beistle CN145 Princess Confetti",
-    images: [
-      "https://images-na.ssl-images-amazon.com/images/I/61LwsUMnmAL.jpg",
-      "https://images-na.ssl-images-amazon.com/images/I/41P%2BwpGuDdL.jpg",
-      "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
-    ],
-    brand: 28,
-    colors: [],
-    seller: 4,
-    isBestSeller: false,
-    quantity: 8,
-    subCatergory: [4, 5, 6, 7],
-    discount: 0,
-    originalPrice: "5.61",
-    returnPolicy: 1,
-    isGiftable: false,
-    modelNumber: "",
-    aboutProduct: "",
-    productSpecification: "",
-    technicalDetails: "",
-    shippingWeight: "",
-    productDimensions: "",
-    warrenty: "",
-    reviews: [],
-    variants: [],
-  },
-];
+// const testProd: Product[] = [
+//   {
+//     id: "dbd86be64e58faa2c3a05fb916818a7f",
+//     title:
+//       'Anagram International A11957001 Sesame Street 1st Birthday Foil Balloon, 18", Multicolor',
+//     images: [
+//       "https://images-na.ssl-images-amazon.com/images/I/31D-X5aC1fL.jpg",
+//       "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
+//     ],
+//     brand: 70,
+//     colors: [],
+//     seller: 70,
+//     isBestSeller: false,
+//     quantity: 7,
+//     subCatergory: [0, 1, 2],
+//     discount: 0,
+//     originalPrice: "6.99",
+//     returnPolicy: 2,
+//     isGiftable: false,
+//     modelNumber: "",
+//     aboutProduct: "",
+//     productSpecification: "",
+//     technicalDetails: "",
+//     shippingWeight: "",
+//     productDimensions: "",
+//     warrenty: "",
+//     reviews: [],
+//     variants: [],
+//   },
+//   {
+//     id: "b48da67f0a050112a8874a42ed6fb341",
+//     title: "Eat More Pie Dessert Plates 7",
+//     images: [
+//       "https://images-na.ssl-images-amazon.com/images/I/51nAxFmWv5L.jpg",
+//       "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
+//     ],
+//     brand: 11,
+//     colors: [],
+//     seller: 48,
+//     isBestSeller: false,
+//     quantity: 4,
+//     subCatergory: [0, 1],
+//     discount: 0,
+//     originalPrice: "8.69",
+//     returnPolicy: 0,
+//     isGiftable: false,
+//     modelNumber: "",
+//     aboutProduct: "",
+//     productSpecification: "",
+//     technicalDetails: "",
+//     shippingWeight: "",
+//     productDimensions: "",
+//     warrenty: "",
+//     reviews: [],
+//     variants: [],
+//   },
+//   {
+//     id: "63f33269bd408e3cfa627e90785a6560",
+//     title: "Beistle CN038 Tropical Breeze Confetti",
+//     images: [
+//       "https://images-na.ssl-images-amazon.com/images/I/61VF9CnU--L.jpg",
+//       "https://images-na.ssl-images-amazon.com/images/I/61keSYOJc3L.jpg",
+//       "https://images-na.ssl-images-amazon.com/images/I/41U7cljeWfL.jpg",
+//       "https://images-na.ssl-images-amazon.com/images/I/41Ju74o4BIL.jpg",
+//       "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
+//     ],
+//     brand: 3,
+//     colors: [],
+//     seller: 59,
+//     isBestSeller: false,
+//     quantity: 2,
+//     subCatergory: [3],
+//     discount: 0,
+//     originalPrice: "4.99",
+//     returnPolicy: 2,
+//     isGiftable: false,
+//     modelNumber: "",
+//     aboutProduct: "",
+//     productSpecification: "",
+//     technicalDetails: "",
+//     shippingWeight: "",
+//     productDimensions: "",
+//     warrenty: "",
+//     reviews: [],
+//     variants: [],
+//   },
+//   {
+//     id: "9e118f3be1a2f0dd14e50e0507827302",
+//     title: "Beistle CN145 Princess Confetti",
+//     images: [
+//       "https://images-na.ssl-images-amazon.com/images/I/61LwsUMnmAL.jpg",
+//       "https://images-na.ssl-images-amazon.com/images/I/41P%2BwpGuDdL.jpg",
+//       "https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/transparent-pixel.jpg",
+//     ],
+//     brand: 28,
+//     colors: [],
+//     seller: 4,
+//     isBestSeller: false,
+//     quantity: 8,
+//     subCatergory: [4, 5, 6, 7],
+//     discount: 0,
+//     originalPrice: "5.61",
+//     returnPolicy: 1,
+//     isGiftable: false,
+//     modelNumber: "",
+//     aboutProduct: "",
+//     productSpecification: "",
+//     technicalDetails: "",
+//     shippingWeight: "",
+//     productDimensions: "",
+//     warrenty: "",
+//     reviews: [],
+//     variants: [],
+//   },
+// ];
 const testSubCat: SubCategory = {
   id: 0,
   title: "Toys & Games",
@@ -295,7 +295,7 @@ export const fetchCache = "force-no-store";
 
 export default async function HomePage() {
   const mytestAdsData = await getAdsData();
-
+const testProd=await getProductsData()
   return (
     <>
       <section>
@@ -328,7 +328,7 @@ export default async function HomePage() {
             <div>
               <ProductCarousel
                 basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-                testProduct={testProd}
+                testProduct={testProd.slice(0,11)}
               />
             </div>
           </div>
@@ -346,7 +346,7 @@ export default async function HomePage() {
               <div className="mt-14">
                 <ProductCarousel
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
-                  testProduct={testProd}
+                  testProduct={testProd.slice(0,11)}
                 />
               </div>
               <div>
@@ -369,7 +369,7 @@ export default async function HomePage() {
             <div>
               <ProductCarousel
                 basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-                testProduct={testProd}
+                testProduct={testProd.slice(0,11)}
               />
             </div>
           </div>
@@ -387,7 +387,7 @@ export default async function HomePage() {
               <div className="mt-14">
                 <ProductCarousel
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
-                  testProduct={testProd}
+                  testProduct={testProd.slice(0,11)}
                 />
               </div>
               <div>

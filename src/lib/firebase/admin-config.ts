@@ -7,12 +7,9 @@ import { SessionCookieOptions, getAuth } from "firebase-admin/auth";
 
 const firebaseAdminConfig = {
   credential: cert({
-    projectId: process.env.NEXT_FIREBASE_ADMIN_PROJECT_ID,
-    clientEmail: process.env.NEXT_FIREBASE_ADMIN_CLIENT_EMAIL,
-    privateKey: process.env.NEXT_FIREBASE_ADMIN_PRIVATE_KEY!.replace(
-      /\\n/gm,
-      "\n"
-    ),
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_ADMIN_PROJECT_ID,
+    clientEmail: process.env.NEXT_PUBLIC_FIREBASE_ADMIN_CLIENT_EMAIL,
+    privateKey: process.env.NEXT_PUBLIC_FIREBASE_ADMIN_PRIVATE_KEY!.replace(/\\n/gm,"\n")
   }),
 };
 // const firebaseAdminConfig = {

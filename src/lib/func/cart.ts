@@ -1,46 +1,115 @@
 import toast from "react-hot-toast";
+import { auth } from "../firebase/config";
+import { addCartItem } from "../supabase/fetch-data";
 
+
+
+
+//Add To Cart:
+
+let supaCartdata: CartItem[] = [];
 export const handleAddToCart = (product: Product) => {
-  let finalPrice =
-    Number(product.originalPrice) * ((100 - Number(product.discount)) / 100);
-  const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
-  const existingItemIndex = cartData.findIndex(
-    (item) => item.productId === product.id
-  );
+  const isAuth = auth.currentUser;
+  //1- if user is signed in
+  if (isAuth) {
+    const existingItemIndex = supaCartdata.findIndex((item) => item.productId === product.id);
 
-  if (existingItemIndex !== -1) {
-    // If the product already exists in the cart, increase its quantity
-    if (cartData[existingItemIndex].quantity <= product.quantity) {
-      cartData[existingItemIndex].quantity++;
+    if (existingItemIndex !== -1) {
+      // If the product already exists in the cart, increase its quantity
+      if (supaCartdata[existingItemIndex].quantity <= product.quantity) {
+        supaCartdata[existingItemIndex].quantity++;
+      } else {
+        toast("Max quantity", {
+          icon: "❕",
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
+      }
     } else {
-      toast("Max quantity", {
-        icon: "❕",
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
+      // If the product doesn't exist in the cart, add it as a new item
+      supaCartdata.push({
+        id: supaCartdata.length,
+        productId: product.id,
+        quantity: 1,
       });
     }
-  } else {
-    // If the product doesn't exist in the cart, add it as a new item
-    cartData.push({
-      id: cartData.length,
-      productId: product.id,
-      quantity: 1,
-      price: finalPrice,
-    });
-  }
+    //add the SupaCarItem[] to Cart object
+    const cart: Cart = {
+      userId: `${auth.currentUser?.uid}`,
+      items: supaCartdata,
+      pickUpOtions: 1,
+    };
 
-  // Save the updated cart data to local storage
-  localStorage.setItem("cart", JSON.stringify(cartData));
-  console.log(cartData);
+   //use addCartItem to add cart to database
+    addCartItem(cart);
+    console.log(cart);
+  } 
+//2- if user isn't signed in
+  else {
+    const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
+    const existingItemIndex = cartData.findIndex((item) => item.productId === product.id);
+
+    if (existingItemIndex !== -1) {
+      // If the product already exists in the cart, increase its quantity
+      if (cartData[existingItemIndex].quantity <= product.quantity) {
+        cartData[existingItemIndex].quantity++;
+      } else {
+        toast("Max quantity");
+      }
+    } else {
+      // If the product doesn't exist in the cart, add it as a new item
+      cartData.push({
+        id: cartData.length + 1,
+        productId: product.id,
+        quantity: 1,
+      });
+    }
+    // save the updated cart data to local storage
+    localStorage.setItem("cart", JSON.stringify(cartData));
+    console.log(cartData);
+  }
 };
 
-export const removeFromCart = (prd: Product) => {
-  // console.log("remove")
+
+
+export const removeFromCart = (product: Product) => {
+
+  const isAuth = auth.currentUser;
+  //1- if user is signed in
+  if (isAuth) {
+    // Find the index of the product in the cart
+    const existingItemIndex = supaCartdata.findIndex(item => item.productId === product.id);
+
+    // If the product exists in the cart
+    if (existingItemIndex !== -1) {
+      supaCartdata[existingItemIndex].quantity--;
+
+      // If the quantity 0, remove the item from the cart
+      if (supaCartdata[existingItemIndex].quantity === 0) {
+        supaCartdata.splice(existingItemIndex, 1);
+      }
+
+      // add supaCartdata to cart object
+      const cart: Cart = {
+        userId: `${auth.currentUser?.uid}`,
+        items: supaCartdata,
+        pickUpOptions: 1, // Corrected typo in 'pickUpOptions'
+      };
+
+      //use addCartItem() to add cart to database
+      addCartItem(cart);
+      console.log(cart);
+    } else {
+      console.log("not found")
+    }
+  }
+  //2- if user isn't signed in
+  else{
   const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
-  const itemIndex = cartData.findIndex((item) => item.productId === prd.id);
+  const itemIndex = cartData.findIndex((item) => item.productId === product.id);
 
   if (itemIndex !== -1) {
     // If the product exists in the cart, remove it
@@ -53,6 +122,7 @@ export const removeFromCart = (prd: Product) => {
     localStorage.setItem("cart", JSON.stringify(cartData));
     console.log(cartData);
   }
+}
 };
 
 export const removeAllFromCart = (prd: Product) => {

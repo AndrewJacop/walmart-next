@@ -48,6 +48,20 @@ export async function addNewUser(newUser: User) {
   if (error) console.log(error);
 }
 
+
+
+export async function addCartItem(newCart: Cart) {
+    const supabase = await createClient();
+    const { error } = await supabase
+
+    .from('users')
+    .update({'cart': [newCart]})
+    .eq('id',newCart.userId)
+    .select()
+    if (error) console.log(error);
+}
+
+
 export async function getUserByUid(id: string) {
   const supabase = await createClient();
   const { data, error } = await supabase.from("users").select().eq("id", id);
@@ -75,4 +89,15 @@ export async function getSubCategoriesData(){
   .order("id")
   if(error) console.log(error)
   return data as SubCategory[];
+}
+
+// Products
+export async function getProductsData(){
+  const supabase= await createClient()
+  const {data,error}=await supabase
+  .from("products")
+  .select()
+  .order("id")
+  if(error) console.log(error)
+  return data as Product[];
 }
