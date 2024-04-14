@@ -2,9 +2,6 @@ import toast from "react-hot-toast";
 import { auth } from "../firebase/config";
 import { addCartItem } from "../supabase/fetch-data";
 
-
-
-
 //Add To Cart:
 
 let supaCartdata: CartItem[] = [];
@@ -12,7 +9,9 @@ export const handleAddToCart = (product: Product) => {
   const isAuth = auth.currentUser;
   //1- if user is signed in
   if (isAuth) {
-    const existingItemIndex = supaCartdata.findIndex((item) => item.productId === product.id);
+    const existingItemIndex = supaCartdata.findIndex(
+      (item) => item.productId === product.id
+    );
 
     if (existingItemIndex !== -1) {
       // If the product already exists in the cart, increase its quantity
@@ -43,14 +42,18 @@ export const handleAddToCart = (product: Product) => {
       pickUpOtions: 1,
     };
 
-   //use addCartItem to add cart to database
+    //use addCartItem to add cart to database
     addCartItem(cart);
     console.log(cart);
-  } 
-//2- if user isn't signed in
+  }
+  //2- if user isn't signed in
   else {
-    const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existingItemIndex = cartData.findIndex((item) => item.productId === product.id);
+    const cartData: CartItem[] = JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    );
+    const existingItemIndex = cartData.findIndex(
+      (item) => item.productId === product.id
+    );
 
     if (existingItemIndex !== -1) {
       // If the product already exists in the cart, increase its quantity
@@ -73,15 +76,14 @@ export const handleAddToCart = (product: Product) => {
   }
 };
 
-
-
 export const removeFromCart = (product: Product) => {
-
   const isAuth = auth.currentUser;
   //1- if user is signed in
   if (isAuth) {
     // Find the index of the product in the cart
-    const existingItemIndex = supaCartdata.findIndex(item => item.productId === product.id);
+    const existingItemIndex = supaCartdata.findIndex(
+      (item) => item.productId === product.id
+    );
 
     // If the product exists in the cart
     if (existingItemIndex !== -1) {
@@ -96,33 +98,37 @@ export const removeFromCart = (product: Product) => {
       const cart: Cart = {
         userId: `${auth.currentUser?.uid}`,
         items: supaCartdata,
-        pickUpOptions: 1, // Corrected typo in 'pickUpOptions'
+pickUpOtions:1
       };
 
       //use addCartItem() to add cart to database
       addCartItem(cart);
       console.log(cart);
     } else {
-      console.log("not found")
+      console.log("not found");
     }
   }
   //2- if user isn't signed in
-  else{
-  const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
-  const itemIndex = cartData.findIndex((item) => item.productId === product.id);
+  else {
+    const cartData: CartItem[] = JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    );
+    const itemIndex = cartData.findIndex(
+      (item) => item.productId === product.id
+    );
 
-  if (itemIndex !== -1) {
-    // If the product exists in the cart, remove it
-    if (cartData[itemIndex].quantity == 1) {
-      cartData.splice(itemIndex, 1);
-    } else {
-      cartData[itemIndex].quantity -= 1;
+    if (itemIndex !== -1) {
+      // If the product exists in the cart, remove it
+      if (cartData[itemIndex].quantity == 1) {
+        cartData.splice(itemIndex, 1);
+      } else {
+        cartData[itemIndex].quantity -= 1;
+      }
+      // Save the updated cart data to local storage
+      localStorage.setItem("cart", JSON.stringify(cartData));
+      console.log(cartData);
     }
-    // Save the updated cart data to local storage
-    localStorage.setItem("cart", JSON.stringify(cartData));
-    console.log(cartData);
   }
-}
 };
 
 export const removeAllFromCart = (prd: Product) => {
