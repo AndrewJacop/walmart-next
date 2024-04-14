@@ -19,7 +19,9 @@ import {
   getProductsData,
   getUserByUid,
   getOrdersData,
+  getOrderId,
 } from "@/lib/supabase/fetch-data";
+import { Button } from "@/components/ui/button";
 // import { getAdsDataId } from "@/lib/API-Functions/fetching";
 // import { adsData } from "../api/ads/data";
 // import { auth } from "@/lib/firebase/config";
@@ -39,7 +41,7 @@ import {
 
 export async function Cart() {
   // const [cartData, setCartData] = useState<CartItem[]>([]);
-  const products: Product[] = await getProductsData();
+  // const products: Product[] = await getProductsData();
   // let qty=0
   // const router = useRouter();
   // useEffect(() => {
@@ -50,66 +52,51 @@ export async function Cart() {
   //     }
   //   }, 100);
   // }, []);
-  const isAuth = auth.currentUser;
 
-  const uId = auth.currentUser?.uid;
-  const user = await getUserByUid(uId!);
-  console.log(user);
-
-  const cartData = user?.cart!;
-  console.log(cartData);
-
-  const date = new Date();
-
-
-  function getOrderId() {
-    var number=0
-    return getOrdersData()
-      .then((ordersData) => {
-        number= ordersData[0].id + 1;
-        return number
-      })
-      .catch((error) => {
-        console.error(error);
-        throw error; 
-      });
-  }
-  
   const handleCheckOut = async () => {
+    const date = new Date();
+    const isAuth = auth.currentUser;
     if (isAuth) {
-      cartData[0].map(async (itm, indx: number) => {
-        const orderId = await getOrderId();
-        console.log(orderId);
-
-        const order: Order = {
-          id: orderId ,
-          userId: uId!,
-          productId: itm.productId,
-          status: "uncomfirmed",
-          pickUpOptions: 1,
-          createdAt: new Date(date.getTime()),
-          lastEditAt: new Date(date.getTime()),
-          arrivingAt: new Date(date.getTime() + 5 * 24 * 60 * 60 * 1000),
-          quantity: itm.quantity,
-        };
-        await addNewOrder(order);
-
-        console.log("done");
+      const uId = isAuth.uid;
+      getUserByUid(uId).then((user) => {
+        if (user) {
+          const orderList: Order[] = [];
+          const cartData: CartItem[] = user.cart;
+          cartData.map((itm, idx) => {
+            const orderId = getOrderId();
+            const order: Order = {
+              id: orderId,
+              userId: uId,
+              productId: itm.productId,
+              status: "uncomfirmed",
+              pickUpOptions: 1,
+              createdAt: new Date(date.getTime()),
+              lastEditAt: new Date(date.getTime()),
+              arrivingAt: new Date(date.getTime() + 5 * 24 * 60 * 60 * 1000),
+              quantity: itm.quantity,
+            };
+            orderList.push(order);
+          });
+          addNewOrder(orderList).then(() => {
+            console.log("done");
+          });
+        }
       });
     } else {
-      console.log("not found ");
+      // get to auth page
     }
   };
 
   return (
     <>
       <h1>hi</h1>
-      <button
-        onClick={handleCheckOut}
-        className="flex justify-center bg-blue-700 text-white hover:bg-blue-600 px-28 py-3 text-sm font-bold rounded-full"
-      >
+      <Button
+        onClick={() => {
+          handleCheckOut();
+        }}
+        className="flex justify-center bg-blue-700 text-white hover:bg-blue-600 px-28 py-3 text-sm font-bold rounded-full">
         Continue to checkout
-      </button>
+      </Button>
     </>
   );
 }

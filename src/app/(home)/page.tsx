@@ -8,8 +8,8 @@ import DepartmentCard from "@/components/category/DepartmentCard";
 import SubCategoryItem from "@/components/category/SubCategoryItem";
 import FilterBar from "@/components/filter/FilterBar";
 import { ProductCarousel } from "@/components/product/ProductCarousel";
-import { getAdsData,getProductsData } from "@/lib/supabase/fetch-data";
-const cartd: CartItem = { id: 90, productId: "", quantity: 32 };
+import { getAdsData, getProductsData } from "@/lib/supabase/fetch-data";
+const cartd: CartItem = { productId: "", quantity: 32 };
 const testAd: Ad[] = [
   {
     id: 10,
@@ -295,7 +295,7 @@ export const fetchCache = "force-no-store";
 
 export default async function HomePage() {
   const mytestAdsData = await getAdsData();
-const testProd=await getProductsData()
+  const testProd = await getProductsData();
   return (
     <>
       <section>
@@ -328,7 +328,7 @@ const testProd=await getProductsData()
             <div>
               <ProductCarousel
                 basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-                testProduct={testProd.slice(0,11)}
+                testProduct={testProd.slice(0, 11)}
               />
             </div>
           </div>
@@ -346,7 +346,7 @@ const testProd=await getProductsData()
               <div className="mt-14">
                 <ProductCarousel
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
-                  testProduct={testProd.slice(0,11)}
+                  testProduct={testProd.slice(0, 11)}
                 />
               </div>
               <div>
@@ -369,7 +369,7 @@ const testProd=await getProductsData()
             <div>
               <ProductCarousel
                 basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-                testProduct={testProd.slice(0,11)}
+                testProduct={testProd.slice(0, 11)}
               />
             </div>
           </div>
@@ -387,7 +387,7 @@ const testProd=await getProductsData()
               <div className="mt-14">
                 <ProductCarousel
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
-                  testProduct={testProd.slice(0,11)}
+                  testProduct={testProd.slice(0, 11)}
                 />
               </div>
               <div>

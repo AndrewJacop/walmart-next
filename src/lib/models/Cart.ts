@@ -5,7 +5,6 @@ type Cart = {
 };
 
 type CartItem = {
-  id: number;
   productId: string;
   quantity: number;
 };
