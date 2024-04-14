@@ -1,14 +1,18 @@
 import toast from "react-hot-toast";
 import { auth } from "../firebase/config";
-import { addCartItem } from "../supabase/fetch-data";
+import { addCartItem, getUserByUid } from "../supabase/fetch-data";
 
 //Add To Cart:
 
 let supaCartdata: CartItem[] = [];
-export const handleAddToCart = (product: Product) => {
+export const handleAddToCart =async (product: Product) => {
   const isAuth = auth.currentUser;
+  const uId = isAuth?.uid;
+
   //1- if user is signed in
   if (isAuth) {
+    const user=await getUserByUid(`${uId}`)
+    let supaCartdata: CartItem[] = user?.cart![0] || []; // Get the first (and only) array from user's cart data
     const existingItemIndex = supaCartdata.findIndex(
       (item) => item.productId === product.id
     );
@@ -36,15 +40,10 @@ export const handleAddToCart = (product: Product) => {
       });
     }
     //add the SupaCarItem[] to Cart object
-    const cart: Cart = {
-      userId: `${auth.currentUser?.uid}`,
-      items: supaCartdata,
-      pickUpOtions: 1,
-    };
+  
 
     //use addCartItem to add cart to database
-    addCartItem(cart);
-    console.log(cart);
+    addCartItem(supaCartdata,`${uId}`);
   }
   //2- if user isn't signed in
   else {
@@ -65,7 +64,7 @@ export const handleAddToCart = (product: Product) => {
     } else {
       // If the product doesn't exist in the cart, add it as a new item
       cartData.push({
-        id: cartData.length + 1,
+        id: cartData.length,
         productId: product.id,
         quantity: 1,
       });
@@ -76,10 +75,14 @@ export const handleAddToCart = (product: Product) => {
   }
 };
 
-export const removeFromCart = (product: Product) => {
+export const removeFromCart =async (product: Product) => {
   const isAuth = auth.currentUser;
+  const uId = isAuth?.uid;
+
   //1- if user is signed in
   if (isAuth) {
+    const user=await getUserByUid(`${uId}`)
+    let supaCartdata: CartItem[] = user?.cart![0] || []; // Get the first (and only) array from user's cart data
     // Find the index of the product in the cart
     const existingItemIndex = supaCartdata.findIndex(
       (item) => item.productId === product.id
@@ -94,16 +97,10 @@ export const removeFromCart = (product: Product) => {
         supaCartdata.splice(existingItemIndex, 1);
       }
 
-      // add supaCartdata to cart object
-      const cart: Cart = {
-        userId: `${auth.currentUser?.uid}`,
-        items: supaCartdata,
-pickUpOtions:1
-      };
+      
 
       //use addCartItem() to add cart to database
-      addCartItem(cart);
-      console.log(cart);
+      addCartItem(supaCartdata,`${uId}`);
     } else {
       console.log("not found");
     }

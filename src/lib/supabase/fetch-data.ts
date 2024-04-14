@@ -48,19 +48,32 @@ export async function addNewUser(newUser: User) {
   if (error) console.log(error);
 }
 
-
-
-export async function addCartItem(newCart: Cart) {
-    const supabase = await createClient();
-    const { error } = await supabase
-
-    .from('users')
-    .update({'cart': [newCart]})
-    .eq('id',newCart.userId)
-    .select()
-    if (error) console.log(error);
+export async function addNewOrder(newOrder: Order) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("orders").insert(newOrder);
+  if (error) console.log(error);
 }
 
+export async function addCartItem(newCart: CartItem[], userId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+
+    .from("users")
+    .update({ cart: [newCart] })
+    .eq("id", userId)
+    .select();
+  if (error) console.log(error);
+}
+
+export async function getCartItem(id: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("users")
+    .select("cart")
+    .eq("id", id);
+  if (error) console.log(error);
+  if (data) return data[0] as unknown as Cart;
+}
 
 export async function getUserByUid(id: string) {
   const supabase = await createClient();
@@ -70,34 +83,42 @@ export async function getUserByUid(id: string) {
 }
 
 // Categories
-export async function getCategoriesData(){
-  const supabase=await createClient();
-  const {data,error}=await supabase
-  .from("categories")
-  .select()
-  .order("id");
-  if (error) console.log(error)
+export async function getCategoriesData() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("categories")
+    .select()
+    .order("id");
+  if (error) console.log(error);
   return data as Category[];
 }
 
 // SubCategories
-export async function getSubCategoriesData(){
-  const supabase= await createClient()
-  const {data,error}=await supabase
-  .from("subcategories")
-  .select()
-  .order("id")
-  if(error) console.log(error)
+export async function getSubCategoriesData() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("subcategories")
+    .select()
+    .order("id");
+  if (error) console.log(error);
   return data as SubCategory[];
 }
 
 // Products
-export async function getProductsData(){
-  const supabase= await createClient()
-  const {data,error}=await supabase
-  .from("products")
-  .select()
-  .order("id")
-  if(error) console.log(error)
+export async function getProductsData() {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("products").select().order("id");
+  if (error) console.log(error);
   return data as Product[];
+}
+
+//
+export async function getOrdersData() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("orders")
+    .select()
+    .order("id", { ascending: false });
+  if (error) console.log(error);
+  return data as Order[];
 }

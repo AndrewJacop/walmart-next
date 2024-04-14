@@ -9,7 +9,7 @@ import SubCategoryItem from "@/components/category/SubCategoryItem";
 import FilterBar from "@/components/filter/FilterBar";
 import { ProductCarousel } from "@/components/product/ProductCarousel";
 import { getAdsData,getProductsData } from "@/lib/supabase/fetch-data";
-const cartd: CartItem = { id: 90, price: 90, productId: "", quantity: 32 };
+const cartd: CartItem = { id: 90, productId: "", quantity: 32 };
 const testAd: Ad[] = [
   {
     id: 10,
