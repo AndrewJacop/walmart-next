@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { IoMdHeart } from "react-icons/io";
 import { CiHeart } from "react-icons/ci";
 
@@ -52,11 +51,10 @@ export default function ProductSmall(card: CardProps) {
             <IoMdHeart className="text-2xl text-blue-600" />
           </button>
         )}
-        <Image
+        <img
           src={product.images[0]}
           alt="card img"
-          width={175}
-          height={175}
+          className="w-40 h-40"
         />
       </div>
 
@@ -75,7 +73,7 @@ export default function ProductSmall(card: CardProps) {
             <span className="font-bold text-lg"> ${finalPrice.toFixed(2)}</span>
           )}
         </div>
-        <span className="text-sm text-gray-800 text-ellipsis">
+        <span className="text-sm text-gray-800 text-ellipsis ">
           {subDescreption}
         </span>
       </div>
@@ -85,9 +83,9 @@ export default function ProductSmall(card: CardProps) {
             {!isAdded ? ( // Render Add button only if the product is not added to cart
               <button
                 className="border border-gray-700 w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2"
-                onClick={async() => {
+                onClick={() => {
                   setIsAdded(true);
-                 await handleAddToCart(product);
+                  handleAddToCart(product);
                 }}>
                 {" "}
                 + Add{" "}
@@ -96,8 +94,8 @@ export default function ProductSmall(card: CardProps) {
               <div className="flex grid grid-cols-2  w-full mx-1  text-center items-center py-1 rounded-full">
                 <span
                   className="cursor-pointer text-2xl bg-gray-300 rounded-full text-white me-14"
-                  onClick={async() => {
-                  await  removeFromCart(product);
+                  onClick={() => {
+                    removeFromCart(product);
                   }}>
                   -
                 </span>
@@ -105,8 +103,8 @@ export default function ProductSmall(card: CardProps) {
 
                 <span
                   className="cursor-pointer text-2xl bg-gray-300 rounded-full ms-14 text-white"
-                  onClick={async () => {
-                  await  handleAddToCart(product);
+                  onClick={ () => {
+                    handleAddToCart(product);
                   }}>
                   +
                 </span>

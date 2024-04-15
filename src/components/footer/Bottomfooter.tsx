@@ -28,7 +28,7 @@ const LinksList = [
 function BottomFooter() {
   return (
     <>
-      <div className="bg-blue-700 p-3 text-center ">
+      <div className="bg-[#004f9a] p-3 text-center ">
         <div className="text-white flex-wrap items-center mx-60 text-sm">
           {LinksList.slice(0, 10).map((link, index) => (
             <a key={index} href={link.href} className="mr-5 hover:underline">

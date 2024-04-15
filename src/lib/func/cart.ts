@@ -10,10 +10,11 @@ export const handleAddToCart = (product: Product) => {
 
   //1- if user is signed in
   if (isAuth) {
+
     const uId = isAuth.uid;
     const user = getUserByUid(uId).then((user) => {
       if (user) {
-        let supaCartdata: CartItem[] = user.cart; // Get the first (and only) array from user's cart data
+        let supaCartdata: CartItem[] = user.cart;
         const existingItemIndex = supaCartdata.findIndex(
           (item) => item.productId === product.id
         );
@@ -32,19 +33,17 @@ export const handleAddToCart = (product: Product) => {
               },
             });
           }
-        }
-      } else {
+        }else {
         // If the product doesn't exist in the cart, add it as a new item
         supaCartdata.push({
           productId: product.id,
           quantity: 1,
         });
       }
-      //add the SupaCarItem[] to Cart object
 
       //use addCartItem to add cart to database
       addCartItem(supaCartdata, uId);
-    });
+  }});
   }
   //2- if user isn't signed in
   else {
@@ -135,4 +134,12 @@ export const removeAllFromCart = (prd: Product) => {
     localStorage.setItem("cart", JSON.stringify(cartData));
     console.log(cartData);
   }
+};
+
+
+export const getLocalStorageCart = () => {
+  const cartData: CartItem[] = JSON.parse(
+    localStorage.getItem("cart") || "[]"
+  );
+  return cartData;
 };

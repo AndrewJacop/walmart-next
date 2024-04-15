@@ -55,11 +55,10 @@ export default function ProductCard(card: CardProps) {
           </button>
         )}
         <Link href={`/product/${product.id}`}>
-          <Image
+          <img
             src={product.images[0]}
             alt="card img"
-            height={175}
-            width={175}
+            className="h-32 w-32"
           />
         </Link>
         <div>
@@ -67,7 +66,7 @@ export default function ProductCard(card: CardProps) {
             <>
               {!isAdded ? ( // Render Add button only if the product is not added to cart
                 <button
-                  className="absolute bottom-1 -left-2 bg-blue-700 text-white font-bold w-20 h-8 border-none rounded-3xl hover:border-2"
+                  className="absolute bottom-1 -left-2 bg-blue-600 text-white font-bold w-20 h-8 border-none rounded-3xl hover:border-2"
                   onClick={() => {
                     setIsAdded(true);
                     handleAddToCart(product);

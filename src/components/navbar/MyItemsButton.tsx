@@ -22,7 +22,7 @@ export default function MyItemsButton() {
           </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="pt-6 px-4 w-56 z-0">
+      <DropdownMenuContent className="pt-6 px-4 w-50 ms-20 z-10 mt-5">
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <RotateCcwSquare className="mr-2 h-4 w-4" />

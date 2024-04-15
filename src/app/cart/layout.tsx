@@ -1,3 +1,4 @@
+import NewTopNavBar from "@/components/navbar/NewTopBar";
 import "../globals.css";
 
 import type { Metadata } from "next";
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <header className="fixed z-[2] w-full">Cart layout</header>
+      <header className="fixed z-[2] w-full"><NewTopNavBar/></header>
       <main className="lg:mx-28 md:mx-6 pt-[7%]">{children}</main>
       <footer className="z-[1] w-full mt-[5%]"></footer>
     </>

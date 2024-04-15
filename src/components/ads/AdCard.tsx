@@ -13,7 +13,7 @@ type AdProps = {
 export function AdCard(ad: AdProps) {
   const myAd = ad.adData;
   return (
-    <div className="xl:mt-1 mt-4 rounded-lg bg-green-600 relative w-fit">
+    <div className="xl:mt-1 mt-4 rounded-lg  relative w-fit">
       <img
         src={myAd.imgLink}
         alt="ad card image"
@@ -43,7 +43,7 @@ export function AdCard(ad: AdProps) {
 export function AdCardWithButton(ad: AdProps) {
   const myAd = ad.adData;
   return (
-    <div className="xl:mt-6 mt-4 rounded-lg bg-green-600 relative w-fit">
+    <div className="xl:mt-6 mt-4 rounded-lg  relative w-fit">
       <img
         src={myAd.imgLink}
         alt="ad card image"

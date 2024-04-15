@@ -35,7 +35,7 @@ export default function AccountButton({
           </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="pt-6 px-4 w-56 z-0">
+      <DropdownMenuContent className="pt-2 px-2 w-54 z-10 mt-5">
         {!params.currentUser ? (
           <>
             <DropdownMenuGroup>
@@ -80,7 +80,7 @@ export default function AccountButton({
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <UserRound className="mr-2 h-4 w-4" />
-                <span>Account</span>
+                <Link href='/account'>Account</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

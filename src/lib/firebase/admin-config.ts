@@ -61,11 +61,14 @@ export async function getCurrentUser() {
   const session = await getSession();
 
   if (!(await isUserAuthenticated(session))) {
+
     return null;
   }
 
   const decodedIdToken = await auth.verifySessionCookie(session!);
+
   const currentUser = await auth.getUser(decodedIdToken.uid);
+  
 
   return currentUser;
 }

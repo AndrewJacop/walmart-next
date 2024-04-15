@@ -37,7 +37,7 @@ export default function NewBottomBar() {
       
         {linksList.map((link,indx)=>(
 
-            <Link className="hover:underline" href={link.href}>{link.title}</Link>
+            <Link key={indx} className="hover:underline" href={link.href}>{link.title}</Link>
         ))}
      
         </div>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 type SubCatItemProps = {
   subCatData: SubCategory;
@@ -15,7 +14,7 @@ export default function SubCategoryItem(subCat: SubCatItemProps) {
   const subCategory = subCat.subCatData;
   return (
     <div className="cursor-pointer py-4 w-full items-center flex">
-      <Image
+      <img
         alt="sub cat item image"
         className="max-w-full self-center"
         src={subCategory.imgLink}
