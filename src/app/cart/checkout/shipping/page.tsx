@@ -1,38 +1,61 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoWalletOutline } from "react-icons/io5";
 import { CiMobile1 } from "react-icons/ci";
 import { useRouter } from "next/navigation";
-import { getProductsData } from "@/lib/supabase/fetch-data";
+import { getUserByUid } from "@/lib/supabase/fetch-data";
+import { auth } from "@/lib/firebase/config";
 
-
-export interface Shipment{
-  firstname:string;
-  lastname:string;
-  address:string;
-  city:string;
-  zipCode:string;
-  PhoneNum:string
+export interface Shipment {
+  firstname: string;
+  lastname: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  phoneNum: string;
 }
-export default async function Shipping() {
+export default  function Shipping() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [zipCode, setZibCode] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
+  const [cartData, setCartData] = useState<CartItem[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const isAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+
+    return () => {
+      isAuth();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      getUserByUid(userId).then((user) => {
+        if (user) {
+          console.log(user);
+          setCartData(user.cart);
+        }
+      });
+    }
+  }, [userId]);
 
   const router = useRouter();
 
-  const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
-  const products: Product[] = await getProductsData()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     localStorage.setItem(
       "shipping",
-      JSON.stringify({ firstname, lastname, address, city, zipCode, phoneNum })
+      JSON.stringify([{ firstname, lastname, address, city, zipCode, phoneNum }])
     );
     router.push("/cart/checkout/payment");
   };
@@ -155,9 +178,7 @@ export default async function Shipping() {
                     id="preferredDeliveryAddress"
                     name="preferredDeliveryAddress"
                   />
-                  <label
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
+                  <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                     Set as my preferred delivery address
                   </label>
                 </div>
@@ -182,7 +203,7 @@ export default async function Shipping() {
                   <p className="text-sm font-light py-3">
                     {cartData.length} items
                   </p>
-                  <div className="flex py-3">
+                  {/* <div className="flex py-3">
                     {cartData.map((itm) => {
                       const cartProducts = products.filter(
                         (prd) => prd.id === itm.productId
@@ -196,7 +217,7 @@ export default async function Shipping() {
                         />
                       ));
                     })}
-                  </div>
+                  </div> */}
                 </div>
               </form>
             </div>

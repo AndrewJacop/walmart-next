@@ -51,11 +51,13 @@ export default function ProductSmall(card: CardProps) {
             <IoMdHeart className="text-2xl text-blue-600" />
           </button>
         )}
-        <img
-          src={product.images[0]}
-          alt="card img"
-          className="w-40 h-40"
-        />
+        <a href={`/product/${product.id}`}>
+          <img
+            src={product.images[0]}
+            alt="card img"
+            className="h-40 w-40 cursor-pointer"
+          />
+        </a>
       </div>
 
       <div className="mb-1">
@@ -80,7 +82,7 @@ export default function ProductSmall(card: CardProps) {
       <div>
         {product.colors ? (
           <>
-            {!isAdded ? ( // Render Add button only if the product is not added to cart
+            {!isAdded ? ( //  Add button only if the product is not added to cart
               <button
                 className="border border-gray-700 w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2"
                 onClick={() => {

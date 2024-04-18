@@ -17,14 +17,14 @@ export default function Payment() {
     e.preventDefault();
     localStorage.setItem(
       "payment",
-      JSON.stringify({ paymentMethod: paymentMethod, cardNumber: cardNum })
+      JSON.stringify([{ paymentMethod: paymentMethod, cardNumber: cardNum }])
     );
     router.push("/cart/checkout/placeOrder");
   };
   return (
-    <div className="mt-5">
-      <div className="w-[50%] ">
-        <div className="border rounded-[10px] shadow-lg">
+    
+      
+        <div className="w-1/2 border rounded-[10px] shadow-lg p-5 ">
           <div className="relative mb-5 flex items-center bg-[#f2f8fd] p-3">
             <IoWalletOutline />
             <p className="font-semibold text-[#2e2f32] mx-2 text-xl">
@@ -54,9 +54,9 @@ export default function Payment() {
                   method: "Benifits Card",
                   img: "https://i5.walmartimages.com/dfw/63fd9f59-8746/124e7571-efdd-4b6f-8846-fc57601437c5/v1/wallet-benefit-card-tile.svg",
                 },
-              ].map((payment) => (
+              ].map((payment,indx) => (
                 <>
-                  <div key={payment.method} className="mb-4 flex">
+                  <div key={indx} className="mb-4 flex">
                     <input
                       name="paymentMethod"
                       className="p-2 outline-none focus:ring-0 "
@@ -108,7 +108,6 @@ export default function Payment() {
             </form>
           </div>
         </div>
-      </div>
-    </div>
+    
   );
 }

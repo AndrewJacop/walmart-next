@@ -63,16 +63,7 @@ export async function addCartItem(newCart: CartItem[], userId: string) {
   if (error) console.log(error);
 }
 
-export async function getCartItems(id: string) {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("users")
-    .select("cart")
-    .eq("id", id)
-    .returns<CartItem[]>();
-  if (error) console.log(error);
-  return data;
-}
+
 
 export async function getUserByUid(id: string) {
   const supabase = await createClient();
@@ -137,4 +128,36 @@ export function getOrderId() {
     });
   console.log(number);
   return number;
+}
+
+export async function getReviewsData(){
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("reviews").select().order("id");
+  if (error) console.log(error);
+  return data as Review[];
+
+}
+
+export async function getReviewById(id : number){
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("reviews").select().eq("id", id);
+  if (error) console.log(error);
+  if (data) return data[0] as Review;
+
+
+}
+
+export async function addNewReview(newreview: Review) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("reviews").insert(newreview);
+  if (error) console.log(error);
+}
+
+export async function addNewProductReview(newReviews:number[], productId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("products")
+    .update({ reviews: newReviews })
+    .eq("id", productId);
+  if (error) console.log(error);
 }

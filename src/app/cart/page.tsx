@@ -1,27 +1,63 @@
-import CartItem from "@/components/cart/CartItem";
-import Shopping from "./../../components/cart/ShippingOption";
+"use client";
+
+import { useEffect, useState } from "react";
+import { auth } from "@/lib/firebase/config";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { auth } from "@/lib/firebase/config";
-
 import {
-  handleAddToCart,
-  removeAllFromCart,
-  removeFromCart,
-} from "@/lib/func/cart";
-import {
-  addNewOrder,
-  getProductsData,
-  getUserByUid,
-} from "@/lib/supabase/fetch-data";
-import { cookies } from "next/headers";
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-export async function Cart() {
-  const products = await getProductsData();
+import CartItem from "@/components/cart/CartItem";
+import Shopping from "./../../components/cart/ShippingOption";
+import { addNewOrder, getUserByUid } from "@/lib/supabase/fetch-data";
+
+
+
+export function Cart() {
+  const [cartData, setCartData] = useState<CartItem[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
+
+ 
+
+
+
+  useEffect(() => {
+    const isAuth = auth.onAuthStateChanged((user) =>
+    {
+      if (user) {setUserId(user.uid);}
+    });
+
+    return () => {isAuth()};
+  }, []);
+
+  
+  useEffect(() => {
+    if (userId) {
+      getUserByUid(userId).then((user) => {
+        if (user) {
+          setCartData(user.cart);
+        }
+      });
+        } 
+        else{
+          const cartDataString = localStorage.getItem("cart");
+          if (cartDataString) {
+            const cartData: CartItem[] = JSON.parse(cartDataString);
+            setCartData(cartData);
+          }
+          
+         }
+         
+  }, [userId]);
+
 
   const handleCheckOut = async () => {
     const date = new Date();
@@ -38,7 +74,7 @@ export async function Cart() {
               id: Math.floor(Math.random() * 10000),
               userId: uId,
               productId: itm.productId,
-              status: "uncomfirmed",
+              status: "unconfirmed",
               pickUpOptions: 1,
               createdAt: new Date(date.getTime()),
               lastEditAt: new Date(date.getTime()),
@@ -57,39 +93,6 @@ export async function Cart() {
       window.location.assign("/auth/sign-in");
     }
   };
-
-  const getCartData = ()=> {
-    const isAuth = auth.currentUser;
-    console.log(isAuth)
-    let cartItemData: CartItem[] = [];
-
-    if (isAuth) {
-      const uId = isAuth.uid;
-      return getUserByUid(uId).then((user) => {
-        if (user) {
-          const data = user.cart;
-          cartItemData = data;
-          return cartItemData;
-
-        }else{
-          return cartItemData;
-
-        }
-      });
-    } else {
-      const cookieStore = cookies();
-      const storedCartData = cookieStore.get('cart')?.value 
-  
-      if (storedCartData) {
-        cartItemData = JSON.parse(storedCartData);
-      }
-      return cartItemData;
-    }
-  };
-  
-  const cartData:CartItem[] = await getCartData();
-  console.log(cartData)
-
   return (
     <>
       {cartData.length < 1 ? (
@@ -113,10 +116,10 @@ export async function Cart() {
       ) : (
         <>
           {/* //pickUpOtions */}
-          <div className="px-10 pt-10 text-xl mb-5">
-            <span className="font-bold">Cart </span>({cartData.length})
+          <div className="w-8/12 pt-10 text-xl mb-5">
+            <span className="font-bold">Cart </span>({cartData.length}) item
           </div>
-          <div className="w-8/12 relative ml-10">
+          <div className="w-8/12 relative">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
                 <img
@@ -133,133 +136,56 @@ export async function Cart() {
               </AccordionItem>
             </Accordion>
           </div>
-        </>
-      )}
-
-      {cartData.map((itm) => {
-        const cartProducts = products.filter((prd) => prd.id === itm.productId);
-
-        return cartProducts.map((prd) => (
-          <>
-            <div className="px-3 ml-10 float-end absolute top-[25%] right-16 fixed-top">
-              <div className="border rounded-lg px-4">
-                <div className="flex justify-center mt-5 ">
-                  <button
-                    onClick={handleCheckOut}
-                    className="flex justify-center bg-blue-600 text-white hover:bg-blue-600 px-28 py-3 text-sm font-bold rounded-full"
-                  >
-                    Continue to checkout
-                  </button>
+          {/* Checkout */}
+          <div className="px-10 ml-10  absolute top-[25%] right-40 fixed-top">
+            <div className="border rounded-lg px-4">
+              <div className="flex justify-center mt-5 ">
+                <button
+                  onClick={handleCheckOut}
+                  className="flex justify-center bg-blue-500 text-white hover:bg-blue-600 px-28 py-3 text-sm font-bold rounded-full"
+                >
+                  Continue to checkout
+                </button>
+              </div>
+              <div className="border my-5 border-gray-100"></div>
+              <div className="px-5 text-sm">
+                <div className="flex justify-between mb-8">
+                  <p>
+                    <span className="font-bold">Subtotal</span>{" "}
+                    {cartData.length} Item
+                  </p>
+                  <span>$3.96</span>
+                </div>
+                <div className="flex justify-between">
+                  <p className="font-bold">Taxes</p>
+                  <span>Calculated at checkout</span>
                 </div>
                 <div className="border my-5 border-gray-100"></div>
-                <div className="px-5 text-sm">
-                  <div className="flex justify-between mb-8">
-                    <p>
-                      <span className="font-bold">Subtotal</span>{" "}
-                      {cartData!.length} Item
-                    </p>
-                    <span>$3.96</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="font-bold">Taxes</p>
-                    <span>Calculated at checkout</span>
-                  </div>
-                  <div className="border my-5 border-gray-100"></div>
-                  <div className="flex justify-between mb-8">
-                    <p className="font-bold">Estimated total</p>
-                    <span className="font-bold">$3.96</span>
-                  </div>
+                <div className="flex justify-between mb-8">
+                  <p className="font-bold">Estimated total</p>
+                  <span className="font-bold">$3.96</span>
                 </div>
               </div>
             </div>
-            <div key={prd.id} className="flex p-10">
-              <div className="w-8/12 border rounded-lg">
-                <div className="flex justify-between bg-blue-50 p-8 rounded-lg">
-                  <h1 className="text-xl font-bold">
-                    Pickup or delivery from store, as soon as Today
-                  </h1>
-                  <a
-                    href="#"
-                    className="underline text-sm hover:no-underline hover:text-blue-800"
-                  >
-                    Reserve a time
-                  </a>
-                </div>
+          </div>
 
-                <div className="border my-5 mx-7 border-gray-100">
-                  <div className="flex mx-7 mt-3">
-                    <img
-                      src={prd.images[0]}
-                      alt="prdImage"
-                      width={100}
-                      height={80}
-                    />
-
-                    <div>
-                      <div className="flex mt-3 ml-2">
-                        <a href="#" className=" flex justify-between mr-72">
-                          {prd.title}
-                        </a>
-                        <span className="font-bold absolute right-[42%] ">
-                          $
-                          {(
-                            Number(prd.originalPrice) *
-                            ((100 - Number(prd.discount)) / 100) *
-                            itm.quantity
-                          ).toFixed(2)}
-                        </span>
-                      </div>
-                      <p className="py-2 text-sm  px-2 text-[gray]">
-                        $
-                        {(
-                          Number(prd.originalPrice) *
-                          ((100 - Number(prd.discount)) / 100)
-                        ).toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end items-center mx-7 mb-3 text-sm">
-                    <p
-                      className="mr-7 underline hover:no-underline cursor-pointer hover:text-blue-500"
-                      onClick={() => {
-                        removeAllFromCart(prd);
-                      }}
-                    >
-                      Remove
-                    </p>
-                    <a
-                      href="#"
-                      className="mr-7 underline hover:no-underline hover:text-blue-500"
-                    >
-                      Save for later
-                    </a>
-                    <div className="flex border justify-center items-center border-gray-300 px-5 py-1 rounded-full">
-                      <span
-                        className="mr-8 cursor-pointer text-lg"
-                        onClick={() => {
-                          removeFromCart(prd);
-                        }}
-                      >
-                        -
-                      </span>
-                      <p className="font-bold">{itm.quantity}</p>
-                      <span
-                        className="ml-8 cursor-pointer text-lg"
-                        onClick={() => {
-                          handleAddToCart(prd);
-                        }}
-                      >
-                        +
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* fixed right sidebar */}
-            </div>
-          </>
-        ));
-      })}
+          <Card className="w-8/12  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+            <CardHeader className="bg-blue-50 border border-gray-200 rounded-lg shadow flex flex-row space-x-24  ">
+              <CardTitle>
+                Pickup or delivery from store, as soon as today
+              </CardTitle>
+              <CardDescription>
+                <a className="font-bold" href="#">
+                  Reserve a time
+                </a>
+              </CardDescription>
+            </CardHeader>
+            {cartData.map((itm) => (
+              <CartItem CartItemData={itm} key={itm.productId} />
+            ))}
+          </Card>
+        </>
+      )}
     </>
   );
 }

@@ -54,13 +54,13 @@ export default function ProductCard(card: CardProps) {
             <IoMdHeart className="text-2xl text-blue-600" />
           </button>
         )}
-        <Link href={`/product/${product.id}`}>
+        <a href={`/product/${product.id}`}>
           <img
             src={product.images[0]}
             alt="card img"
             className="h-32 w-32"
           />
-        </Link>
+        </a>
         <div>
           {product.colors ? (
             <>

@@ -1,38 +1,102 @@
 "use client";
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Payment } from "../payment/page";
 import Link from "next/link";
 import { Shipment } from "../shipping/page";
 import { IoWalletOutline } from "react-icons/io5";
-import { getProductsData } from "@/lib/supabase/fetch-data";
+import { getProductsData, getUserByUid } from "@/lib/supabase/fetch-data";
+import { auth } from "@/lib/firebase/config";
 
 export default async function PlaceOrder() {
-  const payment: Payment = JSON.parse(localStorage.getItem("payment") || "[]");
-  const shipping: Shipment = JSON.parse(localStorage.getItem("shipping") || "[]"
-  );
-  const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
+  const [cartData, setCartData] = useState<CartItem[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [payment, setPayment] = useState<Payment[]>([]);
+  const [shipping, setShipping] = useState<Shipment[]>([]);
+  useEffect(() => {
+    const isAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+
+    return () => {
+      isAuth();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      getUserByUid(userId).then((user) => {
+        if (user) {
+          console.log(user);
+          setCartData(user.cart);
+        }
+      });
+    } else {
+      const cartDataString = localStorage.getItem("cart");
+      if (cartDataString) {
+        const cartData: CartItem[] = JSON.parse(cartDataString);
+        setCartData(cartData);
+      }
+    }
+  }, [userId]);
+  useEffect(() => {
+    const shippingDataString = localStorage.getItem("shipping");
+    const paymentDataString = localStorage.getItem("payment");
+    if (shippingDataString) {
+      setShipping(JSON.parse(shippingDataString));
+    }
+
+    if (paymentDataString) {
+      setPayment(JSON.parse(paymentDataString));
+    }
+    
+  }, []);
+
+  const handleSubmit=()=>{
+    localStorage.setItem("shipping","[]")
+    localStorage.setItem("payment","[]")
+    window.location.assign('/')
+
+    
+  }
 
   const products: Product[] = await getProductsData();
 
   return (
     <div className="grid md:grid-cols-4 md:gap-5">
-      <div className="overflow-x-auto md:col-span-3">
+      <div className=" md:col-span-3">
         <div className="card pb-5  border border-[1px] border-[darkgray] rounded ">
-          <h2 className="mb-2 text-xl p-5 font-bold bg-[#f2f8fd] py-4">Shipping Info</h2>
+          <h2 className="mb-2 text-xl p-5 font-bold bg-[#f2f8fd] py-4">
+            Shipping Info
+          </h2>
           <div className="ps-8">
-
-           <span className="flex text-lg">  <p className="font-bold pe-24"> For : </p> {shipping.firstname}</span><br/>
-           <hr/>
-           <span className="flex my-5 text-lg">  <p className="font-bold pe-14">Address: </p>  st.{shipping.address}, {shipping.city},
-            {shipping.zipCode}</span>
-            <hr/>
-            <span className="flex"> <p className="font-bold mt-5 pe-2">Phone Number: </p>  {shipping.PhoneNum} </span>
+            {shipping.map((ship) => (
+              <>
+                <span className="flex text-lg">
+                  {" "}
+                  <p className="font-bold pe-24"> For : </p> {ship.firstname}
+                </span>
+                <br />
+                <hr />
+                <span className="flex my-5 text-lg">
+                  {" "}
+                  <p className="font-bold pe-14">Address: </p> st.{ship.address}
+                  , {ship.city},{ship.zipCode}
+                </span>
+                <hr />
+                <span className="flex items-center mt-5">
+                  {" "}
+                  <p className="font-bold  pe-2 ">Phone Number: </p>
+                  <p> {ship.phoneNum}</p>{" "}
+                </span>
+              </>
+            ))}
           </div>
           <div className="ms-8">
             <Link
               className="default-button inline-block bg-blue-600 mt-4 px-3 py-1 rounded text-[white]"
-              href="/shipping"
+              href="/cart/checkout/shipping"
             >
               Edit
             </Link>
@@ -44,13 +108,13 @@ export default async function PlaceOrder() {
             <IoWalletOutline className="me-3" />
             Payment Method
           </h2>
-          <div className="ps-8">
-            {payment.paymentMethod}
-            </div>
+          {payment.map((pay)=>(
+          <div className="ps-8">{pay.paymentMethod}</div>
+        ))}
           <div className="ms-8">
             <a
               className="default-button inline-block bg-blue-600 mt-4 px-3 py-1 rounded text-[white]"
-              href="/payment"
+              href="/cart/checkout/payment"
             >
               Edit
             </a>
@@ -112,45 +176,8 @@ export default async function PlaceOrder() {
             </Link>
           </div>
         </div>
-      </div>
-      <div>
-        {/* <div className="card  p-5">
-        <h2 className="mb-2 text-lg">Order Summary</h2>
-        <ul>
-          <li>
-            <div className="mb-2 flex justify-between">
-              <div>Items</div>
-              <div>${itemsPrice}</div>
-            </div>
-          </li>
-          <li>
-            <div className="mb-2 flex justify-between">
-              <div>Tax</div>
-              <div>${taxPrice}</div>
-            </div>
-          </li>
-          <li>
-            <div className="mb-2 flex justify-between">
-              <div>Shipping</div>
-              <div>${shippingPrice}</div>
-            </div>
-          </li>
-          <li>
-            <div className="mb-2 flex justify-between">
-              <div>Total</div>
-              <div>${totalPrice}</div>
-            </div>
-          </li>
-          <li>
-            <button
-              onClick={() => alert('Not implemented')}
-              className="primary-button w-full"
-            >
-              Place Order
-            </button>
-          </li>
-        </ul>
-      </div> */}
+        <button onClick={handleSubmit}  className=" bg-blue-600 text-white float-end mt-4 p-1 rounded font-bold px-4">Done </button>
+
       </div>
     </div>
   );

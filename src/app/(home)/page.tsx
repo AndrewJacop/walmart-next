@@ -314,14 +314,14 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <div className="w-1/2  mb-8 ">
+          <div className="w-1/2  mb-3 ">
             <AdCard adData={apiAdData[3]} />
-            <div className="flex grid grid-cols-2 gap-x-6 mt-7">
+            <div className="flex grid grid-cols-2 gap-x-6 mt-4">
               <AdCard adData={apiAdData[4]} />
               <AdCard adData={apiAdData[5]} />
             </div>
 
-            <div className="mt-7">
+            <div className="mt-4">
               <AdCard adData={apiAdData[6]} />
             </div>
           </div>
