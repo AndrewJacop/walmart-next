@@ -7,6 +7,7 @@ import { CiHeart } from "react-icons/ci";
 
 import { handleAddToCart, removeFromCart } from "@/lib/func/cart";
 import { addToFavorites, removeFromFavorites } from "@/lib/func/list";
+import { auth } from "@/lib/firebase/config";
 
 type CardProps = {
   productData: Product;
@@ -26,9 +27,15 @@ export default function ProductSmall(card: CardProps) {
   const [isAdded, setIsAdded] = useState(false); // State to track whether the product is added to cart
   const [isFav, setIsFav] = useState(false); // State to track whether the product is added to Favorite List
   const subDescreption = product.title;
+  
   const handleAddToFav = () => {
-    setIsFav(true);
-    addToFavorites(product);
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+      console.log(user)
+      setIsFav(true);
+      addToFavorites(product);
+      }
+    });
   };
   const handleRemoveFromFav = () => {
     setIsFav(false);

@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { getProductsData } from "@/lib/supabase/fetch-data";
 import { handleAddToCart, removeAllFromCart, removeFromCart } from "@/lib/func/cart";
+import { useEffect, useState } from "react";
 
 type CartItemProps = {
   CartItemData: CartItem;
@@ -22,14 +24,40 @@ type CartItemProps = {
  * @param CartItem {id,productId,quantity,price}
  */
 
-export default async function CartItem(item: CartItemProps) {
+export default  function CartItem(item: CartItemProps) {
   const cartItem = item.CartItemData;
- const products= await getProductsData()
- const cartProducts = products.filter((prd) => prd.id === cartItem.productId);
+  const [products, setProducts] = useState<Product[]>([]);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const productsData = await getProductsData();
+      setProducts(productsData);
+    };
+
+    fetchProducts();
+  }, []);
+
+
+  const decreaseCartItemQuantity = (product: Product) => {
+    if (cartItem.quantity > 1) {
+      removeFromCart(product);
+      setProducts(
+        (prevProducts) =>
+        prevProducts.map((item) =>
+          item.id==product.id?{...item, quantity: item.quantity--}: item)
+      );
+    } else {
+      // If the quantity is 1, completely remove the item from the cart
+      removeAllFromCart(product);
+      setProducts((prevProducts) =>
+        prevProducts.filter((item) => item.id !== product.id)
+      );
+    }
+  };
+const cartProducts = products.filter((prd) => prd.id === cartItem.productId);
 
   return (
-    <Card className="  shadow dark:bg-gray-800 dark:border-gray-700 ">
+    <Card className="border-none">
       
       
       {cartProducts.map((prd) => (
@@ -73,7 +101,7 @@ export default async function CartItem(item: CartItemProps) {
                       <span
                         className="mr-8 cursor-pointer text-lg"
                         onClick={() => {
-                          removeFromCart(prd);
+                          decreaseCartItemQuantity(prd);
                         }}
                       >
                         -

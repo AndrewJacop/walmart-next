@@ -18,7 +18,6 @@ export const handleAddToCart = (product: Product) => {
         );
 
         if (existingItemIndex !== -1) {
-          // If the product already exists in the cart, increase its quantity
           if (supaCartdata[existingItemIndex].quantity <= product.quantity) {
             supaCartdata[existingItemIndex].quantity++;
           } else {
@@ -32,19 +31,16 @@ export const handleAddToCart = (product: Product) => {
             });
           }
         } else {
-          // If the product doesn't exist in the cart, add it as a new item
           supaCartdata.push({
             productId: product.id,
             quantity: 1,
           });
         }
 
-        //use addCartItem to add cart to database
         addCartItem(supaCartdata, uId);
       }
     });
   }
-  //2- if user isn't signed in
   else {
     const cartData: CartItem[] = JSON.parse(
       localStorage.getItem("cart") || "[]"
@@ -61,13 +57,11 @@ export const handleAddToCart = (product: Product) => {
         toast("Max quantity");
       }
     } else {
-      // If the product doesn't exist in the cart, add it as a new item
       cartData.push({
         productId: product.id,
         quantity: 1,
       });
     }
-    // save the updated cart data to local storage
     localStorage.setItem("cart", JSON.stringify(cartData));
     console.log(cartData);
   }
@@ -122,7 +116,28 @@ export const removeFromCart = async (product: Product) => {
 };
 
 export const removeAllFromCart = (prd: Product) => {
-  const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
+
+  const isAuth = auth.currentUser;
+
+  //1- if user is signed in
+  if (isAuth) {
+    const uId = isAuth.uid;
+    const user = getUserByUid(uId).then((user) => {
+      if (user) {
+        let supaCartdata: CartItem[] = user.cart;
+        const existingItemIndex = supaCartdata.findIndex(
+          (item) => item.productId === prd.id
+        );
+        if (existingItemIndex !== -1) {
+          supaCartdata.splice(existingItemIndex, 1);
+          //use addCartItem to add cart to database
+          addCartItem(supaCartdata, uId);
+        }
+      }
+    });
+  }else{
+
+    const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
   const itemIndex = cartData.findIndex((item) => item.productId === prd.id);
 
   if (itemIndex !== -1) {
@@ -130,9 +145,17 @@ export const removeAllFromCart = (prd: Product) => {
     localStorage.setItem("cart", JSON.stringify(cartData));
     console.log(cartData);
   }
+  }
+  
 };
 
 export const getLocalStorageCart = () => {
   const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
   return cartData;
 };
+
+
+
+
+
+

@@ -12,6 +12,7 @@ import { FaStarHalfAlt } from "react-icons/fa";
 import { handleAddToCart, removeFromCart } from "@/lib/func/cart";
 import { addToFavorites, removeFromFavorites } from "@/lib/func/list";
 import WalmartPlus from "../../../public/wplus-icon-blue.svg";
+import { auth } from "@/lib/firebase/config";
 
 type CardProps = {
   productData: Product;
@@ -30,9 +31,15 @@ export default function ProductCard(card: CardProps) {
     Number(product.originalPrice) * (100 - Number(product.discount) / 100);
 
   const handleAddToFav = () => {
-    setIsFav(true);
-    addToFavorites(product);
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+      console.log(user)
+      setIsFav(true);
+      addToFavorites(product);
+      }
+    });
   };
+
   const handleRemoveFromFav = () => {
     setIsFav(false);
     removeFromFavorites(product);
@@ -44,22 +51,20 @@ export default function ProductCard(card: CardProps) {
         {!isFav ? (
           <button
             className="absolute mt-2 left-36 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
-            onClick={handleAddToFav}>
+            onClick={handleAddToFav}
+          >
             <CiHeart className="text-black text-2xl " />
           </button>
         ) : (
           <button
             className="absolute mt-2 left-36 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
-            onClick={handleRemoveFromFav}>
+            onClick={handleRemoveFromFav}
+          >
             <IoMdHeart className="text-2xl text-blue-600" />
           </button>
         )}
         <a href={`/product/${product.id}`}>
-          <img
-            src={product.images[0]}
-            alt="card img"
-            className="h-32 w-32"
-          />
+          <img src={product.images[0]} alt="card img" className="h-32 w-32" />
         </a>
         <div>
           {product.colors ? (
@@ -70,7 +75,8 @@ export default function ProductCard(card: CardProps) {
                   onClick={() => {
                     setIsAdded(true);
                     handleAddToCart(product);
-                  }}>
+                  }}
+                >
                   {" "}
                   + Add{" "}
                 </button>
@@ -80,7 +86,8 @@ export default function ProductCard(card: CardProps) {
                     className="cursor-pointer text-2xl bg-gray-300 rounded-full text-white me-14"
                     onClick={() => {
                       removeFromCart(product);
-                    }}>
+                    }}
+                  >
                     -
                   </span>
 
@@ -88,7 +95,8 @@ export default function ProductCard(card: CardProps) {
                     className="cursor-pointer text-2xl bg-gray-300 rounded-full ms-14 text-white"
                     onClick={() => {
                       handleAddToCart(product);
-                    }}>
+                    }}
+                  >
                     +
                   </span>
                 </div>
