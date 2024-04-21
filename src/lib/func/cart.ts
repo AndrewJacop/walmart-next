@@ -40,8 +40,7 @@ export const handleAddToCart = (product: Product) => {
         addCartItem(supaCartdata, uId);
       }
     });
-  }
-  else {
+  } else {
     const cartData: CartItem[] = JSON.parse(
       localStorage.getItem("cart") || "[]"
     );
@@ -63,7 +62,6 @@ export const handleAddToCart = (product: Product) => {
       });
     }
     localStorage.setItem("cart", JSON.stringify(cartData));
-    console.log(cartData);
   }
 };
 
@@ -104,19 +102,16 @@ export const removeFromCart = async (product: Product) => {
     if (itemIndex !== -1) {
       // If the product exists in the cart, remove it
       if (cartData[itemIndex].quantity == 1) {
-          cartData.splice(itemIndex, 1);
+        cartData.splice(itemIndex, 1);
       } else {
         cartData[itemIndex].quantity -= 1;
-
       }
       localStorage.setItem("cart", JSON.stringify(cartData));
-      
     }
   }
 };
 
 export const removeAllFromCart = (prd: Product) => {
-
   const isAuth = auth.currentUser;
 
   //1- if user is signed in
@@ -135,27 +130,20 @@ export const removeAllFromCart = (prd: Product) => {
         }
       }
     });
-  }else{
+  } else {
+    const cartData: CartItem[] = JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    );
+    const itemIndex = cartData.findIndex((item) => item.productId === prd.id);
 
-    const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
-  const itemIndex = cartData.findIndex((item) => item.productId === prd.id);
-
-  if (itemIndex !== -1) {
-    cartData.splice(itemIndex, 1);
-    localStorage.setItem("cart", JSON.stringify(cartData));
-    console.log(cartData);
+    if (itemIndex !== -1) {
+      cartData.splice(itemIndex, 1);
+      localStorage.setItem("cart", JSON.stringify(cartData));
+    }
   }
-  }
-  
 };
 
 export const getLocalStorageCart = () => {
   const cartData: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
   return cartData;
 };
-
-
-
-
-
-

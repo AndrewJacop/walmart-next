@@ -13,7 +13,7 @@ export async function getSearchReaults(query: string) {
     .like("title", `%${query}%`)
     .limit(10)
     .order("title");
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getSearchReaults##", error);
   return data as Product[];
 }
 
@@ -24,7 +24,7 @@ export async function getAdsData() {
     .from("billboards")
     .select()
     .order("id");
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getAdsData##", error);
   return data as Ad[];
 }
 
@@ -36,7 +36,7 @@ export async function checkUserEmail(email: string) {
     .select()
     .eq("email", email);
   if (error) {
-    console.log(error);
+    console.log("##fetchdata->checkUserEmail##", error);
     return null;
   }
   return data[0] as User;
@@ -45,13 +45,13 @@ export async function checkUserEmail(email: string) {
 export async function addNewUser(newUser: User) {
   const supabase = await createClient();
   const { error } = await supabase.from("users").insert(newUser);
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->addNewUser##", error);
 }
 
 export async function addNewOrder(newOrder: Order[]) {
   const supabase = await createClient();
   const { error } = await supabase.from("orders").insert(newOrder);
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->addNewOrder##", error);
 }
 
 export async function addCartItem(newCart: CartItem[], userId: string) {
@@ -60,15 +60,13 @@ export async function addCartItem(newCart: CartItem[], userId: string) {
     .from("users")
     .update({ cart: newCart })
     .eq("id", userId);
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->addCartItem##", error);
 }
-
-
 
 export async function getUserByUid(id: string) {
   const supabase = await createClient();
   const { data, error } = await supabase.from("users").select().eq("id", id);
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getUserByUid##", error);
   if (data) return data[0] as User;
 }
 
@@ -79,7 +77,7 @@ export async function getCategoriesData() {
     .from("categories")
     .select()
     .order("id");
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getCategoriesData##", error);
   return data as Category[];
 }
 
@@ -90,7 +88,7 @@ export async function getSubCategoriesData() {
     .from("subcategories")
     .select()
     .order("id");
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getSubCategoriesData##", error);
   return data as SubCategory[];
 }
 
@@ -98,7 +96,7 @@ export async function getSubCategoriesData() {
 export async function getProductsData() {
   const supabase = await createClient();
   const { data, error } = await supabase.from("products").select().order("id");
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getProductsData##", error);
   return data as Product[];
 }
 
@@ -110,7 +108,7 @@ export async function getOrdersData() {
     .select()
     .order("id", { ascending: false })
     .returns<Order[]>();
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getOrdersData##", error);
   return data;
 }
 
@@ -119,45 +117,43 @@ export function getOrderId() {
   getOrdersData()
     .then((data) => {
       if (data) {
-        console.log(data);
         number = data[0].id + 1;
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("##fetchdata->getOrderId##", error);
     });
-  console.log(number);
   return number;
 }
 
-export async function getReviewsData(){
+export async function getReviewsData() {
   const supabase = await createClient();
   const { data, error } = await supabase.from("reviews").select().order("id");
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getReviewsData##", error);
   return data as Review[];
-
 }
 
-export async function getReviewById(id : number){
+export async function getReviewById(id: number) {
   const supabase = await createClient();
   const { data, error } = await supabase.from("reviews").select().eq("id", id);
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->getReviewById##", error);
   if (data) return data[0] as Review;
-
-
 }
 
 export async function addNewReview(newreview: Review) {
   const supabase = await createClient();
   const { error } = await supabase.from("reviews").insert(newreview);
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->addNewReview##", error);
 }
 
-export async function addNewProductReview(newReviews:number[], productId: string) {
+export async function addNewProductReview(
+  newReviews: number[],
+  productId: string
+) {
   const supabase = await createClient();
   const { error } = await supabase
     .from("products")
     .update({ reviews: newReviews })
     .eq("id", productId);
-  if (error) console.log(error);
+  if (error) console.log("##fetchdata->addNewProductReview##", error);
 }

@@ -33,7 +33,6 @@ export const totalPriceSlice = createSlice({
         );
         cartItems = cartItemsData;
       }
-      console.log(cartItems)
       state.totalPrice = cartItems.reduce(
         (total: number, cartItem: CartItem) => {
           const product = products.find(

@@ -318,7 +318,7 @@ export default function BottmNavBar() {
         </button>
 
         {showDropdown && (
-          <div className="absolute p-5 m-h-[530px]   overflow:auto w-[246px] max-h-96  -right-20 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-48 overflow-y-auto">
+          <div className="absolute p-5 m-h-[530px]   overflow:auto w-[246px] max-h-96 -right-20 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-48 overflow-y-auto">
             <div className="py-1 ">
               <h1 className="font-semibold">All Departments</h1>
               {depLinks.map((lin, index) => (

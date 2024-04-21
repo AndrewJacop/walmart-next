@@ -28,13 +28,12 @@ export default function ProductSmall(card: CardProps) {
   const [isAdded, setIsAdded] = useState(false); // State to track whether the product is added to cart
   const [isFav, setIsFav] = useState(false); // State to track whether the product is added to Favorite List
   const subDescreption = product.title;
-  
+
   const handleAddToFav = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-      console.log(user)
-      setIsFav(true);
-      addToFavorites(product);
+        setIsFav(true);
+        addToFavorites(product);
       }
     });
   };
@@ -89,10 +88,9 @@ export default function ProductSmall(card: CardProps) {
       </div>
       <div>
         {product.colors ? (
-          <div >
-          <AddToCartBtn product={product} />
+          <div>
+            <AddToCartBtn product={product} />
           </div>
-
         ) : (
           <Link href={`/product/${product.id}`}>
             <button className=" border border-gray-700 w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2">

@@ -9,7 +9,10 @@ const firebaseAdminConfig = {
   credential: cert({
     projectId: process.env.NEXT_PUBLIC_FIREBASE_ADMIN_PROJECT_ID,
     clientEmail: process.env.NEXT_PUBLIC_FIREBASE_ADMIN_CLIENT_EMAIL,
-    privateKey: process.env.NEXT_PUBLIC_FIREBASE_ADMIN_PRIVATE_KEY!.replace(/\\n/gm,"\n")
+    privateKey: process.env.NEXT_PUBLIC_FIREBASE_ADMIN_PRIVATE_KEY!.replace(
+      /\\n/gm,
+      "\n"
+    ),
   }),
 };
 // const firebaseAdminConfig = {
@@ -52,7 +55,7 @@ export async function isUserAuthenticated(
     const isRevoked = !(await auth.verifySessionCookie(_session, true));
     return !isRevoked;
   } catch (error) {
-    console.log(error);
+    console.log("##admin-config->isUserAuthenticated##", error);
     return false;
   }
 }
@@ -61,14 +64,12 @@ export async function getCurrentUser() {
   const session = await getSession();
 
   if (!(await isUserAuthenticated(session))) {
-
     return null;
   }
 
   const decodedIdToken = await auth.verifySessionCookie(session!);
 
   const currentUser = await auth.getUser(decodedIdToken.uid);
-  
 
   return currentUser;
 }

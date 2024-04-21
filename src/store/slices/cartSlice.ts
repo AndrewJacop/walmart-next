@@ -40,7 +40,6 @@ export const cartSlice = createSlice({
       if (isAuth) {
         const uId = isAuth.uid;
         const user = getUserByUid(uId).then((user) => {
-          console.log(user);
           if (user) {
             let supaCartdata: CartItem[] = user.cart;
             state.cartItems = supaCartdata;
@@ -148,11 +147,9 @@ export const cartSlice = createSlice({
         const itemIndex = cartData.findIndex(
           (item) => item.productId === action.payload.id
         );
-
         if (itemIndex !== -1) {
           cartData.splice(itemIndex, 1);
           localStorage.setItem("cart", JSON.stringify(cartData));
-          console.log(cartData);
         }
       }
     },

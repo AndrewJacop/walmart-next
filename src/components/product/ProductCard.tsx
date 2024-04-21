@@ -33,9 +33,8 @@ export default function ProductCard(card: CardProps) {
   const handleAddToFav = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-      console.log(user)
-      setIsFav(true);
-      addToFavorites(product);
+        setIsFav(true);
+        addToFavorites(product);
       }
     });
   };
@@ -51,15 +50,13 @@ export default function ProductCard(card: CardProps) {
         {!isFav ? (
           <button
             className="absolute mt-2 left-36 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
-            onClick={handleAddToFav}
-          >
+            onClick={handleAddToFav}>
             <CiHeart className="text-black text-2xl " />
           </button>
         ) : (
           <button
             className="absolute mt-2 left-36 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
-            onClick={handleRemoveFromFav}
-          >
+            onClick={handleRemoveFromFav}>
             <IoMdHeart className="text-2xl text-blue-600" />
           </button>
         )}
@@ -75,8 +72,7 @@ export default function ProductCard(card: CardProps) {
                   onClick={() => {
                     setIsAdded(true);
                     handleAddToCart(product);
-                  }}
-                >
+                  }}>
                   {" "}
                   + Add{" "}
                 </button>
@@ -86,8 +82,7 @@ export default function ProductCard(card: CardProps) {
                     className="cursor-pointer text-2xl bg-gray-300 rounded-full text-white me-14"
                     onClick={() => {
                       removeFromCart(product);
-                    }}
-                  >
+                    }}>
                     -
                   </span>
 
@@ -95,8 +90,7 @@ export default function ProductCard(card: CardProps) {
                     className="cursor-pointer text-2xl bg-gray-300 rounded-full ms-14 text-white"
                     onClick={() => {
                       handleAddToCart(product);
-                    }}
-                  >
+                    }}>
                     +
                   </span>
                 </div>

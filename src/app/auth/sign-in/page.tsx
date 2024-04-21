@@ -80,7 +80,7 @@ export default function SignInPage() {
             }
           })
           .catch((error) => {
-            console.log(error);
+            // console.log("##signinpage->use effect##", error);
           });
       }
     }
@@ -107,11 +107,11 @@ export default function SignInPage() {
           });
         })
         .catch((error) => {
-          console.log(error);
+          // console.log("##signinpage->onSubmit##", error);
         });
     } else if (form.getValues("type") == "pass") {
       const password = form.getValues("password");
-      console.log(email, password);
+      // console.log("##signinpage->onSubmit##", email, password);
       const user = await signMeIn(email!, password);
       if (user) window.location.assign("/");
     }

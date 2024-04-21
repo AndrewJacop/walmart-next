@@ -14,7 +14,7 @@ export interface Shipment {
   zipCode: string;
   phoneNum: string;
 }
-export default  function Shipping() {
+export default function Shipping() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -40,7 +40,6 @@ export default  function Shipping() {
     if (userId) {
       getUserByUid(userId).then((user) => {
         if (user) {
-          console.log(user);
           setCartData(user.cart);
         }
       });
@@ -49,13 +48,14 @@ export default  function Shipping() {
 
   const router = useRouter();
 
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     localStorage.setItem(
       "shipping",
-      JSON.stringify([{ firstname, lastname, address, city, zipCode, phoneNum }])
+      JSON.stringify([
+        { firstname, lastname, address, city, zipCode, phoneNum },
+      ])
     );
     router.push("/cart/checkout/payment");
   };
@@ -165,8 +165,7 @@ export default  function Shipping() {
                   <br />
                   <input
                     placeholder=""
-                    className="border border-[1px] border-[darkgray] w-full h-20  px-1 rounded "
-                  ></input>
+                    className="border border-[1px] border-[darkgray] w-full h-20  px-1 rounded "></input>
                 </div>
                 <p className="my-2 font-bold mt-3 text-sm">
                   More delivery instructions
@@ -184,8 +183,7 @@ export default  function Shipping() {
                 </div>
                 <button
                   type="submit"
-                  className="bg-blue-600 text-[white] rounded-[22px] px-5 py-2 ms-[80%] text-lg font-semibold mb-2"
-                >
+                  className="bg-blue-600 text-[white] rounded-[22px] px-5 py-2 ms-[80%] text-lg font-semibold mb-2">
                   {" "}
                   continue
                 </button>
@@ -193,7 +191,7 @@ export default  function Shipping() {
                 <div>
                   <span className="flex text-sm py-3 mb-3">
                     <p className="font-bold me-1 underline">WARRNING:</p>
-                    <p> California's Proposition 65</p>{" "}
+                    <p> California&apos;s Proposition 65</p>{" "}
                   </span>
                 </div>
                 <hr />

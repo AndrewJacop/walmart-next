@@ -7,7 +7,7 @@ import { IoWalletOutline } from "react-icons/io5";
 import { getProductsData, getUserByUid } from "@/lib/supabase/fetch-data";
 import { auth } from "@/lib/firebase/config";
 
-export default async function PlaceOrder() {
+export default function PlaceOrder() {
   const [cartData, setCartData] = useState<CartItem[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [payment, setPayment] = useState<Payment[]>([]);
@@ -28,7 +28,6 @@ export default async function PlaceOrder() {
     if (userId) {
       getUserByUid(userId).then((user) => {
         if (user) {
-          console.log(user);
           setCartData(user.cart);
         }
       });
@@ -50,17 +49,15 @@ export default async function PlaceOrder() {
     if (paymentDataString) {
       setPayment(JSON.parse(paymentDataString));
     }
-    
   }, []);
 
-  const handleSubmit=()=>{
-    localStorage.setItem("shipping","[]")
-    localStorage.setItem("payment","[]")
-    window.location.assign('/')
+  const handleSubmit = () => {
+    localStorage.setItem("shipping", "[]");
+    localStorage.setItem("payment", "[]");
+    window.location.assign("/");
+  };
 
-    
-  }
-
+  // TODO: use effect
   const products: Product[] = await getProductsData();
 
   return (
@@ -96,26 +93,26 @@ export default async function PlaceOrder() {
           <div className="ms-8">
             <Link
               className="default-button inline-block bg-blue-600 mt-4 px-3 py-1 rounded text-[white]"
-              href="/cart/checkout/shipping"
-            >
+              href="/cart/checkout/shipping">
               Edit
             </Link>
           </div>
         </div>
-        <div className="card mt-5  pb-5  border border-[1px] border-[darkgray] rounded">
+        <div className="card mt-5  pb-5  border border-[darkgray] rounded">
           <h2 className="mb-2 text-xl p-5 flex items-center   font-bold bg-[#f2f8fd] py-4">
             {" "}
             <IoWalletOutline className="me-3" />
             Payment Method
           </h2>
-          {payment.map((pay)=>(
-          <div className="ps-8">{pay.paymentMethod}</div>
-        ))}
+          {payment.map((pay, index) => (
+            <div className="ps-8" key={index}>
+              {pay.paymentMethod}
+            </div>
+          ))}
           <div className="ms-8">
             <a
               className="default-button inline-block bg-blue-600 mt-4 px-3 py-1 rounded text-[white]"
-              href="/cart/checkout/payment"
-            >
+              href="/cart/checkout/payment">
               Edit
             </a>
           </div>
@@ -142,8 +139,7 @@ export default async function PlaceOrder() {
                     <td>
                       <Link
                         href={`/product/${prd.id}`}
-                        className="flex items-center"
-                      >
+                        className="flex items-center">
                         <img
                           src={prd.images[0]}
                           width={50}
@@ -170,14 +166,16 @@ export default async function PlaceOrder() {
           <div className="ms-4">
             <Link
               className="default-button inline-block bg-blue-600 mt-4 px-3 py-1 rounded text-[white]"
-              href="/cart"
-            >
+              href="/cart">
               Edit
             </Link>
           </div>
         </div>
-        <button onClick={handleSubmit}  className=" bg-blue-600 text-white float-end mt-4 p-1 rounded font-bold px-4">Done </button>
-
+        <button
+          onClick={handleSubmit}
+          className=" bg-blue-600 text-white float-end mt-4 p-1 rounded font-bold px-4">
+          Done{" "}
+        </button>
       </div>
     </div>
   );
