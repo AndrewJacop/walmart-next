@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 
 import {
@@ -8,13 +8,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getProductsData } from "@/lib/supabase/fetch-data";
-import { handleAddToCart, removeAllFromCart, removeFromCart } from "@/lib/func/cart";
+import { getProductsData, getUserByUid } from "@/lib/supabase/fetch-data";
+import {
+  handleAddToCart,
+  removeAllFromCart,
+  removeFromCart,
+} from "@/lib/func/cart";
 import { useEffect, useState } from "react";
-
-type CartItemProps = {
-  CartItemData: CartItem;
-};
+import AddToCartBtn from "../product/addToCartButton";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import {
+  decrement,
+  increment,
+  productQtyInCartSelector,
+} from "@/store/slices/cartSlice";
+import QtyBtn from "../product/qtyButton";
+import { auth } from "@/lib/firebase/config";
 
 /**
  * @brief Cart Item
@@ -24,8 +33,9 @@ type CartItemProps = {
  * @param CartItem {id,productId,quantity,price}
  */
 
-export default  function CartItem(item: CartItemProps) {
-  const cartItem = item.CartItemData;
+export default function CartItem() {
+  const [cartData, setCartData] = useState<CartItem[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -37,91 +47,153 @@ export default  function CartItem(item: CartItemProps) {
     fetchProducts();
   }, []);
 
-
-  const decreaseCartItemQuantity = (product: Product) => {
+  const decreaseCartItemQuantity = (product: Product, cartItem: CartItem) => {
     if (cartItem.quantity > 1) {
-      removeFromCart(product);
-      setProducts(
-        (prevProducts) =>
-        prevProducts.map((item) =>
-          item.id==product.id?{...item, quantity: item.quantity--}: item)
+      dispatch(decrement(product));
+      setCartData((prevCartData) =>
+        prevCartData.map((item) =>
+          item.productId == product.id
+            ? { ...item, quantity: item.quantity-- }
+            : item
+        )
       );
     } else {
-      // If the quantity is 1, completely remove the item from the cart
-      removeAllFromCart(product);
-      setProducts((prevProducts) =>
-        prevProducts.filter((item) => item.id !== product.id)
+      dispatch(decrement(product));
+      setCartData((prevCartData) =>
+        prevCartData.filter((item) => item.productId !== product.id)
       );
     }
   };
-const cartProducts = products.filter((prd) => prd.id === cartItem.productId);
+
+  const handleRemoveAll = (product: Product, cartItem: CartItem) => {
+    removeAllFromCart(product);
+    setCartData((prevCartData) =>
+      prevCartData.filter((item) => item.productId !== product.id)
+    );
+  };
+
+  const increaseCartItemQuantity = (product: Product, cartItem: CartItem) => {
+    if (cartItem.quantity < product.quantity) {
+      handleAddToCart(product);
+      setCartData((prevCartData) =>
+        prevCartData.map((item) =>
+          item.productId == product.id
+            ? { ...item, quantity: item.quantity++ }
+            : item
+        )
+      );
+    } else {
+      alert("max quantity");
+    }
+  };
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const productsData = await getProductsData();
+      setProducts(productsData);
+    };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    const isAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+
+    return () => {
+      isAuth();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      getUserByUid(userId).then((user) => {
+        if (user) {
+          setCartData(user.cart);
+        }
+      });
+    } else {
+      const cartDataString = localStorage.getItem("cart");
+      if (cartDataString) {
+        const cartData: CartItem[] = JSON.parse(cartDataString);
+        setCartData(cartData);
+      }
+    }
+  }, [userId]);
+
+  const cartQuantities = useAppSelector((state) =>
+    cartData.map((item) => productQtyInCartSelector(state, item.productId))
+  );
 
   return (
     <Card className="border-none">
-      
-      
-      {cartProducts.map((prd) => (
-        <div key={prd.id}>
-          <CardHeader className="flex flex-row  relative">
-            <Image
-              src={prd.images[0]}
-              alt="product img"
-              height={96}
-              width={96}
-            />
+      {cartData.map((itm, indx) => {
+        const qty = cartQuantities[indx];
 
-            <CardContent>
-              <p className="w-1/2 flex ">
-                {prd.title}{" "}
-                <span className="font-bold absolute right-10">
-                $
-                          {(
-                            Number(prd.originalPrice) *
-                            ((100 - Number(prd.discount)) / 100) *
-                            cartItem.quantity
-                          ).toFixed(2)}
-                </span>
-              </p>
-              <div className="flex justify-end items-center mx-7 mb-3 text-sm absolute right-3">
-                    <p  
-                      className="mr-7 underline hover:no-underline cursor-pointer hover:text-blue-500"
-                      onClick={() => {
-                        removeAllFromCart(prd);
-                      }}
-                    >
-                      Remove
-                    </p>
-                    <a
-                      href="#"
-                      className="mr-7 underline hover:no-underline hover:text-blue-500"
-                    >
-                      Save for later
-                    </a>
-                    <div className="flex border justify-center items-center border-gray-300 px-5 py-1 rounded-full">
-                      <span
-                        className="mr-8 cursor-pointer text-lg"
-                        onClick={() => {
-                          decreaseCartItemQuantity(prd);
-                        }}
-                      >
-                        -
-                      </span>
-                      <p className="font-bold">{cartItem.quantity}</p>
-                      <span
-                        className="ml-8 cursor-pointer text-lg"
-                        onClick={() => {
-                          handleAddToCart(prd);
-                        }}
-                      >
-                        +
-                      </span>
-                    </div>
-                    </div>
-            </CardContent>
-          </CardHeader>
-        </div>
-      ))}
+        const cartProducts = products.filter((prd) => prd.id === itm.productId);
 
+        return cartProducts.map((prd) => (
+          <div key={prd.id}>
+            <CardHeader className="flex flex-row  relative">
+              <Image
+                src={prd.images[0]}
+                alt="product img"
+                height={96}
+                width={96}
+              />
+
+              <CardContent>
+                <p className="w-1/2 flex ">
+                  {prd.title}{" "}
+                  <span className="font-bold absolute right-10">
+                    $
+                    {(
+                      Number(prd.originalPrice) *
+                      ((100 - Number(prd.discount)) / 100) *
+                      itm.quantity
+                    ).toFixed(2)}
+                  </span>
+                </p>
+                <div className="flex justify-end items-center mx-7 mb-3 text-sm absolute right-3">
+                  <p
+                    className="mr-7 underline hover:no-underline cursor-pointer hover:text-blue-500"
+                    onClick={() => {
+                      removeAllFromCart(prd);
+                    }}
+                  >
+                    Remove
+                  </p>
+                  <a
+                    href="#"
+                    className="mr-7 underline hover:no-underline hover:text-blue-500"
+                  >
+                    Save for later
+                  </a>
+                  <div className="flex border justify-center items-center border-gray-300 px-5 py-1 rounded-full">
+                    {!qty ? (
+                      <div className="flex justify-center">
+                        <button className=" border-[1px] border-[#46474a] w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2">
+                          +Add
+                        </button>
+                      </div>
+                    ) : (
+                      <QtyBtn
+                        onDecrease={() => decreaseCartItemQuantity(prd, itm)}
+                        onIncrease={() => dispatch(increment(prd))}
+                        qty={qty}
+                      />
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </CardHeader>
+          </div>
+        ));
+      })}
     </Card>
   );
 }

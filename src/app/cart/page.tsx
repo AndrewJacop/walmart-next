@@ -12,12 +12,19 @@ import { auth } from "@/lib/firebase/config";
 import { useRouter } from "next/navigation";
 import { addNewOrder, getProductsData, getUserByUid } from "@/lib/supabase/fetch-data";
 import { handleAddToCart, removeAllFromCart, removeFromCart } from "@/lib/func/cart";
+import CartItem from "@/components/cart/CartItem";
+import { decrement, increment, productQtyInCartSelector, remove } from "@/store/slices/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import QtyBtn from "@/components/product/qtyButton";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { calculateTotalPrice } from "@/store/slices/totalPrice";
 
 
 export function Cart() {
   const [cartData, setCartData] = useState<CartItem[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,83 +35,88 @@ export function Cart() {
     fetchProducts();
   }, []);
 
+  const decreaseCartItemQuantity = (product: Product, cartItem: CartItem) => {
+    if (cartItem.quantity > 1) {
+      dispatch(decrement(product));
+      setCartData((prevCartData) =>
+        prevCartData.map((item) =>
+          item.productId == product.id
+            ? { ...item, quantity: item.quantity-- }
+            : item
+        )
+      );
 
+    } else {
+      dispatch(decrement(product));
+      setCartData((prevCartData) =>
+        prevCartData.filter((item) => item.productId !== product.id)
+      );
+    }
 
-  
+  };
+
+  const handleRemoveAll = (product: Product) => {
+    dispatch(remove(product));
+    setCartData((prevCartData) =>
+      prevCartData.filter((item) => item.productId !== product.id)
+    );
+    dispatch(calculateTotalPrice({ products: products}))
+
+  };
+
+  const increaseCartItemQuantity = (product: Product, cartItem: CartItem) => {
+    dispatch(increment(product))
+    if (cartItem.quantity < product.quantity) {
+      setCartData((prevCartData) =>
+        prevCartData.map((item) =>
+          item.productId == product.id
+            ? { ...item, quantity: item.quantity++ }
+            : item
+        )
+      );
+    } else {
+      alert("max quantity");
+    }
+    dispatch(calculateTotalPrice({ products: products}))
+
+  };
+
   useEffect(() => {
-    const isAuth = auth.onAuthStateChanged((user) =>
-    {
-      if (user) {setUserId(user.uid);}
-    });
+    const fetchProducts = async () => {
+      const productsData = await getProductsData();
+      setProducts(productsData);
+    };
 
-    return () => {isAuth()};
+    fetchProducts();
   }, []);
 
-  
   useEffect(() => {
-   
+    const isAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+
+    return () => {
+      isAuth();
+    };
+  }, []);
+
+  useEffect(() => {
     if (userId) {
       getUserByUid(userId).then((user) => {
         if (user) {
           setCartData(user.cart);
         }
       });
-        } 
-        else{
-          
-          const cartDataString = localStorage.getItem("cart");
-          if (cartDataString) {
-            const cartData: CartItem[] = JSON.parse(cartDataString);
-            setCartData(cartData);
-          }
-          
-         }
-         
+    } else {
+      const cartDataString = localStorage.getItem("cart");
+      if (cartDataString) {
+        const cartData: CartItem[] = JSON.parse(cartDataString);
+        setCartData(cartData);
+      }
+    }
   }, [userId]);
-
-  const decreaseCartItemQuantity = (product: Product,cartItem:CartItem) => {
-    if(cartItem.quantity>1){
-      removeFromCart(product);
-      setCartData(
-        (prevCartData) =>
-        prevCartData.map((item) =>
-          item.productId==product.id?{...item, quantity: item.quantity--}: item)
-
-      );
-    }else{
-      removeAllFromCart(product);
-      setCartData((prevCartData) =>
-        prevCartData.filter((item) => item.productId !== product.id))
-    }
-    
-    }
-  
-    const handleRemoveAll = (product: Product,cartItem:CartItem) => {
-      
-        removeAllFromCart(product);
-        setCartData((prevCartData) =>
-          prevCartData.filter((item) => item.productId !== product.id))
-     
-      
-      }
-    
-
-    const increaseCartItemQuantity = (product: Product,cartItem:CartItem) => {
-      if(cartItem.quantity<product.quantity){
-        handleAddToCart(product);
-        setCartData(
-          (prevCartData) =>
-          prevCartData.map((item) =>
-            item.productId==product.id?{...item, quantity: item.quantity++}: item)
-  
-        );
-      }else{
-        
-        alert("max quantity")
-      }
-      
-      }
-
 
   const handleCheckOut = async () => {
     const date = new Date();
@@ -121,7 +133,7 @@ export function Cart() {
               id: Math.floor(Math.random() * 10000),
               userId: uId,
               productId: itm.productId,
-              status: "unconfirmed",
+              status: "Unconfirmed",
               pickUpOptions: 1,
               createdAt: new Date(date.getTime()),
               lastEditAt: new Date(date.getTime()),
@@ -140,6 +152,11 @@ export function Cart() {
       window.location.assign("/auth/sign-in");
     }
   };
+
+
+  const cartQuantities = useAppSelector((state) =>
+    cartData.map((item) => productQtyInCartSelector(state, item.productId))
+  );
 
   return (
     <>
@@ -184,137 +201,128 @@ export function Cart() {
               </AccordionItem>
             </Accordion>
           </div>
-        </>
-      )}
-
-      {cartData.map((itm) => {
         
-
-        
-const cartProducts = products.filter((prd) => prd.id === itm.productId);
-
-      return  cartProducts.map((prd) => (
-          <>
           
-        <div  className="px-3 ml-10 float-end absolute top-[25%] right-16 fixed-top">
-        <div className="border rounded-lg px-4">
-          <div className="flex justify-center mt-5 ">
-            <button
-              onClick={handleCheckOut}
-              className="flex justify-center bg-blue-600  text-white hover:bg-blue-600 px-28 py-3 text-sm font-bold rounded-full"
-            >
-              Continue to checkout
-            </button>
-          </div>
-          <div className="border my-5 border-gray-100"></div>
-          <div className="px-5 text-sm">
-            <div className="flex justify-between mb-8">
-              <p>
-                <span className="font-bold">Subtotal</span> {(cartData.length)} Item
-              </p>
-              <span>$3.96</span>
-            </div>
-            <div className="flex justify-between">
-              <p className="font-bold">Taxes</p>
-              <span>Calculated at checkout</span>
+          <div  className="px-3 ml-10 float-end absolute top-[25%] right-16 fixed-top">
+          <div className="border rounded-lg px-4">
+            <div className="flex justify-center mt-5 ">
+              <button
+                onClick={handleCheckOut}
+                className="flex justify-center bg-blue-600  text-white hover:bg-blue-600 px-28 py-3 text-sm font-bold rounded-full"
+              >
+                Continue to checkout
+              </button>
             </div>
             <div className="border my-5 border-gray-100"></div>
-            <div className="flex justify-between mb-8">
-              <p className="font-bold">Estimated total</p>
-              <span className="font-bold">$3.96</span>
+            <div className="px-5 text-sm">
+              <div className="flex justify-between mb-8">
+                <p>
+                  <span className="font-bold">Subtotal</span> {(cartData.length)} Item
+                </p>
+                <span>$3.96</span>
+              </div>
+              <div className="flex justify-between">
+                <p className="font-bold">Taxes</p>
+                <span>Calculated at checkout</span>
+              </div>
+              <div className="border my-5 border-gray-100"></div>
+              <div className="flex justify-between mb-8">
+                <p className="font-bold">Estimated total</p>
+                <span className="font-bold">$3.96</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-            <div key={prd.id} className="flex p-10">
-              <div className="w-8/12 border rounded-lg">
-                <div className="flex justify-between bg-blue-50 p-8 rounded-lg">
-                  <h1 className="text-xl font-bold">
-                    Pickup or delivery from store, as soon as Today
-                  </h1>
-                  <a
-                    href="#"
-                    className="underline text-sm hover:no-underline hover:text-blue-800"
-                  >
-                    Reserve a time
-                  </a>
-                </div>
-
-                <div className="border my-5 mx-7 border-gray-100">
-                  <div className="flex mx-7 mt-3">
-                    <img
-                      src={prd.images[0]}
-                      alt="prdImage"
-                      width={100}
-                      height={80}
-                    />
-
-                    <div>
-                      <div className="flex mt-3 ml-2">
-                        <a href="#" className=" flex justify-between mr-72">
-                          {prd.title}
-                        </a>
-                        <span className="font-bold absolute right-[42%] ">
-                          $
-                          {(
-                            Number(prd.originalPrice) *
-                            ((100 - Number(prd.discount)) / 100) *
-                            itm.quantity
-                          ).toFixed(2)}
-                        </span>
-                      </div>
-                      <p className="py-2 text-sm  px-2 text-[gray]">
-                        $
-                        {(
-                          Number(prd.originalPrice) *
-                          ((100 - Number(prd.discount)) / 100)
-                        ).toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end items-center mx-7 mb-3 text-sm">
-                    <p
-                      className="mr-7 underline hover:no-underline cursor-pointer hover:text-blue-500"
-                      onClick={() => {
-                        handleRemoveAll(prd,itm);
-                      }}
-                    >
-                      Remove
-                    </p>
+              <div  className="flex p-10">
+                <div className="w-8/12 border rounded-lg">
+                  <div className="flex justify-between bg-blue-50 p-8 rounded-lg">
+                    <h1 className="text-xl font-bold">
+                      Pickup or delivery from store, as soon as Today
+                    </h1>
                     <a
                       href="#"
-                      className="mr-7 underline hover:no-underline hover:text-blue-500"
+                      className="underline text-sm hover:no-underline hover:text-blue-800"
                     >
-                      Save for later
+                      Reserve a time
                     </a>
-                    <div className="flex border justify-center items-center border-gray-300 px-5 py-1 rounded-full">
-                      <span
-                        className="mr-8 cursor-pointer text-lg"
-                        onClick={() => {
-                          decreaseCartItemQuantity(prd,itm);
-                        }}
-                      >
-                        -
-                      </span>
-                      <p className="font-bold">{itm.quantity}</p>
-                      <span
-                        className="ml-8 cursor-pointer text-lg"
-                        onClick={() => {
-                          increaseCartItemQuantity(prd,itm);
-                        }}
-                      >
-                        +
-                      </span>
-                    </div>
+                  </div>
+  
+                  <Card className="border-none">
+      {cartData.map((itm, indx) => {
+        const qty = cartQuantities[indx];
+
+        const cartProducts = products.filter((prd) => prd.id === itm.productId);
+
+        return cartProducts.map((prd) => (
+          <div key={prd.id}>
+            <CardHeader className="flex flex-row  relative">
+              <img
+                src={prd.images[0]}
+                alt="product img"
+                height={96}
+                width={96}
+              />
+
+              <CardContent>
+                <p className="w-1/2 flex ">
+                  {prd.title}{" "}
+                  <span className="font-bold absolute right-10">
+                    $
+                    {(
+                      Number(prd.originalPrice) *
+                      ((100 - Number(prd.discount)) / 100) *
+                      itm.quantity
+                    ).toFixed(2)}
+                  </span>
+                </p>
+                <div className="flex justify-end items-center mx-7 mb-3 text-sm absolute right-3">
+                  <p
+                    className="mr-7 underline hover:no-underline cursor-pointer hover:text-blue-500"
+                    onClick={() => {
+                      handleRemoveAll(prd);
+                    }}
+                  >
+                    Remove
+                  </p>
+                  <a
+                    href="#"
+                    className="mr-7 underline hover:no-underline hover:text-blue-500"
+                  >
+                    Save for later
+                  </a>
+                  <div className="flex border justify-center items-center border-gray-300 px-5 py-1 rounded-full">
+                    {!qty ? (
+                      <div className="flex justify-center">
+                        <button className=" border-[1px] border-[#46474a] w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2">
+                          +Add
+                        </button>
+                      </div>
+                    ) : (
+                      <QtyBtn
+                        onDecrease={() => decreaseCartItemQuantity(prd, itm)}
+                        onIncrease={() =>increaseCartItemQuantity(prd,itm)}
+                        qty={qty}
+                      />
+                    )}
                   </div>
                 </div>
-              </div>
-              {/* fixed right sidebar */}
-              
-            </div>
-          </>
+              </CardContent>
+            </CardHeader>
+          </div>
         ));
       })}
+    </Card>
+                </div>
+                {/* fixed right sidebar */}
+
+                
+              </div>
+            </>
+      )}
+
+     
+         
+      
 
 
     </>
