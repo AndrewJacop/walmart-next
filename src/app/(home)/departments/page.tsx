@@ -64,8 +64,8 @@ export default async function Departments() {
       <div className="flex flex-col  container mt-5 ">
         <h1 className="text-base font-bold">{explore.title}</h1>
         <div className="pt-5 pb-20">
-          {explore.links.map((link) => (
-            <a className="mr-3.5 text-xs underline " key={link} href="#">
+          {explore.links.map((link,indx) => (
+            <a className="mr-3.5 text-xs underline " key={indx} href="#">
               {link}
             </a>
           ))}

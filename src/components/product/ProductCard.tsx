@@ -51,23 +51,22 @@ export default function ProductCard(card: CardProps) {
       <div className="relative">
         {!isFav ? (
           <button
-            className="absolute mt-2 left-36 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
+            className="absolute mt-2 left-16 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
             onClick={handleAddToFav}>
             <CiHeart className="text-black text-2xl " />
           </button>
         ) : (
           <button
-            className="absolute mt-2 left-36 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
+            className="absolute mt-2 left-16 bg-white border rounded-full p-0 w-7 h-7 flex items-center text-center justify-center	"
             onClick={handleRemoveFromFav}>
             <IoMdHeart className="text-2xl text-blue-600" />
           </button>
         )}
         <a href={`/product/${product.id}`}>
-          <Image
+          <img
             src={product.images[0]}
             alt="card img"
-            width={128}
-            height={128}
+            className="w-20 h-36"
           />
         </a>
         <div>
@@ -75,7 +74,7 @@ export default function ProductCard(card: CardProps) {
             <>
               {!isAdded ? ( // Render Add button only if the product is not added to cart
                 <button
-                  className="absolute bottom-1 -left-2 bg-blue-600 text-white font-bold w-16 h-7 border-none rounded-3xl hover:border-2"
+                  className="absolute bottom-1 -left-1 bg-blue-600 text-white font-bold w-16 h-7 border-none rounded-3xl hover:border-2"
                   onClick={() => {
                     setIsAdded(true);
                     handleAddToCart(product);
@@ -146,8 +145,9 @@ export default function ProductCard(card: CardProps) {
               <Image
                 src={WalmartPlus}
                 alt="walmart icon"
+                width={20}
                 height={20}
-                width={25}
+              
               />
             </div>
             <div className="my-2 text-xs text-gray-800">

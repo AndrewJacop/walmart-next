@@ -67,7 +67,7 @@ export default async function Category({
   return (
     <section className="px-20 mb-10 ">
       <div className="">
-        {/* <AdBarLarge imgLink={category.barLink} title={category.title}/> */}
+        <AdBarLarge imgLink={category.carouselImg} title={category.title}/>
         <div className="flex ">
           {/* sidebar */}
           <div className="w-[20%]  me-6">
@@ -81,8 +81,8 @@ export default async function Category({
             <div className="my-4 ">
               <p className="font-bold text-2xl">Shop groceries</p>
               <div className="flex items-center ">
-                {categoryData.slice(0, 6).map((cat) => (
-                  <CategoryCard key={cat.id} categoryData={cat} />
+                {categoryData.slice(0, 6).map((cat,indx) => (
+                  <CategoryCard key={indx} categoryData={cat} />
                 ))}
               </div>
             </div>

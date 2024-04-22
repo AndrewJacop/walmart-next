@@ -41,7 +41,7 @@ export function VideoAdCard() {
         </button>
       </div>
       <Link href={"/"}>
-        <Image
+        <img
           alt="video ad vard"
           height={447}
           width={794}

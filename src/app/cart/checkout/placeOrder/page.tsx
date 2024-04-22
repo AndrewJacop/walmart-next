@@ -75,8 +75,8 @@ export default function PlaceOrder() {
             Shipping Info
           </h2>
           <div className="ps-8">
-            {shipping.map((ship) => (
-              <>
+            {shipping.map((ship,indx) => (
+              <div key={indx}>
                 <span className="flex text-lg">
                   {" "}
                   <p className="font-bold pe-24"> For : </p> {ship.firstname}
@@ -94,7 +94,7 @@ export default function PlaceOrder() {
                   <p className="font-bold  pe-2 ">Phone Number: </p>
                   <p> {ship.phoneNum}</p>{" "}
                 </span>
-              </>
+              </div>
             ))}
           </div>
           <div className="ms-8">
@@ -147,7 +147,7 @@ export default function PlaceOrder() {
                       <Link
                         href={`/product/${prd.id}`}
                         className="flex items-center">
-                        <Image
+                        <img
                           alt="product image"
                           src={prd.images[0]}
                           width={50}

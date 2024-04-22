@@ -55,8 +55,8 @@ export default function Payment() {
                   img: "https://i5.walmartimages.com/dfw/63fd9f59-8746/124e7571-efdd-4b6f-8846-fc57601437c5/v1/wallet-benefit-card-tile.svg",
                 },
               ].map((payment,indx) => (
-                <>
-                  <div key={indx} className="mb-4 flex">
+                <div key={indx}>
+                  <div  className="mb-4 flex">
                     <input
                       name="paymentMethod"
                       className="p-2 outline-none focus:ring-0 "
@@ -77,7 +77,7 @@ export default function Payment() {
                       {payment.method}
                     </label>
                   </div>
-                </>
+                </div>
               ))}
               <p className="text-xs underline cursor-pointer font-semibold  pb-5">
                 Learn More about payment methods we accept

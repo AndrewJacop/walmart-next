@@ -44,9 +44,9 @@ export default async function CategoryAccordion(cat: AccordionProps) {
       </h1>
     {categories.map((cat,indx)=>(
 
-    <>
+    <div key={indx}>
       
-          <Accordion key={indx} type="single" collapsible>
+          <Accordion  type="single" collapsible>
             <AccordionItem value={`item-${indx+1}`}>
               <AccordionTrigger>
                 <SubCategoryItem subCatData={cat} />
@@ -57,7 +57,7 @@ export default async function CategoryAccordion(cat: AccordionProps) {
         const subcategories = subCat.filter((sub) => sub.id === itm);
 
         return subcategories.map((sub,idx) => (
-                    <><Link key={idx} className="no-underline text-sm hover:underline" href="#">{sub.title}</Link><br /></>
+                    <div key={idx}><Link  className="no-underline text-sm hover:underline" href="#">{sub.title}</Link><br /></div>
 
                 ))
                 
@@ -70,7 +70,7 @@ export default async function CategoryAccordion(cat: AccordionProps) {
         
       
       
-    </>
+    </div>
   ))}
   </>
   );

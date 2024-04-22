@@ -41,14 +41,14 @@ const ShippingOption = () => {
         <Button asChild key={option.id} variant={"custom"}>
           <div className="flex flex-col items-center justify-center m-2 rounded-lg border-2 border-gray-300 w-full h-full font-bold py-4 gap-y-1">
             {option.available ? (
-              <Image
+              <img
                 height={40}
                 width={40}
                 src={option.imgLink}
                 alt="shipping option Image"
               />
             ) : (
-              <Image
+              <img
                 height={40}
                 width={40}
                 src={option.imgLink}

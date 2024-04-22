@@ -6,21 +6,7 @@ import { GrHomeRounded } from "react-icons/gr";
 import Addressbutton from "./addressbutton";
 import { getCategoriesData } from "@/lib/supabase/fetch-data";
 
-const linksList=[
-    {href:"#",title:"Deals" },
-    {href:"#",title:"Generic" },
-    {href:"#",title:"Grocery & Essential" },
-    {href:"#",title:"Pet Supplies" },
-    {href:"#",title:"Home & Kitchen" },
-    {href:"#",title:"Toys" },
-    {href:"#",title:"Electronic" },
-    {href:"#",title:"Patio & Garden" },
-    {href:"#",title:"Auto" },
-    {href:"#",title:"Health" },
-    {href:"#",title:"Movies" },
-    {href:"#",title:"Walmart+" },
 
-]
 
 export default async function NewBottomBar() {
 

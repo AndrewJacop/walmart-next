@@ -159,7 +159,7 @@ export default function CartPage() {
           </div>
           <div className="items-center flex justify-center pb-16">
             <div>
-              <Image
+              <img
                 alt="background"
                 src="https://i5.walmartimages.com/dfw/63fd9f59-e0d6/65ab57af-59d6-423a-9500-1fa5ab36d1c7/v1/empty-cart.svg"
                 width={200}
@@ -181,7 +181,7 @@ export default function CartPage() {
           <div className="w-8/12 relative ml-10">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <Image
+                <img
                   className="absolute mt-3"
                   src="https://i5.walmartimages.com/dfwrs/76316474-2775/k2-_3691ba8c-cbca-4439-9112-adb25c1b1803.v1.svg"
                   alt="image"
@@ -252,7 +252,7 @@ export default function CartPage() {
                   return cartProducts.map((prd) => (
                     <div key={prd.id}>
                       <CardHeader className="flex flex-row  relative">
-                        <Image
+                        <img
                           src={prd.images[0]}
                           alt="product img"
                           height={96}

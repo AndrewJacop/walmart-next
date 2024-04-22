@@ -57,7 +57,7 @@ export default async function NewTopNavBar() {
     <DropdownMenuSeparator />
 
           {categories?.map((cat) => (
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem className="cursor-pointer" key={cat.id}>
               <a>{cat.title}</a>
               </DropdownMenuItem>
           ))}

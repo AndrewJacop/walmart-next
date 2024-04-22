@@ -139,7 +139,7 @@ export default function CartItem() {
         return cartProducts.map((prd) => (
           <div key={prd.id}>
             <CardHeader className="flex flex-row  relative">
-              <Image
+              <img
                 src={prd.images[0]}
                 alt="product img"
                 height={96}
