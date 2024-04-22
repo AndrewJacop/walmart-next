@@ -63,7 +63,12 @@ export default function ProductCard(card: CardProps) {
           </button>
         )}
         <a href={`/product/${product.id}`}>
-          <img src={product.images[0]} alt="card img" className="h-32 w-32" />
+          <Image
+            src={product.images[0]}
+            alt="card img"
+            width={128}
+            height={128}
+          />
         </a>
         <div>
           {product.colors ? (

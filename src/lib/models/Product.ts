@@ -7,8 +7,8 @@ type Product = {
   seller: number;
   isBestSeller: boolean;
   subCatergory: number[];
-  discount: number | string;
-  originalPrice: number | string;
+  discount: number;
+  originalPrice: number;
   returnPolicy: number;
   isGiftable: boolean;
   quantity: number;

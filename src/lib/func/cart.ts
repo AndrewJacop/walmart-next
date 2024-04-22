@@ -10,7 +10,7 @@ export const handleAddToCart = (product: Product) => {
   //1- if user is signed in
   if (isAuth) {
     const uId = isAuth.uid;
-    const user = getUserByUid(uId).then((user) => {
+    getUserByUid(uId).then((user) => {
       if (user) {
         let supaCartdata: CartItem[] = user.cart;
         const existingItemIndex = supaCartdata.findIndex(
@@ -34,6 +34,9 @@ export const handleAddToCart = (product: Product) => {
           supaCartdata.push({
             productId: product.id,
             quantity: 1,
+            productPrice:
+              product.originalPrice -
+              (product.originalPrice * product.discount) / 100,
           });
         }
 
@@ -59,6 +62,9 @@ export const handleAddToCart = (product: Product) => {
       cartData.push({
         productId: product.id,
         quantity: 1,
+        productPrice:
+          product.originalPrice -
+          (product.originalPrice * product.discount) / 100,
       });
     }
     localStorage.setItem("cart", JSON.stringify(cartData));

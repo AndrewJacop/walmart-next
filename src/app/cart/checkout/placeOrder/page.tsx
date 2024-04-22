@@ -6,12 +6,15 @@ import { Shipment } from "../shipping/page";
 import { IoWalletOutline } from "react-icons/io5";
 import { getProductsData, getUserByUid } from "@/lib/supabase/fetch-data";
 import { auth } from "@/lib/firebase/config";
+import Image from "next/image";
 
 export default function PlaceOrder() {
   const [cartData, setCartData] = useState<CartItem[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [payment, setPayment] = useState<Payment[]>([]);
   const [shipping, setShipping] = useState<Shipment[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+
   useEffect(() => {
     const isAuth = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -40,6 +43,10 @@ export default function PlaceOrder() {
     }
   }, [userId]);
   useEffect(() => {
+    getProductsData().then((data) => {
+      setProducts([...data]);
+    });
+
     const shippingDataString = localStorage.getItem("shipping");
     const paymentDataString = localStorage.getItem("payment");
     if (shippingDataString) {
@@ -58,12 +65,12 @@ export default function PlaceOrder() {
   };
 
   // TODO: use effect
-  const products: Product[] = await getProductsData();
+  // const products: Product[] = getProductsData();
 
   return (
     <div className="grid md:grid-cols-4 md:gap-5">
       <div className=" md:col-span-3">
-        <div className="card pb-5  border border-[1px] border-[darkgray] rounded ">
+        <div className="card pb-5 border border-[darkgray] rounded ">
           <h2 className="mb-2 text-xl p-5 font-bold bg-[#f2f8fd] py-4">
             Shipping Info
           </h2>
@@ -117,7 +124,7 @@ export default function PlaceOrder() {
             </a>
           </div>
         </div>
-        <div className="card overflow-x-auto mt-5 p-5 border border-[1px] border-[darkgray] rounded">
+        <div className="card overflow-x-auto mt-5 p-5 border border-[darkgray] rounded">
           <h2 className="mb-2 text-xl font-bold ">Order Items</h2>
           <table className="min-w-full ">
             <thead className="border-b">
@@ -140,7 +147,8 @@ export default function PlaceOrder() {
                       <Link
                         href={`/product/${prd.id}`}
                         className="flex items-center">
-                        <img
+                        <Image
+                          alt="product image"
                           src={prd.images[0]}
                           width={50}
                           height={50}
@@ -148,7 +156,7 @@ export default function PlaceOrder() {
                             maxWidth: "100%",
                             height: "auto",
                           }}
-                          className="m-3   me-5"
+                          className="m-3 me-5"
                         />
                         {prd.title}
                       </Link>
