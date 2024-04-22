@@ -76,6 +76,7 @@ export default function SignInPage() {
             const resBody = await response.json();
             if (response.ok && resBody.success) {
               localStorage.setItem("userId", idToken);
+
               window.location.assign("/");
             }
           })

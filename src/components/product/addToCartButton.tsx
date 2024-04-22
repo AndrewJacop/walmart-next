@@ -1,5 +1,3 @@
-"use client";
-import React, { useEffect, useState } from "react";
 
 import {
   decrement,
@@ -11,6 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import QtyBtn from "./qtyButton";
 import {
+  addCartItem,
   addNewOrder,
   getProductsData,
   getUserByUid,
@@ -26,30 +25,51 @@ const AddToCartBtn = (props: Props) => {
   const qty = useAppSelector((state) =>
     productQtyInCartSelector(state, props.product.id)
   );
-
   const dispatch = useAppDispatch();
-  const [products, setProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productsData = await getProductsData();
-      setProducts(productsData);
-    };
-
-    fetchProducts();
-  }, []);
 
   const decreaseCartItemQuantity = (product: Product) => {
-    dispatch(decrement(product));
+    const isAuth = auth.currentUser;
+    if (isAuth) {
+      dispatch(decrement(product));
+     
+      const uId = isAuth.uid;
+      const userCart: CartItem[] = JSON.parse(
+        localStorage.getItem("userCart") || "[]"
+      )
+      addCartItem(userCart, uId);
+    // dispatch(calculateTotalPrice({ product: product }));
 
-    dispatch(calculateTotalPrice({ products: products }));
+    }else{
+      dispatch(decrement(product));
+
+    }
+    // dispatch(calculateTotalPrice({ product: product }));
   };
 
-  const increaseCartItemQuantity = (product: Product) => {
-    dispatch(increment(product));
+  const increaseCartItemQuantity =  (product: Product) => {
+    const isAuth = auth.currentUser;
+    if (isAuth) {
+      dispatch(increment(product));
+     
+      const uId = isAuth.uid;
+      const userCart: CartItem[] = JSON.parse(
+        localStorage.getItem("userCart") || "[]"
+      )
+      addCartItem(userCart, uId);
+    }else{
+      dispatch(increment(product));
 
-    dispatch(calculateTotalPrice({ products: products }));
+    }
+
+    dispatch(calculateTotalPrice({ product: product }));
   };
+
+
+
+
+
+
 
   if (!qty)
     return (

@@ -100,7 +100,7 @@ export function Cart() {
     return () => {
       isAuth();
     };
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     if (userId) {

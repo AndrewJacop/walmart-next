@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { setCartItem, totalCartItemsSelector } from "@/store/slices/cartSlice";
+import { TotalPriceSelector, setCartItem, totalCartItemsSelector } from "@/store/slices/cartSlice";
 import {
   addCartItem,
   getProductsData,
@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase/config";
 import {
   calculateTotalPrice,
-  totalPriceSelector,
 } from "@/store/slices/totalPrice";
 
 export const revalidate = 0;
@@ -24,7 +23,8 @@ export const fetchCache = "force-no-store";
 
 export default function CartToggle() {
   const totalItems: number = useAppSelector(totalCartItemsSelector);
-  const totalPrice: number = useAppSelector(totalPriceSelector);
+  const totalPrice: number = useAppSelector(TotalPriceSelector);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -39,17 +39,25 @@ export default function CartToggle() {
     };
     fetchProducts();
   }, []);
+  useEffect(() => {
+    const isAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+
+    return () => {
+      isAuth();
+    };
+  }, []);
 
   useEffect(() => {
     const fetchCartData = async () => {
-      const isAuth = auth.currentUser;
-
-      //1- if user is signed in
-      if (isAuth) {
-        const uId = isAuth.uid;
-        const user = getUserByUid(uId).then((user) => {
+      if (userId) {
+        getUserByUid(userId).then((user) => {
           if (user) {
             const supaCartdata: CartItem[] = user.cart;
+            localStorage.setItem("userCart", JSON.stringify(supaCartdata));
             dispatch(setCartItem(supaCartdata));
           }
         });
@@ -60,7 +68,7 @@ export default function CartToggle() {
     };
 
     fetchCartData();
-  }, []);
+  }, [userId]);
 
   const dispatch = useAppDispatch();
 
@@ -72,12 +80,14 @@ export default function CartToggle() {
           className="text-white font-bold rounded-full"
           onClick={() => {
             window.location.assign("/cart");
-          }}>
+          }}
+        >
           <div className="flex flex-col relative">
             <ShoppingCart className="h-6 w-6" />
             <Badge
               variant="custom"
-              className="bg-yellow-500 border border-black text-black w-4 h-4 p-[3px] justify-center absolute right-[-3px] top-[-5px]">
+              className="bg-yellow-500 border border-black text-black w-4 h-4 p-[3px] justify-center absolute right-[-3px] top-[-5px]"
+            >
               {totalItems}
             </Badge>
             <p className="font-normal text-[10px]">{totalPrice.toFixed(2)}</p>

@@ -16,17 +16,17 @@ export const totalPriceSlice = createSlice({
   initialState,
   reducers: {
     calculateTotalPrice(state, action) {
-      const { products } = action.payload;
+      const { product} = action.payload;
       const isAuth = auth.currentUser;
       let cartItems: CartItem[] = [];
+      //1- if user is signed in
       if (isAuth) {
         const uId = isAuth.uid;
-        const user = getUserByUid(uId).then((user) => {
-          if (user) {
-            let cartItemsData = user.cart;
-            cartItems = cartItemsData;
-          }
-        });
+        const userCart: CartItem[] = JSON.parse(
+          localStorage.getItem("userCart") || "[]"
+        );
+        cartItems = userCart;
+
       } else {
         const cartItemsData: CartItem[] = JSON.parse(
           localStorage.getItem("cart") || "[]"
@@ -35,9 +35,6 @@ export const totalPriceSlice = createSlice({
       }
       state.totalPrice = cartItems.reduce(
         (total: number, cartItem: CartItem) => {
-          const product = products.find(
-            (prd: Product) => prd.id === cartItem.productId
-          );
           if (product) {
             total += cartItem.quantity * Number(product.originalPrice);
           }
