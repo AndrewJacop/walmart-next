@@ -66,7 +66,7 @@ export default async function Category({
   
 
   const categoryData=await getCategoriesData()
-  const indx = categoryData.findIndex((cat:any) => String(cat.id) === params.categoryId);
+  const indx = categoryData.findIndex((cat:Category) => String(cat.id) === params.categoryId);
  const category=categoryData[indx];
   const productData=await getProductsData()
   return (
@@ -74,10 +74,10 @@ export default async function Category({
      
             <div className="" >
              
-              {/* <AdBarLarge imgLink={category.barLink} title={category.title}/> */}
+              <AdBarLarge imgLink={category.carouselImg} title={category.title}/>
               <div className="flex ">
                 {/* sidebar */}
-                <div className="w-[20%]  me-6">
+                <div className="w-[20%]  me-10">
                   <div>
                     <CategoryAccordion  categoryData={category} />
 
@@ -89,28 +89,30 @@ export default async function Category({
                 {/* right bar */}
              <div className="w-[80%] ps-24  px-4">
                   <div className="my-4 ">
-                    <p className="font-bold text-2xl">Shop groceries</p>
+                    <p className="font-bold text-xl my-2">Shop groceries</p>
                     <div className="flex items-center ">
                     {categoryData.slice(0,6).map((cat)=>
                         <CategoryCard key={cat.id} categoryData={cat} />
 
-                      )}
-                    
+                      )}                    
                     </div>
+                    <hr/>
+
                   </div>
                   <div className=" my-4">
-                    <p className="font-bold mb-6 text-2xl">Shop Essential</p>
+                    <p className="font-bold mb-6 text-xl">Shop Essential</p>
                     <div className="flex items-center ">
                       {categoryData.slice(6,12).map((cat)=>
                         <CategoryCard key={cat.id} categoryData={cat} />
 
                       )}
-                    
                     </div>
+                    <hr/>
+
                   </div>
-                  <div className=" my-4">
-                    <p className="font-bold mb-6 text-2xl">Build Your Card</p>
-                    <div className="flex mb-10 items-center justify-center ">
+                  <div className=" mb-4 mt-7">
+                    <p className="font-bold mb-6 text-xl ">Build Your Card</p>
+                    <div className="flex mb-10 items-center">
                       <ProductCarouselLarge
                         
                         basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
@@ -120,9 +122,9 @@ export default async function Category({
                   </div>
 
                 {/* ////////////////// */}
-                <div className="flex grid grid-cols-3 gap-x-4">
+                <div className=" grid grid-cols-3 gap-x-28 justify-center">
                   {adCard.map((data,indx)=>
-                  <AdCardSmall imgLink={data.imgLink} title={data.title} description={data.description}/>
+                  <AdCardSmall key={indx} imgLink={data.imgLink} title={data.title} description={data.description}/>
                   )}
                 </div>
 
@@ -130,16 +132,16 @@ export default async function Category({
                     <p className="font-bold mb-6 text-2xl">
                       Easter meal must-haves
                     </p>
-                    <div className="flex mb-20 items-center justify-center ">
+                    <div className="flex mb-20 items-center ">
                       <ProductCarouselLarge
                         basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-                        testProduct={productData.slice(100,111)}
+                        testProduct={productData.slice(100,110)}
                       />
                     </div>
                   </div>
                   <div className=" my-6">
                     <p className="font-bold mb-3 text-2xl">Easter Basket Suffer</p>
-                    <div className="flex mb-10 items-center justify-center ">
+                    <div className="flex mb-10 items-center  ">
                       <ProductCarouselLarge
                         
                         basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
@@ -151,7 +153,7 @@ export default async function Category({
 
                   <div className=" my-6">
                     <p className="font-bold mb-6 text-2xl">Easter candy</p>
-                    <div className="flex mb-10 items-center justify-center ">
+                    <div className="flex mb-10 items-center  ">
                       <ProductCarouselLarge
                         basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
                         testProduct={productData.slice(70,80)}
@@ -161,7 +163,7 @@ export default async function Category({
 
                   <div className=" my-4">
                     <p className="font-bold mb-10 text-2xl">Easter baking</p>
-                    <div className="flex mb-10 items-center justify-center ">
+                    <div className="flex mb-10 items-center  ">
                       <ProductCarouselLarge
                         basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
                         testProduct={productData.slice(90,100)}
@@ -172,7 +174,7 @@ export default async function Category({
                   <div className="my-6">
                     <AdBarLarge
                       title={categoryData[0].title}
-                      imgLink={categoryData[0].barLink}
+                      imgLink={categoryData[0].carouselImg}
                     />
                   </div>
 
@@ -180,7 +182,7 @@ export default async function Category({
                     <p className="font-bold mb-10 text-2xl">
                       St. Patrick’s Day picks
                     </p>
-                    <div className="flex mb-10 items-center justify-center ">
+                    <div className="flex mb-10 items-center ">
                       <ProductCarouselLarge
                         basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
                         testProduct={productData.slice(200,210)}

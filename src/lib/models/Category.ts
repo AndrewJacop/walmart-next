@@ -1,6 +1,6 @@
 type Category = {
   id: number;
-  barLink: string;
+  carouselImg: string;
   title: string;
   imgLink: string;
   subCategories: number[];

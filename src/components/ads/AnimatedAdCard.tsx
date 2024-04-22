@@ -45,7 +45,7 @@ export function AnimatedAdCard() {
           className="relative w-full object-cover -z-10"
           autoPlay
           loop={true}
-          src="https://download-video.akamaized.net/v3-1/playback/42ec8452-32b2-4ff5-8a0e-cdce5951e423/a005d866?__token__=st=1711541503~exp=1711555903~acl=%2Fv3-1%2Fplayback%2F42ec8452-32b2-4ff5-8a0e-cdce5951e423%2Fa005d866%2A~hmac=ce39ec241bd1dd2fa2ff1b445d24f946b5fafdf5e6e65ce494d5ec50bbed449d&r=dXMtd2VzdDE%3D"></video>
+          src="https://player.vimeo.com/progressive_redirect/playback/892046818/rendition/1080p/file.mp4?loc=external&signature=b17d4e94e2cbf913d7fa0081e248f9738d403e74496424afc2da03a6d595e339"></video>
       </Link>
     </div>
   );

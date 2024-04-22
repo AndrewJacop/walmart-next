@@ -30,14 +30,16 @@ export default function ProductCard(card: CardProps) {
   const finalPrice =
     Number(product.originalPrice) * (100 - Number(product.discount) / 100);
 
-  const handleAddToFav = () => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsFav(true);
-        addToFavorites(product);
-      }
-    });
-  };
+    const handleAddToFav = () => {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          setIsFav(true);
+          addToFavorites(product);
+        }else{
+          window.location.assign('/auth')
+        }
+      });
+    };
 
   const handleRemoveFromFav = () => {
     setIsFav(false);
@@ -68,7 +70,7 @@ export default function ProductCard(card: CardProps) {
             <>
               {!isAdded ? ( // Render Add button only if the product is not added to cart
                 <button
-                  className="absolute bottom-1 -left-2 bg-blue-600 text-white font-bold w-20 h-8 border-none rounded-3xl hover:border-2"
+                  className="absolute bottom-1 -left-2 bg-blue-600 text-white font-bold w-16 h-7 border-none rounded-3xl hover:border-2"
                   onClick={() => {
                     setIsAdded(true);
                     handleAddToCart(product);
@@ -115,9 +117,9 @@ export default function ProductCard(card: CardProps) {
           <span className="text-xs font-bold inline-block align-top">67</span>
         </div>
 
-        <span className="text-sm text-gray-800 text-ellipsis">
+        <div className="text-sm text-gray-800 text-ellipsis overflow-hidden  max-h-9">
           {subDescreption}
-        </span>
+        </div>
         <div>
           <div className="flex items-center">
             <span className="mt-2 flex items-center">

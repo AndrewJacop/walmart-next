@@ -1,5 +1,6 @@
 import { AdBar } from "@/components/ads/AdBar";
 import { AdCard } from "@/components/ads/AdCard";
+import { AnimatedAdCard } from "@/components/ads/AnimatedAdCard";
 import { VideoAdCard } from "@/components/ads/VideoAdCard";
 import ShippingOption from "@/components/cart/ShippingOption";
 import CategoryAccordion from "@/components/category/CategoryAccordion";
@@ -494,7 +495,7 @@ export default async function HomePage() {
                 testProduct={productData.slice(200, 211)}
               />
             </div>
-            <VideoAdCard />
+            <AnimatedAdCard />
           </div>
         </article>
 

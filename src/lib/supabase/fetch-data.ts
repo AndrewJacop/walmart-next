@@ -100,7 +100,7 @@ export async function getProductsData() {
   return data as Product[];
 }
 
-//
+// Orders
 export async function getOrdersData() {
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -108,6 +108,17 @@ export async function getOrdersData() {
     .select()
     .order("id", { ascending: false })
     .returns<Order[]>();
+  if (error) console.log("##fetchdata->getOrdersData##", error);
+  return data;
+}
+
+export async function getDepartmentData() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("departments")
+    .select()
+    .order("id", { ascending: false })
+    .returns<Department[]>();
   if (error) console.log("##fetchdata->getOrdersData##", error);
   return data;
 }

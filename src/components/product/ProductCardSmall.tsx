@@ -25,7 +25,6 @@ export default function ProductSmall(card: CardProps) {
   const finalPrice =
     Number(product.originalPrice) * ((100 - Number(product.discount)) / 100);
 
-  const [isAdded, setIsAdded] = useState(false); // State to track whether the product is added to cart
   const [isFav, setIsFav] = useState(false); // State to track whether the product is added to Favorite List
   const subDescreption = product.title;
 
@@ -34,6 +33,8 @@ export default function ProductSmall(card: CardProps) {
       if (user) {
         setIsFav(true);
         addToFavorites(product);
+      }else{
+        window.location.assign('/auth')
       }
     });
   };
@@ -82,13 +83,13 @@ export default function ProductSmall(card: CardProps) {
             <span className="font-bold text-lg"> ${finalPrice.toFixed(2)}</span>
           )}
         </div>
-        <span className="text-sm text-gray-800 text-ellipsis ">
+        <div className="text-sm text-gray-800 text-ellipsis overflow-hidden  max-h-9">
           {subDescreption}
-        </span>
+        </div>
       </div>
       <div>
         {product.colors ? (
-          <div>
+          <div className="float-start mt-3">
             <AddToCartBtn product={product} />
           </div>
         ) : (

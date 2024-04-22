@@ -4,6 +4,7 @@ import Link from "next/link";
 import { HiOutlineMapPin } from "react-icons/hi2";
 import { GrHomeRounded } from "react-icons/gr";
 import Addressbutton from "./addressbutton";
+import { getCategoriesData } from "@/lib/supabase/fetch-data";
 
 const linksList=[
     {href:"#",title:"Deals" },
@@ -21,7 +22,9 @@ const linksList=[
 
 ]
 
-export default function NewBottomBar() {
+export default async function NewBottomBar() {
+
+  const categories=await getCategoriesData()
   return (
     <div className="bg-[#0071dc] border-t-[1px] px-7 py-1  text-white flex items-center">
       <Addressbutton/>
@@ -35,9 +38,9 @@ export default function NewBottomBar() {
 
       <div className="flex flex-wrap font-bold text-xs  w-2/3 gap-x-5  justify-end overflow-hidden">
       
-        {linksList.map((link,indx)=>(
+        {categories.slice(0,9).map((cat,indx)=>(
 
-            <Link key={indx} className="hover:underline" href={link.href}>{link.title}</Link>
+            <Link key={indx} className="hover:underline" href={`/departments/${cat.id}`}>{cat.title}</Link>
         ))}
      
         </div>

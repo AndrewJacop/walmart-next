@@ -13,7 +13,7 @@ type CategoryProps = {
   const myCat = cat.categoryData;
   return (
     <div className="flex flex-col items-center p-1 mx-auto">
-      <img src={myCat.imgLink} alt="category img"  className="rounded-full h-20 w-20" />
+      <img src={myCat.imgLink} alt="category img"  className="rounded-full h-24 w-24" />
       <p className="text-center font-sans text-xs py-1 overflow-hidden truncate w-24 ">{myCat.title}</p>
     </div>
   );

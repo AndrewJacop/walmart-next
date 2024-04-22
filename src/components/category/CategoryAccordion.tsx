@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/accordion";
 
 import SubCategoryItem from "@/components/category/SubCategoryItem";
-import { getSubCategoriesData } from "@/lib/supabase/fetch-data";
+import { getCategoriesData, getSubCategoriesData } from "@/lib/supabase/fetch-data";
 
 type AccordionProps = {
   categoryData: Category;
@@ -23,42 +23,55 @@ type AccordionProps = {
 export default async function CategoryAccordion(cat: AccordionProps) {
   const category = cat.categoryData;
   const subCat = await getSubCategoriesData();
+  const categories= await getCategoriesData()
   let subList: number[] = [];
   const subCategoriesIndexes: number[] = [];
 
-  subCat.map((sub) => subList.push(sub.id));
+  // subCat.map((sub) => subList.push(sub.id));
 
-  for (let i = 0; i < category.subCategories.length; i++) {
-    const num = category.subCategories[i];
-    const list2Index = subList.indexOf(num);
-    if (list2Index !== -1) {
-      subCategoriesIndexes.push(list2Index);
-    }
-  }
+  // for (let i = 0; i < category.subCategories.length; i++) {
+  //   const num = category.subCategories[i];
+  //   const list2Index = subList.indexOf(num);
+  //   if (list2Index !== -1) {
+  //     subCategoriesIndexes.push(list2Index);
+  //   }
+  // }
 
   return (
     <>
-      <h1 className="text-xl py-6 pr-4 font-bold pl-6 leading-5 border-b-1">
-        {category.title}
+    <h1 className="text-xl py-6 pr-4 font-bold  leading-5 border-b-1">
+        Categories
       </h1>
-      {subCategoriesIndexes.map((indx, idx) => {
-        return (
-          <Accordion key={idx} type="single" collapsible>
-            <AccordionItem value="item-1">
+    {categories.map((cat,indx)=>(
+
+    <>
+      
+          <Accordion key={indx} type="single" collapsible>
+            <AccordionItem value={`item-${indx+1}`}>
               <AccordionTrigger>
-                <SubCategoryItem subCatData={subCat[indx]} />
+                <SubCategoryItem subCatData={cat} />
               </AccordionTrigger>
-              {subCat[indx].queries.map((q, idx) => {
-                return (
-                  <AccordionContent key={idx}>
-                    <Link href={q.query}>{q.title}</Link>
-                  </AccordionContent>
-                );
+              <AccordionContent >
+
+        {cat.subCategories.slice(0,5).map((itm, indx) => {
+        const subcategories = subCat.filter((sub) => sub.id === itm);
+
+        return subcategories.map((sub,idx) => (
+                    <><Link key={idx} className="no-underline text-sm hover:underline" href="#">{sub.title}</Link><br /></>
+
+                ))
+                
               })}
+              <Link href={'#'} className="text-sm underline hover:no-underline ">Show All</Link>
+                  </AccordionContent>
+            
             </AccordionItem>
           </Accordion>
-        );
-      })}
+        
+      
+      
     </>
+  ))}
+  </>
   );
 }

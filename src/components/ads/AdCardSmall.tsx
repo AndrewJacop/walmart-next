@@ -13,7 +13,7 @@ type Adprops = {
 export default function AdCardSmall(props: Adprops) {
   return (
     <>
-      <div className="max-w-sm md:h-[310px] xl:h-[400px] rounded-3xl overflow-hidden shadow-md my-8">
+      <div className="w-[380px] md:h-[330px]  xl:h-[420px] rounded-3xl overflow-hidden shadow-md my-8">
         <img
           className="w-full"
           src={props.imgLink}

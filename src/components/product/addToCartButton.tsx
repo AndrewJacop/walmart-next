@@ -78,7 +78,7 @@ const AddToCartBtn = (props: Props) => {
           className=" border-[1px] border-[#46474a] w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2"
           onClick={() => increaseCartItemQuantity(props.product)}
         >
-          +Add
+          + Add
         </button>
       </div>
     );

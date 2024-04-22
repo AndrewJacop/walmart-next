@@ -1,6 +1,6 @@
 
 type SubCatItemProps = {
-  subCatData: SubCategory;
+  subCatData: Category;
 };
 /**
  * @brief SubCategory Accordion
@@ -16,10 +16,9 @@ export default function SubCategoryItem(subCat: SubCatItemProps) {
     <div className="cursor-pointer py-4 w-full items-center flex">
       <img
         alt="sub cat item image"
-        className="max-w-full self-center"
+        className="max-w-full rounded-full self-center w-10 h-10"
         src={subCategory.imgLink}
-        width={48}
-        height={48}
+       
       />
       <span className="text-base text-left ml-4 w-[90%] font-bold">
         {subCategory.title}

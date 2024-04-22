@@ -46,7 +46,7 @@ export function VideoAdCard() {
           height={447}
           width={794}
           className="relative w-full object-cover -z-10"
-          src="https://i5.walmartimages.com/dfw/4ff9c6c9-a305/k2-_d0659449-43f8-4acc-9610-40fdc8747db8.v1.jpg?odnDynImageQuality=70"
+          src="https://player.vimeo.com/progressive_redirect/playback/892046818/rendition/1080p/file.mp4?loc=external&signature=b17d4e94e2cbf913d7fa0081e248f9738d403e74496424afc2da03a6d595e339"
         />
       </Link>
     </div>

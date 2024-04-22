@@ -90,7 +90,7 @@ export default function CartToggle() {
             >
               {totalItems}
             </Badge>
-            <p className="font-normal text-[10px]">{totalPrice.toFixed(2)}</p>
+            <p className="font-normal text-[10px]">${totalPrice.toFixed(2)}</p>
           </div>
         </Button>
       </Link>
