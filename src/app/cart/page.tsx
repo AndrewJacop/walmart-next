@@ -9,18 +9,24 @@ import {
 } from "@/components/ui/accordion";
 
 import { auth } from "@/lib/firebase/config";
-import { useRouter } from "next/navigation";
-import { addNewOrder, getProductsData, getUserByUid } from "@/lib/supabase/fetch-data";
-import { handleAddToCart, removeAllFromCart, removeFromCart } from "@/lib/func/cart";
-import CartItem from "@/components/cart/CartItem";
-import { decrement, increment, productQtyInCartSelector, remove } from "@/store/slices/cartSlice";
+import {
+  addNewOrder,
+  getProductsData,
+  getUserByUid,
+} from "@/lib/supabase/fetch-data";
+import {
+  decrement,
+  increment,
+  productQtyInCartSelector,
+  remove,
+} from "@/store/slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import QtyBtn from "@/components/product/qtyButton";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { calculateTotalPrice } from "@/store/slices/totalPrice";
+import Image from "next/image";
 
-
-export function Cart() {
+export default function CartPage() {
   const [cartData, setCartData] = useState<CartItem[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
@@ -35,7 +41,7 @@ export function Cart() {
     fetchProducts();
   }, []);
 
-  const decreaseCartItemQuantity = (product: Product, cartItem: CartItem) => {
+  function decreaseCartItemQuantity(product: Product, cartItem: CartItem) {
     if (cartItem.quantity > 1) {
       dispatch(decrement(product));
       setCartData((prevCartData) =>
@@ -45,27 +51,24 @@ export function Cart() {
             : item
         )
       );
-
     } else {
       dispatch(decrement(product));
       setCartData((prevCartData) =>
         prevCartData.filter((item) => item.productId !== product.id)
       );
     }
+  }
 
-  };
-
-  const handleRemoveAll = (product: Product) => {
+  function handleRemoveAll(product: Product) {
     dispatch(remove(product));
     setCartData((prevCartData) =>
       prevCartData.filter((item) => item.productId !== product.id)
     );
-    dispatch(calculateTotalPrice({ products: products}))
+    dispatch(calculateTotalPrice({ products: products }));
+  }
 
-  };
-
-  const increaseCartItemQuantity = (product: Product, cartItem: CartItem) => {
-    dispatch(increment(product))
+  function increaseCartItemQuantity(product: Product, cartItem: CartItem) {
+    dispatch(increment(product));
     if (cartItem.quantity < product.quantity) {
       setCartData((prevCartData) =>
         prevCartData.map((item) =>
@@ -77,18 +80,8 @@ export function Cart() {
     } else {
       alert("max quantity");
     }
-    dispatch(calculateTotalPrice({ products: products}))
-
-  };
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productsData = await getProductsData();
-      setProducts(productsData);
-    };
-
-    fetchProducts();
-  }, []);
+    dispatch(calculateTotalPrice({ products: products }));
+  }
 
   useEffect(() => {
     const isAuth = auth.onAuthStateChanged((user) => {
@@ -118,7 +111,7 @@ export function Cart() {
     }
   }, [userId]);
 
-  const handleCheckOut = async () => {
+  async function handleCheckOut() {
     const date = new Date();
     const isAuth = auth.currentUser;
     if (isAuth) {
@@ -151,8 +144,7 @@ export function Cart() {
     } else {
       window.location.assign("/auth/sign-in");
     }
-  };
-
+  }
 
   const cartQuantities = useAppSelector((state) =>
     cartData.map((item) => productQtyInCartSelector(state, item.productId))
@@ -167,9 +159,11 @@ export function Cart() {
           </div>
           <div className="items-center flex justify-center pb-16">
             <div>
-              <img
-                className="t"
-                src="https://i5.walmartimages.com/dfw/63fd9f59-e0d6/65ab57af-59d6-423a-9500-1fa5ab36d1c7/v1/empty-cart.svg?odnHeight=240&odnWidth=200&odnBg=ffffff"
+              <Image
+                alt="background"
+                src="https://i5.walmartimages.com/dfw/63fd9f59-e0d6/65ab57af-59d6-423a-9500-1fa5ab36d1c7/v1/empty-cart.svg"
+                width={200}
+                height={240}
               />
               <p className="font-bold text-lg text-center">
                 Time to start shopping!
@@ -187,10 +181,12 @@ export function Cart() {
           <div className="w-8/12 relative ml-10">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <img
+                <Image
                   className="absolute mt-3"
                   src="https://i5.walmartimages.com/dfwrs/76316474-2775/k2-_3691ba8c-cbca-4439-9112-adb25c1b1803.v1.svg"
                   alt="image"
+                  width={32}
+                  height={32}
                 />
                 <AccordionTrigger className="text-xl font-bold ml-10 ">
                   Pickup and delivery options
@@ -201,132 +197,124 @@ export function Cart() {
               </AccordionItem>
             </Accordion>
           </div>
-        
-          
-          <div  className="px-3 ml-10 float-end absolute top-[25%] right-16 fixed-top">
-          <div className="border rounded-lg px-4">
-            <div className="flex justify-center mt-5 ">
-              <button
-                onClick={handleCheckOut}
-                className="flex justify-center bg-blue-600  text-white hover:bg-blue-600 px-28 py-3 text-sm font-bold rounded-full"
-              >
-                Continue to checkout
-              </button>
-            </div>
-            <div className="border my-5 border-gray-100"></div>
-            <div className="px-5 text-sm">
-              <div className="flex justify-between mb-8">
-                <p>
-                  <span className="font-bold">Subtotal</span> {(cartData.length)} Item
-                </p>
-                <span>$3.96</span>
-              </div>
-              <div className="flex justify-between">
-                <p className="font-bold">Taxes</p>
-                <span>Calculated at checkout</span>
+
+          <div className="px-3 ml-10 float-end absolute top-[25%] right-16 fixed-top">
+            <div className="border rounded-lg px-4">
+              <div className="flex justify-center mt-5 ">
+                <button
+                  onClick={handleCheckOut}
+                  className="flex justify-center bg-blue-600  text-white hover:bg-blue-600 px-28 py-3 text-sm font-bold rounded-full">
+                  Continue to checkout
+                </button>
               </div>
               <div className="border my-5 border-gray-100"></div>
-              <div className="flex justify-between mb-8">
-                <p className="font-bold">Estimated total</p>
-                <span className="font-bold">$3.96</span>
+              <div className="px-5 text-sm">
+                <div className="flex justify-between mb-8">
+                  <p>
+                    <span className="font-bold">Subtotal</span>{" "}
+                    {cartData.length} Item
+                  </p>
+                  <span>$3.96</span>
+                </div>
+                <div className="flex justify-between">
+                  <p className="font-bold">Taxes</p>
+                  <span>Calculated at checkout</span>
+                </div>
+                <div className="border my-5 border-gray-100"></div>
+                <div className="flex justify-between mb-8">
+                  <p className="font-bold">Estimated total</p>
+                  <span className="font-bold">$3.96</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-              <div  className="flex p-10">
-                <div className="w-8/12 border rounded-lg">
-                  <div className="flex justify-between bg-blue-50 p-8 rounded-lg">
-                    <h1 className="text-xl font-bold">
-                      Pickup or delivery from store, as soon as Today
-                    </h1>
-                    <a
-                      href="#"
-                      className="underline text-sm hover:no-underline hover:text-blue-800"
-                    >
-                      Reserve a time
-                    </a>
-                  </div>
-  
-                  <Card className="border-none">
-      {cartData.map((itm, indx) => {
-        const qty = cartQuantities[indx];
-
-        const cartProducts = products.filter((prd) => prd.id === itm.productId);
-
-        return cartProducts.map((prd) => (
-          <div key={prd.id}>
-            <CardHeader className="flex flex-row  relative">
-              <img
-                src={prd.images[0]}
-                alt="product img"
-                height={96}
-                width={96}
-              />
-
-              <CardContent>
-                <p className="w-1/2 flex ">
-                  {prd.title}{" "}
-                  <span className="font-bold absolute right-10">
-                    $
-                    {(
-                      Number(prd.originalPrice) *
-                      ((100 - Number(prd.discount)) / 100) *
-                      itm.quantity
-                    ).toFixed(2)}
-                  </span>
-                </p>
-                <div className="flex justify-end items-center mx-7 mb-3 text-sm absolute right-3">
-                  <p
-                    className="mr-7 underline hover:no-underline cursor-pointer hover:text-blue-500"
-                    onClick={() => {
-                      handleRemoveAll(prd);
-                    }}
-                  >
-                    Remove
-                  </p>
-                  <a
-                    href="#"
-                    className="mr-7 underline hover:no-underline hover:text-blue-500"
-                  >
-                    Save for later
-                  </a>
-                  <div className="flex border justify-center items-center border-gray-300 px-5 py-1 rounded-full">
-                    {!qty ? (
-                      <div className="flex justify-center">
-                        <button className=" border-[1px] border-[#46474a] w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2">
-                          +Add
-                        </button>
-                      </div>
-                    ) : (
-                      <QtyBtn
-                        onDecrease={() => decreaseCartItemQuantity(prd, itm)}
-                        onIncrease={() =>increaseCartItemQuantity(prd,itm)}
-                        qty={qty}
-                      />
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </CardHeader>
-          </div>
-        ));
-      })}
-    </Card>
-                </div>
-                {/* fixed right sidebar */}
-
-                
+          <div className="flex p-10">
+            <div className="w-8/12 border rounded-lg">
+              <div className="flex justify-between bg-blue-50 p-8 rounded-lg">
+                <h1 className="text-xl font-bold">
+                  Pickup or delivery from store, as soon as Today
+                </h1>
+                <a
+                  href="#"
+                  className="underline text-sm hover:no-underline hover:text-blue-800">
+                  Reserve a time
+                </a>
               </div>
-            </>
+
+              <Card className="border-none">
+                {cartData.map((itm, indx) => {
+                  const qty = cartQuantities[indx];
+
+                  const cartProducts = products.filter(
+                    (prd) => prd.id === itm.productId
+                  );
+
+                  return cartProducts.map((prd) => (
+                    <div key={prd.id}>
+                      <CardHeader className="flex flex-row  relative">
+                        <Image
+                          src={prd.images[0]}
+                          alt="product img"
+                          height={96}
+                          width={96}
+                        />
+
+                        <CardContent>
+                          <p className="w-1/2 flex ">
+                            {prd.title}{" "}
+                            <span className="font-bold absolute right-10">
+                              $
+                              {(
+                                Number(prd.originalPrice) *
+                                ((100 - Number(prd.discount)) / 100) *
+                                itm.quantity
+                              ).toFixed(2)}
+                            </span>
+                          </p>
+                          <div className="flex justify-end items-center mx-7 mb-3 text-sm absolute right-3">
+                            <p
+                              className="mr-7 underline hover:no-underline cursor-pointer hover:text-blue-500"
+                              onClick={() => {
+                                handleRemoveAll(prd);
+                              }}>
+                              Remove
+                            </p>
+                            <a
+                              href="#"
+                              className="mr-7 underline hover:no-underline hover:text-blue-500">
+                              Save for later
+                            </a>
+                            <div className="flex border justify-center items-center border-gray-300 px-5 py-1 rounded-full">
+                              {!qty ? (
+                                <div className="flex justify-center">
+                                  <button className=" border-[1px] border-[#46474a] w-20 h-8 font-semibold text-sm rounded-[18px] hover:border-2">
+                                    +Add
+                                  </button>
+                                </div>
+                              ) : (
+                                <QtyBtn
+                                  onDecrease={() =>
+                                    decreaseCartItemQuantity(prd, itm)
+                                  }
+                                  onIncrease={() =>
+                                    increaseCartItemQuantity(prd, itm)
+                                  }
+                                  qty={qty}
+                                />
+                              )}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </CardHeader>
+                    </div>
+                  ));
+                })}
+              </Card>
+            </div>
+            {/* fixed right sidebar */}
+          </div>
+        </>
       )}
-
-     
-         
-      
-
-
     </>
   );
 }
-
-export default Cart;
