@@ -12,6 +12,8 @@ export default function PlaceOrder() {
   const [userId, setUserId] = useState<string | null>(null);
   const [payment, setPayment] = useState<Payment[]>([]);
   const [shipping, setShipping] = useState<Shipment[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+
   useEffect(() => {
     const isAuth = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -40,6 +42,10 @@ export default function PlaceOrder() {
     }
   }, [userId]);
   useEffect(() => {
+    getProductsData().then((data) => {
+      setProducts([...data]);
+    });
+
     const shippingDataString = localStorage.getItem("shipping");
     const paymentDataString = localStorage.getItem("payment");
     if (shippingDataString) {
@@ -58,7 +64,7 @@ export default function PlaceOrder() {
   };
 
   // TODO: use effect
-  const products: Product[] = await getProductsData();
+  // const products: Product[] = getProductsData();
 
   return (
     <div className="grid md:grid-cols-4 md:gap-5">
