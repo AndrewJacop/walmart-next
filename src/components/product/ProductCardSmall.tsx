@@ -9,6 +9,7 @@ import { handleAddToCart, removeFromCart } from "@/lib/func/cart";
 import { addToFavorites, removeFromFavorites } from "@/lib/func/list";
 import { auth } from "@/lib/firebase/config";
 import AddToCartBtn from "./addToCartButton";
+import Image from "next/image";
 
 type CardProps = {
   productData: Product;
@@ -59,10 +60,12 @@ export default function ProductSmall(card: CardProps) {
           </button>
         )}
         <a href={`/product/${product.id}`}>
-          <img
+          <Image
             src={product.images[0]}
             alt="card img"
-            className="h-40 w-40 cursor-pointer"
+            className="cursor-pointer"
+            width={160}
+            height={160}
           />
         </a>
       </div>

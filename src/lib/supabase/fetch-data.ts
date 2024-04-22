@@ -4,6 +4,17 @@ export const revalidate = 0;
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
+export type Filter = {
+  query?: string;
+  priceMin?: number;
+  priceMax?: number;
+  isBestSeller: boolean;
+  isGiftable: boolean;
+  onlyAvailabe: boolean;
+  returnIdxList: number[];
+  pageIdx: number;
+};
+
 // Search
 export async function getSearchReaults(query: string) {
   const supabase = await createClient();
@@ -98,6 +109,32 @@ export async function getProductsData() {
   const { data, error } = await supabase.from("products").select().order("id");
   if (error) console.log("##fetchdata->getProductsData##", error);
   return data as Product[];
+}
+
+export async function getFilteredProductsData(filter: Filter) {
+  const supabase = await createClient();
+
+  const pageSize = 100;
+
+  const start = (filter.pageIdx - 1) * pageSize;
+  const end = start + pageSize - 1;
+
+  const { data: productsData, error } = await supabase
+    .from("products")
+    .select("*")
+    .like("title", filter.query ? `%${filter.query}%` : "%%")
+    .is("isBestSeller", filter.isBestSeller)
+    .is("isGiftable", filter.isGiftable)
+    .gt("quantity", filter.onlyAvailabe ? 0 : -1)
+    .in("returnPolicy", filter.returnIdxList)
+    .order("id", { ascending: true })
+    .gte("originalPrice", filter.priceMin ?? 0)
+    .lte("originalPrice", filter.priceMax ?? 10000)
+    .range(start, end)
+    .returns<Product[]>();
+
+  if (error) console.log("##fetchdata->getProductsData##", error);
+  return productsData;
 }
 
 //

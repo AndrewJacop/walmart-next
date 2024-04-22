@@ -58,6 +58,7 @@ import { randomInt } from "crypto";
 import Reviews, { ReviewBtn } from "@/components/product/reviews";
 import { auth } from "@/lib/firebase/config";
 import { getCurrentUser } from "@/lib/firebase/admin-config";
+import Image from "next/image";
 
 const crumb = [
   { id: "1", title: "Grocery", link: "#" },
@@ -65,7 +66,11 @@ const crumb = [
   { id: "3", title: "Organic Produce", link: "#" },
 ];
 
-export default async function Product({params,}: {params: { productId: string };}) {
+export default async function Product({
+  params,
+}: {
+  params: { productId: string };
+}) {
   // const [vot, setVote] = useState(0);
   // const [reviewTitle, setReviewTitle] = useState("");
   const products = await getProductsData();
@@ -110,8 +115,6 @@ export default async function Product({params,}: {params: { productId: string };
   }
   const user = await getData();
 
- 
-
   return (
     <>
       <section>
@@ -150,7 +153,7 @@ export default async function Product({params,}: {params: { productId: string };
                         key={indx}
                         // onMouseOver={() => handleImageClick(image)}
                       >
-                        <img
+                        <Image
                           src={image}
                           alt={`Image`}
                           width={100}
@@ -269,8 +272,7 @@ export default async function Product({params,}: {params: { productId: string };
                             {specs.map((spec, idx) => (
                               <DialogDescription
                                 key={idx}
-                                className="font-[black]"
-                              >
+                                className="font-[black]">
                                 <p className="font-bold py-2">
                                   {spec.title}
                                   <p className="font-normal text-[gray]">
@@ -302,8 +304,7 @@ export default async function Product({params,}: {params: { productId: string };
                 <TbMessageCircle2 />{" "}
                 <a
                   href="#"
-                  className="underline px-2 py-2 hover:text-mainColor font-light hover:no-underline"
-                >
+                  className="underline px-2 py-2 hover:text-mainColor font-light hover:no-underline">
                   Report incorrect product information
                 </a>
               </span>
@@ -348,7 +349,7 @@ export default async function Product({params,}: {params: { productId: string };
                   submit review
                 </button>
               </div> */}
-              <ReviewBtn productData={products[indx]}/>
+              <ReviewBtn productData={products[indx]} />
               {/* <Reviews productData={products[indx]} currentUser={user} /> */}
               <h1 className="text-3xl my-5 font-bold">
                 Customer ratings & reviews
@@ -360,8 +361,7 @@ export default async function Product({params,}: {params: { productId: string };
                     {review.subtitle != "" && (
                       <div
                         key={index}
-                        className="border my-2 shadow-md rounded-[10px] "
-                      >
+                        className="border my-2 shadow-md rounded-[10px] ">
                         {review.vote < 5 ? (
                           <span className="flex relative px-5 py-3">
                             <p className="text-lg pe-5 py-3">
@@ -426,8 +426,7 @@ export default async function Product({params,}: {params: { productId: string };
               <span>
                 <Link
                   href={"#"}
-                  className=" underline  hover:no-underline  hover:text-[#0073e6] text-sm"
-                >
+                  className=" underline  hover:no-underline  hover:text-[#0073e6] text-sm">
                   {" "}
                   {/* {products[indx].brand.title} */}
                 </Link>
@@ -519,8 +518,7 @@ export default async function Product({params,}: {params: { productId: string };
                   <div className="grid gap-1.5 leading-none">
                     <label
                       htmlFor="terms1"
-                      className=" leading-none cursor-pointer text-sm flex peer-disabled:opacity-70 font-normal focus:font-bold active:font-bold "
-                    >
+                      className=" leading-none cursor-pointer text-sm flex peer-disabled:opacity-70 font-normal focus:font-bold active:font-bold ">
                       I want shipping & delivery savings with Walmart plus
                       <img
                         src="https://i5.walmartimages.com/dfw/63fd9f59-3e1b/a3d2466d-fa02-4f2d-a401-aca52a4aac17/v1/walmartPlus-logo-blue.svg"
