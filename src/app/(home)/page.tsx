@@ -306,8 +306,8 @@ export default async function HomePage() {
     <>
       <section>
         {/* ads section 1  */}
-        <section className="flex">
-          <div className="w-1/4 mx-6  mb-8  ">
+        <section className="flex flex-col lg:flex-row">
+          <div className="w-full lg:w-1/4 mx-6  mb-8  ">
             {apiAdData.slice(0, 3).map((data) => (
               <div key={data.id} className="mb-4">
                 <AdCard adData={data} />
@@ -315,7 +315,7 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <div className="w-1/2  mb-3 ">
+          <div className="w-full lg:w-1/2  mb-3 ">
             <AdCard adData={apiAdData[3]} />
             <div className="flex grid grid-cols-2 gap-x-6 mt-4">
               <AdCard adData={apiAdData[4]} />
@@ -327,7 +327,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="w-1/4 mx-6 mb-8 ">
+          <div className="w-full lg:w-1/4 mx-6 mb-8 ">
             {apiAdData.slice(13, 16).map((data) => (
               <div key={data.id} className="mb-4">
                 <AdCard adData={data} />
@@ -385,7 +385,7 @@ export default async function HomePage() {
         </article>
 
         {/* ads section 2  */}
-        <section className="flex  gap-x-6 ">
+        <section className="flex flex-col lg:flex-row  gap-x-6 ">
           <div className="basis-[42%] py-2">
             <AdCard adData={apiAdData[8]} />
           </div>
@@ -450,7 +450,7 @@ export default async function HomePage() {
         <AdBar />
 
         {/* ads section 3  */}
-        <section className="flex  gap-x-6 ">
+        <section className="flex flex-col lg:flex-row  gap-x-6 ">
           <div className="basis-[42%] py-2">
             <AdCard adData={apiAdData[18]} />
           </div>
@@ -500,7 +500,7 @@ export default async function HomePage() {
         </article>
 
         {/*  ads section 4 */}
-        <section className="flex  gap-x-6 ">
+        <section className="flex flex-col lg:flex-row  gap-x-6 ">
           <div className="basis-[42%] py-2">
             <AdCard adData={apiAdData[23]} />
           </div>
@@ -536,7 +536,7 @@ export default async function HomePage() {
 
         {/*  Ads section 5 */}
 
-        <section className="flex  gap-x-6 ">
+        <section className="flex flex-col lg:flex-row gap-x-6 ">
           <div className="basis-[42%] py-2">
             <AdCard adData={apiAdData[28]} />
           </div>

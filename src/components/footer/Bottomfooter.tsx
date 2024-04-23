@@ -29,21 +29,21 @@ function BottomFooter() {
   return (
     <>
       <div className="bg-[#004f9a] p-3 text-center ">
-        <div className="text-white flex-wrap items-center mx-60 text-sm">
+        <div className="text-white flex flex-col lg:flex-row  justify-center  mx-60 text-sm">
           {LinksList.slice(0, 10).map((link, index) => (
             <a key={index} href={link.href} className="mr-5 hover:underline">
               {link.title}
             </a>
           ))}
         </div>
-        <div className="text-white py-1 flex justify-center text-sm">
+        <div className="text-white py-1 flex flex-col lg:flex-row  justify-center text-sm">
           {LinksList.slice(10, 18).map((link, index) => (
             <a key={index} href={link.href} className="mr-6 hover:underline">
               {link.title}
             </a>
           ))}
         </div>
-        <div className="text-white flex justify-center text-sm">
+        <div className="text-white flex flex-col lg:flex-row justify-center text-sm">
           {LinksList.slice(18, 24).map((link, index) => (
             <a key={index} href={link.href} className="mr-6  hover:underline">
               {link.title}

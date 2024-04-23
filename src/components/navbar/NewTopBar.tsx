@@ -40,10 +40,11 @@ export default async function NewTopNavBar() {
   const categories = await getCategoriesData();
 
   return (
-    <div className="flex justify-center items-center px-4 py-6 bg-[#0071dc] gap-1 z-10">
+    <div className="flex flex-col justify-center items-center px-4 py-6 bg-[#0071dc] gap-1 z-10 md:flex md:flex-row">
       {/* Logo */}
       <MainLogo />
 
+      <div className="flex flex-row">
       {/* Departments Button */}
       <DropdownMenu>
         <DropdownMenuTrigger>
@@ -70,8 +71,12 @@ export default async function NewTopNavBar() {
         <LayoutGrid className="mr-2 h-4 w-4" />
         Services
       </Button>
+      </div>
+
       {/* search bar */}
       <SearchBar />
+
+      <div className="flex flex-row my-2">
       {/* My Itmes Button */}
       <MyItemsButton />
       {/* Account Button */}
@@ -80,6 +85,8 @@ export default async function NewTopNavBar() {
           currentUser: currentUser,
         }}
       />
+      </div>
+
       {/* Cart */}
       <CartToggle />
     </div>

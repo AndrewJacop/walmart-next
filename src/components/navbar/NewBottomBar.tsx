@@ -12,17 +12,17 @@ export default async function NewBottomBar() {
 
   const categories=await getCategoriesData()
   return (
-    <div className="bg-[#0071dc] border-t-[1px] px-7 py-1  text-white flex items-center">
-      <Addressbutton/>
+    <div className="bg-[#0071dc] border-t-[1px] px-7 py-1  text-white flex items-center invisible lg:visible">
 
-        <div className="px-2 text-xs flex items-center gap-x-2 cursor-pointer">|
+        <div className="px-2 text-xs flex items-center gap-x-2 cursor-pointer ">
+      <Addressbutton/>|
       <HiOutlineMapPin />  
          Sacramento,95829 
          <GrHomeRounded />
          Sacramento Supercenter
       </div>
 
-      <div className="flex flex-wrap font-bold text-xs  w-2/3 gap-x-5  justify-end overflow-hidden">
+      <div className="flex flex-wrap font-bold text-xs w-2/3 gap-x-5 justify-end overflow-hidden">
       
         {categories.slice(0,9).map((cat,indx)=>(
 
