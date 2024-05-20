@@ -9,6 +9,7 @@ import { handleAddToCart, removeFromCart } from "@/lib/func/cart";
 import { addToFavorites, removeFromFavorites } from "@/lib/func/list";
 import { auth } from "@/lib/firebase/config";
 import AddToCartBtn from "./addToCartButton";
+import { Toaster } from "react-hot-toast";
 
 type CardProps = {
   productData: Product;
@@ -100,6 +101,7 @@ export default function ProductSmall(card: CardProps) {
             </button>
           </Link>
         )}
+
       </div>
     </div>
   );

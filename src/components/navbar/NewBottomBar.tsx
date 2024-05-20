@@ -15,16 +15,16 @@ export default async function NewBottomBar() {
     <div className="bg-[#0071dc] border-t-[1px] px-7 py-1  text-white flex items-center">
       <Addressbutton/>
 
-        <div className="px-2 text-xs flex items-center gap-x-2 cursor-pointer">|
+        <div className="px-2 text-xs flex items-center gap-x-2 cursor-pointer">| 
       <HiOutlineMapPin />  
          Sacramento,95829 
          <GrHomeRounded />
          Sacramento Supercenter
       </div>
 
-      <div className="flex flex-wrap font-bold text-xs  w-2/3 gap-x-5  justify-end overflow-hidden">
+      <div className="xl:flex xl:flex-wrap font-bold text-xs  w-2/3 gap-x-5  justify-end overflow-hidden sm:hidden ">
       
-        {categories.slice(0,9).map((cat,indx)=>(
+        {categories.slice(0,7).map((cat,indx)=>(
 
             <Link key={indx} className="hover:underline" href={`/departments/${cat.id}`}>{cat.title}</Link>
         ))}

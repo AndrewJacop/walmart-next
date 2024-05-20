@@ -1,5 +1,6 @@
 import React from "react";
 import { TrashIcon } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 interface Props {
   onIncrease: () => void;
   onDecrease: () => void;
@@ -23,6 +24,8 @@ const QtyBtn = (props: Props) => {
       >
         +
       </button>
+      <Toaster position="top-center" />
+
     </div>
   );
 };

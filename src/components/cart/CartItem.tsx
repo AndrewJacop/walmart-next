@@ -24,6 +24,7 @@ import {
 } from "@/store/slices/cartSlice";
 import QtyBtn from "../product/qtyButton";
 import { auth } from "@/lib/firebase/config";
+import toast from "react-hot-toast";
 
 /**
  * @brief Cart Item
@@ -83,7 +84,7 @@ export default function CartItem() {
         )
       );
     } else {
-      alert("max quantity");
+      toast.error('! Max quantity')
     }
   };
 

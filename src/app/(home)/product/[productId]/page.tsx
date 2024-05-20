@@ -1,4 +1,5 @@
 // Product.jsx
+
 import { LuAlertCircle } from "react-icons/lu";
 import { LuMapPin } from "react-icons/lu";
 import { FaRegHeart, FaStar } from "react-icons/fa6";
@@ -46,14 +47,16 @@ import { ProductCarouselLarge } from "@/components/product/ProductCarouselLarge"
 import RelatedPage from "@/components/footer/RelatedPages";
 import { calcRating, extractSecefications, getReviews } from "@/lib/utils";
 import {
+  addNewProductReview,
+  addNewReview,
   getProductsData,
   getReviewsData,
   getUserByUid,
 } from "@/lib/supabase/fetch-data";
 import { AdBar } from "@/components/ads/AdBar";
 import ProductCard from "@/components/product/ProductCard";
+import  { ReviewBtn } from "@/components/product/reviews";
 import { getCurrentUser } from "@/lib/firebase/admin-config";
-import { ReviewBtn } from "@/components/product/reviews";
 
 const crumb = [
   { id: "1", title: "Grocery", link: "#" },
@@ -62,16 +65,17 @@ const crumb = [
 ];
 
 export default async function Product({params,}: {params: { productId: string };}) {
-
+  // const [vot, setVote] = useState(0);
+  // const [reviewTitle, setReviewTitle] = useState("");
   const products = await getProductsData();
   const indx = products.findIndex((prd) => prd.id === params.productId);
   const specs = extractSecefications(products[indx]);
   const reviewData = await getReviews(products[indx]);
 
+  const allReviews = await getReviewsData();
   const ratingAverage = calcRating(reviewData);
   const reminStars = 5 - Math.floor(5 / ratingAverage) * ratingAverage;
 
- 
   async function getData() {
     const firebaseUser = await getCurrentUser();
     if (firebaseUser) {
@@ -80,21 +84,24 @@ export default async function Product({params,}: {params: { productId: string };
       return userName;
     }
   }
+  const user = await getData();
+
  
+
   return (
     <>
       <section>
         <Breadcrumb>
           <BreadcrumbList>
             {crumb.map((crumb, idx) => (
-              <div  key={idx}>
-                <BreadcrumbItem>
+              <>
+                <BreadcrumbItem key={idx}>
                   <BreadcrumbLink className="py-6" href="/components">
                     {crumb.title}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
-              </div>
+              </>
             ))}
 
             <BreadcrumbItem>
@@ -153,7 +160,7 @@ export default async function Product({params,}: {params: { productId: string };
               </p>{" "}
               <ProductCarouselLarge
                 basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/5"
-                testProduct={products.slice(100, 111)}
+                testProduct={products.slice(60, 71)}
               />
             </div>
 
@@ -277,18 +284,58 @@ export default async function Product({params,}: {params: { productId: string };
                 </a>
               </span>
               <AdBar />
-            
+              {/* 
+              <div className="my-10 ">
+                <h1 className="text-3xl font-bold">Rate this product </h1>
+                <p className="text-gray-600">Tell other what you think</p>
+
+                <div className="w-full   flex p-5 cursor-pointer">
+                  <span onClick={() => setVote(1)}>
+                    <FaStar className="hover:text-[gold] text-3xl text-[gray] me-5 " />
+                  </span>
+                  <span onClick={() => setVote(2)}>
+                    {" "}
+                    <FaStar className="hover:text-[gold] text-3xl text-[gray] mx-5" />
+                  </span>
+                  <span onClick={() => setVote(3)}>
+                    {" "}
+                    <FaStar className="hover:text-[gold] text-3xl text-[gray] mx-5" />
+                  </span>
+                  <span onClick={() => setVote(4)}>
+                    {" "}
+                    <FaStar className="hover:text-[gold] text-3xl text-[gray] mx-5" />
+                  </span>
+                  <span onClick={() => setVote(5)}>
+                    {" "}
+                    <FaStar className="hover:text-[gold] text-3xl text-[gray] mx-5" />
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  className="w-full p-2 border h-20   "
+                  placeholder="type your review........"
+                  value={reviewTitle}
+                  onChange={(e) => setReviewTitle(e.target.value)}
+                />
+                <button
+                  className="bg-[#0071dc] h-10 w-40 text-white rounded-[18px] text-xl mt-4 "
+                  onClick={() => adrev()}
+                >
+                  submit review
+                </button>
+              </div> */}
               <ReviewBtn productData={products[indx]}/>
+              {/* <Reviews productData={products[indx]} currentUser={user} /> */}
               <h1 className="text-3xl my-5 font-bold">
                 Customer ratings & reviews
               </h1>
 
               <div className="flex grid grid-cols-2 gap-x-6">
                 {reviewData.map((review, index) => (
-                  <div key={index}>
+                  <>
                     {review.subtitle != "" && (
                       <div
-                        
+                        key={index}
                         className="border my-2 shadow-md rounded-[10px] "
                       >
                         {review.vote < 5 ? (
@@ -329,7 +376,7 @@ export default async function Product({params,}: {params: { productId: string };
                         </div>
                       </div>
                     )}
-                  </div>
+                  </>
                 ))}
               </div>
               <div className="flex justify-center my-4">

@@ -19,9 +19,9 @@ type CategoryProps = {
         className="rounded-full h-24 w-24"
        
       />
-      <p className="text-center font-sans text-xs py-1 overflow-hidden truncate w-24 ">
+      <a href={`/departments/${myCat.id}`} className="text-center font-sans text-xs py-1 overflow-hidden truncate w-24 ">
         {myCat.title}
-      </p>
+      </a>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import AddToCartBtn from "@/components/product/addToCartButton";
 import { handleAddToCart, removeFromCart } from "@/lib/func/cart";
 import { getFavoriteProducts, removeFromFavorites } from "@/lib/func/list";
 import React, { useState, useEffect } from "react";
@@ -65,22 +66,9 @@ export default function MyFavoriteLists() {
               </button>
             ) : (
               <div className="flex grid grid-cols-2  w-full mx-1  text-center items-center py-1 rounded-full">
-                <span
-                  className="cursor-pointer text-2xl bg-gray-300 rounded-full text-white me-14"
-                  onClick={() => {
-                    removeFromCart(product);
-                  }}>
-                  -
-                </span>
-                {/* <p className="font-bold"></p> */}
+            
 
-                <span
-                  className="cursor-pointer text-2xl bg-gray-300 rounded-full ms-14 text-white"
-                  onClick={ () => {
-                    handleAddToCart(product);
-                  }}>
-                  +
-                </span>
+               <AddToCartBtn product={product} />
               </div>
             )}
                                       </div>

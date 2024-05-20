@@ -96,7 +96,7 @@ export default async function Category({
             </div>
             <div className=" my-4">
               <p className="font-bold mb-6 text-2xl">Build Your Card</p>
-              <div className="flex mb-10 items-center justify-center ">
+              <div className="flex mb-10 items-center  ">
                 <ProductCarouselLarge
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
                   testProduct={productData.slice(0, 10)}
@@ -105,7 +105,7 @@ export default async function Category({
             </div>
 
             {/* ////////////////// */}
-            <div className="grid grid-cols-3 gap-x-4">
+            <div className="grid grid-cols-3 gap-x-">
               {adCard.map((data, index) => (
                 <AdCardSmall
                   key={index}
@@ -118,16 +118,16 @@ export default async function Category({
 
             <div className=" my-6">
               <p className="font-bold mb-6 text-2xl">Easter meal must-haves</p>
-              <div className="flex mb-20 items-center justify-center ">
+              <div className="flex mb-20 items-center ">
                 <ProductCarouselLarge
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-                  testProduct={productData.slice(100, 111)}
+                  testProduct={productData.slice(100, 110)}
                 />
               </div>
             </div>
             <div className=" my-6">
               <p className="font-bold mb-3 text-2xl">Easter Basket Suffer</p>
-              <div className="flex mb-10 items-center justify-center ">
+              <div className="flex mb-10 items-center ">
                 <ProductCarouselLarge
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
                   testProduct={productData.slice(200, 210)}
@@ -137,7 +137,7 @@ export default async function Category({
 
             <div className=" my-6">
               <p className="font-bold mb-6 text-2xl">Easter candy</p>
-              <div className="flex mb-10 items-center justify-center ">
+              <div className="flex mb-10 items-center ">
                 <ProductCarouselLarge
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
                   testProduct={productData.slice(70, 80)}
@@ -147,7 +147,7 @@ export default async function Category({
 
             <div className=" my-4">
               <p className="font-bold mb-10 text-2xl">Easter baking</p>
-              <div className="flex mb-10 items-center justify-center ">
+              <div className="flex mb-10 items-center ">
                 <ProductCarouselLarge
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
                   testProduct={productData.slice(90, 100)}
@@ -166,7 +166,7 @@ export default async function Category({
               <p className="font-bold mb-10 text-2xl">
                 St. Patrick’s Day picks
               </p>
-              <div className="flex mb-10 items-center justify-center ">
+              <div className="flex mb-10 items-center ">
                 <ProductCarouselLarge
                   basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
                   testProduct={productData.slice(200, 210)}

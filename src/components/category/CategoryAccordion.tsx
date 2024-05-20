@@ -57,7 +57,7 @@ export default async function CategoryAccordion(cat: AccordionProps) {
         const subcategories = subCat.filter((sub) => sub.id === itm);
 
         return subcategories.map((sub,idx) => (
-                    <div key={idx}><Link  className="no-underline text-sm hover:underline" href="#">{sub.title}</Link><br /></div>
+                    <div key={idx}><a  className="no-underline text-sm hover:underline" href={`/departments/${cat.id}/${sub.id}`}>{sub.title}</a><br /></div>
 
                 ))
                 

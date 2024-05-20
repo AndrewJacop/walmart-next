@@ -9,7 +9,7 @@ const LinksList = [
   { href: "#", title: "Accessibility" },
   { href: "#", title: "Tax Exempt Program" },
   { href: "#", title: "Get the Walmart App" },
-  { href: "/auth/sign-in", title: "Sign-up for Email" },
+  { href: "/auth", title: "Sign-up for Email" },
   { href: "#", title: "Safety Data Sheet" },
   { href: "#", title: "Terms of Use" },
   { href: "#", title: "Privacy & Security" },

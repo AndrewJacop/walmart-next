@@ -73,7 +73,7 @@ export default function SignUpPage() {
     if (newUserId) {
       // check if there is a cart in local storage
       const cartData: CartItem[] = JSON.parse(
-        localStorage.getItem("cart") || "[]"
+        localStorage.getItem("userCart") || "[]"
       );
       // add new user to supabase
       const newUser: User = {
@@ -93,9 +93,9 @@ export default function SignUpPage() {
       };
 
       await addNewUser(newUser);
-
+      
       // add user id to local storage
-      // localStorage.setItem("userId", newUserId);
+      localStorage.setItem("userCart", JSON.stringify([]));
 
       // navigate to home
       window.location.assign("/");

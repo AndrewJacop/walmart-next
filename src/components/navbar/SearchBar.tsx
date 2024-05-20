@@ -43,7 +43,7 @@ export default function SearchBar() {
               <div
                 key={map.id}
                 className="flex justify-between items-center py-3 px-5 hover:bg-slate-200 rounded-xl m-1">
-                <a className="">{map.title}</a>
+                <a href={`/product/${map.id}`} className="">{map.title}</a>
                 <ArrowUpLeft />
               </div>
             ))}

@@ -25,6 +25,7 @@ import QtyBtn from "@/components/product/qtyButton";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { calculateTotalPrice } from "@/store/slices/totalPrice";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function CartPage() {
   const [cartData, setCartData] = useState<CartItem[]>([]);
@@ -77,9 +78,7 @@ export default function CartPage() {
             : item
         )
       );
-    } else {
-      alert("max quantity");
-    }
+    } 
     dispatch(calculateTotalPrice({ products: products }));
   }
 
@@ -142,7 +141,7 @@ export default function CartPage() {
       });
       window.location.assign("/cart/checkout/shipping");
     } else {
-      window.location.assign("/auth/sign-in");
+      window.location.assign("/auth");
     }
   }
 

@@ -13,6 +13,7 @@ import { handleAddToCart, removeFromCart } from "@/lib/func/cart";
 import { addToFavorites, removeFromFavorites } from "@/lib/func/list";
 import WalmartPlus from "../../../public/wplus-icon-blue.svg";
 import { auth } from "@/lib/firebase/config";
+import BlueAddToCartBtn from "./blueAddToCartbtn";
 
 type CardProps = {
   productData: Product;
@@ -72,35 +73,7 @@ export default function ProductCard(card: CardProps) {
         <div>
           {product.colors ? (
             <>
-              {!isAdded ? ( // Render Add button only if the product is not added to cart
-                <button
-                  className="absolute bottom-1 -left-1 bg-blue-600 text-white font-bold w-16 h-7 border-none rounded-3xl hover:border-2"
-                  onClick={() => {
-                    setIsAdded(true);
-                    handleAddToCart(product);
-                  }}>
-                  {" "}
-                  + Add{" "}
-                </button>
-              ) : (
-                <div className="grid grid-cols-2 w-full mx-1 items-center py-1 rounded-full">
-                  <span
-                    className="cursor-pointer text-2xl bg-gray-300 rounded-full text-white me-14"
-                    onClick={() => {
-                      removeFromCart(product);
-                    }}>
-                    -
-                  </span>
-
-                  <span
-                    className="cursor-pointer text-2xl bg-gray-300 rounded-full ms-14 text-white"
-                    onClick={() => {
-                      handleAddToCart(product);
-                    }}>
-                    +
-                  </span>
-                </div>
-              )}
+             <BlueAddToCartBtn product={product}/>
             </>
           ) : (
             <Link href={`/product/${product.id}`}>

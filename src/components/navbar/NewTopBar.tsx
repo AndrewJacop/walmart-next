@@ -45,25 +45,25 @@ export default async function NewTopNavBar() {
       <MainLogo />
 
       {/* Departments Button */}
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <span className="text-white font-bold text-sm rounded-full flex items-center hover:bg-blue-900/[.8] p-2">
-            <LayoutGrid className="mr-2 h-4 w-4" />
-            Departments
-          </span>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="ms-32 mt-5">
-        <DropdownMenuLabel><a href='/departments' className="font-bold hover:underline">All Departments</a></DropdownMenuLabel>
-    <DropdownMenuSeparator />
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <span className="text-white font-bold text-sm rounded-full flex items-center hover:bg-blue-900/[.8] p-2">
+              <LayoutGrid className="mr-2 h-4 w-4" />
+              Departments
+            </span>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="ms-32 mt-5">
+          <DropdownMenuLabel><a href='/departments' className="font-bold hover:underline">All Departments</a></DropdownMenuLabel>
+          <DropdownMenuSeparator />
 
           {categories?.map((cat) => (
-            <DropdownMenuItem className="cursor-pointer" key={cat.id}>
-              <a>{cat.title}</a>
-              </DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer" key={cat.id}>
+              <a href={`/departments/${cat.id}`}>{cat.title}</a>
+          </DropdownMenuItem>
           ))}
            
-        </DropdownMenuContent>
-      </DropdownMenu>
+          </DropdownMenuContent>
+       </DropdownMenu>
 
       {/* Services Button */}
       <Button variant="ghost" className="text-white font-bold rounded-full">

@@ -69,10 +69,15 @@ export async function signMeOut() {
     });
     const resBody = await response.json();
     if (response.ok && resBody.success) {
+      localStorage.setItem('favorites',JSON.stringify([]));
+      localStorage.setItem('cart',JSON.stringify([]));
       console.log("logging out is done");
-      localStorage.clear();
+   
+
       return true;
     } else {
+      localStorage.setItem('favorites',JSON.stringify([]));
+      localStorage.setItem('cart',JSON.stringify([]));
       console.log("logging problem");
       return false;
     }

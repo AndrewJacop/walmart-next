@@ -88,6 +88,7 @@ const AddToCartBtn = (props: Props) => {
       onIncrease={() => increaseCartItemQuantity(props.product)}
       qty={qty}
     />
+    
   );
 };
 

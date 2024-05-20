@@ -1,7 +1,6 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
 import { useRef, useState } from "react";
+import Link from "next/link";
 import {
   MdOutlinePlayCircleFilled,
   MdOutlinePauseCircleFilled,
@@ -40,14 +39,13 @@ export function VideoAdCard() {
           )}
         </button>
       </div>
-      <Link href={"/"}>
-        <img
-          alt="video ad vard"
-          height={447}
-          width={794}
+      <Link href={""}>
+        <video
+          ref={videoRef}
           className="relative w-full object-cover -z-10"
-          src="https://player.vimeo.com/progressive_redirect/playback/892046818/rendition/1080p/file.mp4?loc=external&signature=b17d4e94e2cbf913d7fa0081e248f9738d403e74496424afc2da03a6d595e339"
-        />
+          autoPlay
+          loop={true}
+          src='AdVideo.mp4'></video>
       </Link>
     </div>
   );

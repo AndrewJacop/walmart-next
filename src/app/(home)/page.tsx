@@ -2,8 +2,7 @@ import { AdBar } from "@/components/ads/AdBar";
 import { AdCard } from "@/components/ads/AdCard";
 import { AnimatedAdCard } from "@/components/ads/AnimatedAdCard";
 import { VideoAdCard } from "@/components/ads/VideoAdCard";
-import ShippingOption from "@/components/cart/ShippingOption";
-import CategoryAccordion from "@/components/category/CategoryAccordion";
+
 import { CategoryCarousel } from "@/components/category/CategoryCarousel";
 import DepartmentCard from "@/components/category/DepartmentCard";
 import SubCategoryItem from "@/components/category/SubCategoryItem";
@@ -306,8 +305,9 @@ export default async function HomePage() {
     <>
       <section>
         {/* ads section 1  */}
-        <section className="flex">
-          <div className="w-1/4 mx-6  mb-8  ">
+        <section className="xl:flex xl:flex-row md:flex sm:inline sm:align-center">
+          
+          <div className="xl:w-1/4 xl:inline xl:mx-6  xl:mb-8 xl:order-1 sm:w-full sm:inline md:hidden sm:hidden">
             {apiAdData.slice(0, 3).map((data) => (
               <div key={data.id} className="mb-4">
                 <AdCard adData={data} />
@@ -315,8 +315,10 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <div className="w-1/2  mb-3 ">
-            <AdCard adData={apiAdData[3]} />
+         
+
+            <div className="xl:w-1/2  xl:mb-3 xl:order-2 sm:inline sm:w-full sm:order-1">
+            <VideoAdCard/>
             <div className="flex grid grid-cols-2 gap-x-6 mt-4">
               <AdCard adData={apiAdData[4]} />
               <AdCard adData={apiAdData[5]} />
@@ -326,251 +328,260 @@ export default async function HomePage() {
               <AdCard adData={apiAdData[6]} />
             </div>
           </div>
-
-          <div className="w-1/4 mx-6 mb-8 ">
+          <div className="xl:w-1/4 xl:inline xl:mx-6 xl:mb-8 xl:order-3 md:hidden sm:inline sm:w-1/2 sm:order-3  sm:ms-36">
             {apiAdData.slice(13, 16).map((data) => (
-              <div key={data.id} className="mb-4">
+              <div key={data.id} className="mb-4 sm:ms-24  lg:ms-1 ">
                 <AdCard adData={data} />
               </div>
             ))}
           </div>
+         
         </section>
-
         <AdBar />
 
-        {/* product carousel 1 "Flash Deals"*/}
-        <article className=" mt-0 mb-16  ">
-          <p className="font-bold text-2xl  "> Flash Deals </p>
-          <p className="text-[gray] font-light text-xs mb-5"> Up to 65% off</p>
-          <div>
-            <ProductCarousel
-              basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-              testProduct={productData.slice(300,311)}
-            />
-          </div>
-        </article>
+{/* product carousel 1 "Flash Deals"*/}
+<article className=" mt-0 mb-16  ">
+  <p className="font-bold text-2xl  "> Flash Deals </p>
+  <p className="text-[gray] font-light text-xs mb-5"> Up to 65% off</p>
+  <div>
+    <ProductCarousel
+      basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
+      testProduct={productData.slice(300,311)}
+    />
+  </div>
+</article>
 
-        <hr />
+<hr />
 
-        {/* second Product Carousel "Continue Your shopping"*/}
-        <article className=" my-5 ">
-          <p className="font-bold text-2xl mb-6 "> Continue your shopping </p>
-          <div>
-            <ProductCarousel
-              basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-              testProduct={productData.slice(219, 230)}
-            />
-          </div>
-        </article>
+{/* second Product Carousel "Continue Your shopping"*/}
+<article className=" my-5 ">
+  <p className="font-bold text-2xl mb-6 "> Continue your shopping </p>
+  <div>
+    <ProductCarousel
+      basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
+      testProduct={productData.slice(219, 230)}
+    />
+  </div>
+</article>
 
-        <hr />
+<hr />
 
-        {/*1 product carousel 2 | large Ad */}
-        <article className=" my-5">
-          <p className="font-bold text-2xl  "> Perfectly pinch-proof </p>
-          <p className="text-[gray] font-light text-sm ">
-            {" "}
-            Get green everything.
-          </p>
+{/*1 product carousel 2 | large Ad */}
+<article className=" my-5">
+  <p className="font-bold text-2xl  "> Perfectly pinch-proof </p>
+  <p className="text-[gray] font-light text-sm  ">
+    {" "}
+    Get green everything.
+  </p>
 
-          <div className=" grid grid-cols-2 gap-x-5">
-            <div className="mt-14">
-              <ProductCarousel
-                basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
-                testProduct={productData.slice(120, 131)}
-              />
-            </div>
-            <AdCard adData={apiAdData[7]} />
-          </div>
-        </article>
+  <div className=" lg:grid lg:grid-cols-2 lg:gap-x-5 md:inline ">
+    <div className="mt-14">
+      <ProductCarousel
+        basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
+        testProduct={productData.slice(120, 131)}
+      />
+    </div >
+    <div className="lg:ms-0 md:ms-12 ">
+    <AdCard adData={apiAdData[7]} />
 
-        {/* ads section 2  */}
-        <section className="flex  gap-x-6 ">
-          <div className="basis-[42%] py-2">
-            <AdCard adData={apiAdData[8]} />
-          </div>
+    </div>
+  </div>
+</article>
 
-          <div className="basis-1/3 py-2 h-full">
-            <AdCard adData={apiAdData[9]} />
-            <div className="flex gap-x-6  py-4">
-              <AdCard adData={apiAdData[10]} />
-              <AdCard adData={apiAdData[11]} />
-            </div>
-          </div>
+{/* ads section 2  */}
+<section className="flex flex-col lg:flex-row  gap-x-6 lg:ms-0 md:ms-10 ">
+<div className="basis-[42%] py-2 xl:inline lg:hidden lg:ms-0 md:ms-16">
+    <AdCard adData={apiAdData[8]} />
+  </div>
 
-          <div className="basis-[24.5%] py-2">
-            <AdCard adData={apiAdData[12]} />
-          </div>
-        </section>
+  <div className="xl:basis-1/3 py-2 h-full md:w-full lg:ms-0 md:ms-32">
+    <AdCard adData={apiAdData[9]} />
+    <div className="flex gap-x-6  py-4 lg:ms-0 md:ms-1">
+      <AdCard adData={apiAdData[10]} />
+      <AdCard adData={apiAdData[11]} />
+    </div>
+  </div>
 
-        <hr />
+  <div className="xl:basis-[24.5%] py-2 md:w-full lg:ms-0 md:ms-44">
+    <AdCard adData={apiAdData[12]} />
+  </div>
+</section>
 
-        {/* third Product Carosel "Get set..." */}
-        <article className=" mt-8 mb-16  ">
-          <p className="font-bold text-2xl  ">Get set for the bunny </p>
-          <p className="text-[gray] font-light text-xs mb-5">
-            Find everything you need.
-          </p>
-          <div>
-            <ProductCarousel
-              basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-              testProduct={productData.slice(60, 72)}
-            />
-          </div>
-        </article>
-        <hr />
+<hr />
 
-        {/*2 product carousel | large Ad */}
-        <article className="my-2">
-          <p className="font-bold text-2xl  ">Cheer on your team </p>
-          <p className="text-[gray] font-light text-sm mb-1">
-            TVs, supplies, snacks & more..
-          </p>
+{/* third Product Carosel "Get set..." */}
+<article className=" mt-8 mb-16  ">
+  <p className="font-bold text-2xl  ">Get set for the bunny </p>
+  <p className="text-[gray] font-light text-xs mb-5">
+    Find everything you need.
+  </p>
+  <div>
+    <ProductCarousel
+      basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
+      testProduct={productData.slice(60, 72)}
+    />
+  </div>
+</article>
+<hr />
 
-          <div className="flex grid grid-cols-2 gap-x-5 ">
-            <div className="mt-14">
-              <ProductCarousel
-                basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
-                testProduct={productData.slice(2, 13)}
-              />
-            </div>
-            <AdCard adData={apiAdData[17]} />
-          </div>
-        </article>
+{/*2 product carousel | large Ad */}
+<article className="my-2 ">
+  <p className="font-bold text-2xl  ">Cheer on your team </p>
+  <p className="text-[gray] font-light text-sm mb-1">
+    TVs, supplies, snacks & more..
+  </p>
 
-        {/* Category Carousel */}
-        <article className="ms-8  mt-4">
-          <p className="font-bold lg:text-2xl md:text-xl mb-5 ">
-            {" "}
-            Get it all right here
-          </p>
-          <CategoryCarousel categoryData={categoryData}/>
-        </article>
+  <div className=" lg:grid lg:grid-cols-2 lg:gap-x-5 md:inline">
+    <div className="mt-14">
+      <ProductCarousel
+        basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
+        testProduct={productData.slice(2, 13)}
+      />
+    </div>
+    <div className="lg:ms-0 md:ms-12">
+    <AdCard adData={apiAdData[17]} />
 
-        <AdBar />
+    </div>
+  </div>
+</article>
 
-        {/* ads section 3  */}
-        <section className="flex  gap-x-6 ">
-          <div className="basis-[42%] py-2">
-            <AdCard adData={apiAdData[18]} />
-          </div>
+{/* Category Carousel */}
+<article className="ms-8  mt-4">
+  <p className="font-bold lg:text-2xl md:text-xl mb-5 ">
+    {" "}
+    Get it all right here
+  </p>
+  <div className="lg:flex md:hidden">
+  <CategoryCarousel categoryData={categoryData}/>
+  </div>
+</article>
 
-          <div className="basis-1/3 py-2 h-full">
-            <AdCard adData={apiAdData[19]} />
-            <div className="flex gap-x-6  py-4">
-              <AdCard adData={apiAdData[20]} />
-              <AdCard adData={apiAdData[21]} />
-            </div>
-          </div>
+<AdBar />
 
-          <div className="basis-[24.5%] py-2">
-            <AdCard adData={apiAdData[22]} />
-          </div>
-        </section>
+{/* ads section 3  */}
+<section className="flex flex-col lg:flex-row  gap-x-6  lg:ms-0 md:ms-10">
+<div className="basis-[42%] py-2 xl:inline lg:hidden lg:ms-0 md:ms-16">
+    <AdCard adData={apiAdData[18]} />
+  </div>
 
-        {/* 4th Product Carosel "Refresh..." */}
-        <article className=" my-8">
-          <p className="font-bold text-2xl mb-5 "> Refresh your yard </p>
-          <div>
-            <ProductCarousel
-              basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-              testProduct={productData.slice(90, 101)}
-            />
-          </div>
-        </article>
+  <div className="xl:basis-1/3 py-2 h-full md:w-full lg:ms-0 md:ms-32">
+    <AdCard adData={apiAdData[19]} />
+    <div className="flex gap-x-6  py-4 lg:ms-0 md:ms-1">
+      <AdCard adData={apiAdData[20]} />
+      <AdCard adData={apiAdData[21]} />
+    </div>
+  </div>
 
-        <AdBar />
-        {/*3 product carousel | Video Ad */}
-        <article className="my-4">
-          <p className="font-bold text-2xl  ">Get all you cheer </p>
-          <p className="text-[gray] font-light text-sm">
-            {" "}
-            TVs, supplies, snacks & more..
-          </p>
+  <div className="xl:basis-[24.5%] py-2 md:w-full lg:ms-0 md:ms-56 ">
+    <AdCard adData={apiAdData[22]} />
+  </div>
+</section>
 
-          <div className="flex grid grid-cols-2 gap-x-5  ">
-            <div className="mt-14">
-              <ProductCarousel
-                basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/3"
-                testProduct={productData.slice(200, 211)}
-              />
-            </div>
-            <AnimatedAdCard />
-          </div>
-        </article>
+{/* 4th Product Carosel "Refresh..." */}
+<article className=" my-8">
+  <p className="font-bold text-2xl mb-5 "> Refresh your yard </p>
+  <div>
+    <ProductCarousel
+      basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
+      testProduct={productData.slice(90, 101)}
+    />
+  </div>
+</article>
 
-        {/*  ads section 4 */}
-        <section className="flex  gap-x-6 ">
-          <div className="basis-[42%] py-2">
-            <AdCard adData={apiAdData[23]} />
-          </div>
+<AdBar />
+{/*3 product carousel | Video Ad */}
+<article className="my-4">
+  <p className="font-bold text-2xl  ">Get all you cheer </p>
+  <p className="text-[gray] font-light text-sm">
+    {" "}
+    TVs, supplies, snacks & more..
+  </p>
 
-          <div className="basis-1/3 py-2 h-full">
-            <AdCard adData={apiAdData[24]} />
-            <div className="flex gap-x-6  py-4">
-              <AdCard adData={apiAdData[25]} />
-              <AdCard adData={apiAdData[26]} />
-            </div>
-          </div>
+  <div className=" xl:grid xl:grid-cols-2 xl:gap-x-5 md:inline  ">
+    <div className="mt-14">
+      <ProductCarousel
+        basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/3 "
+        testProduct={productData.slice(200, 211)}
+      />
+    </div>
+    <div>
+    <AnimatedAdCard />
+    </div>
+  </div>
+</article>
 
-          <div className="basis-[24.5%] py-2">
-            <AdCard adData={apiAdData[27]} />
-          </div>
-        </section>
+{/*  ads section 4 */}
+<section className="flex flex-col lg:flex-row  gap-x-6 lg:ms-0 md:ms-10">
+<div className="basis-[42%] py-2 xl:inline lg:hidden lg:ms-0 md:ms-32">
+    <AdCard adData={apiAdData[23]} />
+  </div>
 
-        <hr />
-        {/* 5th Product Carosel "Dress..." */}
-        <article className=" mt-4">
-          <p className="font-bold text-2xl mb-5 ">Dresses for less</p>
-          <p className="text-[gray] font-light text-sm mb-5">
-            {" "}
-            Find fits for every occasion.
-          </p>
-          <div>
-            <ProductCarousel
-              basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-              testProduct={productData.slice(720, 731)}
-            />
-          </div>
-        </article>
+  <div className="xl:basis-1/3 py-2 h-full md:w-full lg:ms-0 md:ms-44 ">
+    <AdCard adData={apiAdData[24]} />
+    <div className="flex gap-x-6  py-4">
+      <AdCard adData={apiAdData[25]} />
+      <AdCard adData={apiAdData[26]} />
+    </div>
+  </div>
 
-        {/*  Ads section 5 */}
+  <div className="xl:basis-[24.5%] py-2 md:w-full lg:ms-0 md:ms-60">
+    <AdCard adData={apiAdData[27]} />
+  </div>
+</section>
 
-        <section className="flex  gap-x-6 ">
-          <div className="basis-[42%] py-2">
-            <AdCard adData={apiAdData[28]} />
-          </div>
+<hr />
+{/* 5th Product Carosel "Dress..." */}
+<article className=" mt-4">
+  <p className="font-bold text-2xl mb-5 ">Dresses for less</p>
+  <p className="text-[gray] font-light text-sm mb-5">
+    {" "}
+    Find fits for every occasion.
+  </p>
+  <div>
+    <ProductCarousel
+      basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
+      testProduct={productData.slice(720, 731)}
+    />
+  </div>
+</article>
 
-          <div className="basis-1/3 py-2 h-full">
-            <AdCard adData={apiAdData[29]} />
-            <div className="flex gap-x-6  py-4">
-              <AdCard adData={apiAdData[30]} />
-              <AdCard adData={apiAdData[31]} />
-            </div>
-          </div>
+{/*  Ads section 5 */}
 
-          <div className="basis-[24.5%] py-2">
-            <AdCard adData={apiAdData[32]} />
-          </div>
-        </section>
+<section className="flex flex-col lg:flex-row gap-x-6 ">
+<div className="basis-[42%] py-2 xl:inline lg:hidden lg:ms-0 md:ms-32">
+    <AdCard adData={apiAdData[28]} />
+  </div>
 
-        <hr />
-        {/* last Product Carosel "Dress..." */}
+  <div className="xl:basis-1/3 py-2 h-full md:w-full lg:ms-0 md:ms-44">
+    <AdCard adData={apiAdData[29]} />
+    <div className="flex gap-x-6  py-4">
+      <AdCard adData={apiAdData[30]} />
+      <AdCard adData={apiAdData[31]} />
+    </div>
+  </div>
 
-        <article className=" mt-4">
-          <p className="font-bold text-2xl mb-5 ">Explore mores</p>
-          <p className="text-[gray] font-light text-sm mb-5">
-            {" "}
-            Support women-owned brands.
-          </p>
-          <div className="mb-6">
-            <ProductCarousel
-              basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
-              testProduct={productData.slice(370, 381)}
-            />
-          </div>
-        </article>
-      </section>
-    </>
-  );
+  <div className="xl:basis-[24.5%] py-2 md:w-full lg:ms-0 md:ms-60">
+    <AdCard adData={apiAdData[32]} />
+  </div>
+</section>
+
+<hr />
+{/* last Product Carosel "Dress..." */}
+
+<article className=" mt-4">
+  <p className="font-bold text-2xl mb-5 ">Explore mores</p>
+  <p className="text-[gray] font-light text-sm mb-5">
+    {" "}
+    Support women-owned brands.
+  </p>
+  <div className="mb-6">
+    <ProductCarousel
+      basisClass="sm:basis-1/2 md:basis-1/4 lg:basis-1/6"
+      testProduct={productData.slice(370, 381)}
+    />
+  </div>
+</article>
+</section>
+</>
+);
 }
