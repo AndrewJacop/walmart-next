@@ -15,7 +15,6 @@ import {
     getUserByUid,
   } from "@/lib/supabase/fetch-data";
   import { auth } from "@/lib/firebase/config";
-  import { calculateTotalPrice } from "@/store/slices/totalPrice";
   
   interface Props {
     product: Product;
@@ -38,13 +37,11 @@ import {
           localStorage.getItem("userCart") || "[]"
         )
         addCartItem(userCart, uId);
-      // dispatch(calculateTotalPrice({ product: product }));
   
       }else{
         dispatch(decrement(product));
   
       }
-      // dispatch(calculateTotalPrice({ product: product }));
     };
   
     const increaseCartItemQuantity =  (product: Product) => {
@@ -62,7 +59,6 @@ import {
   
       }
   
-      dispatch(calculateTotalPrice({ product: product }));
     };
   
   

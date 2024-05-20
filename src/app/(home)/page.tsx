@@ -451,7 +451,7 @@ export default async function HomePage() {
     {" "}
     Get it all right here
   </p>
-  <div className="lg:flex md:hidden">
+  <div className="lg:block md:hidden">
   <CategoryCarousel categoryData={categoryData}/>
   </div>
 </article>

@@ -23,7 +23,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import QtyBtn from "@/components/product/qtyButton";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { calculateTotalPrice } from "@/store/slices/totalPrice";
+// import { calculateTotalPrice } from "@/store/slices/totalPrice";
 import Image from "next/image";
 import toast from "react-hot-toast";
 
@@ -65,7 +65,7 @@ export default function CartPage() {
     setCartData((prevCartData) =>
       prevCartData.filter((item) => item.productId !== product.id)
     );
-    dispatch(calculateTotalPrice({ products: products }));
+    // dispatch(calculateTotalPrice({ products: products }));
   }
 
   function increaseCartItemQuantity(product: Product, cartItem: CartItem) {
@@ -79,7 +79,7 @@ export default function CartPage() {
         )
       );
     } 
-    dispatch(calculateTotalPrice({ products: products }));
+    // dispatch(calculateTotalPrice({ products: products }));
   }
 
   useEffect(() => {

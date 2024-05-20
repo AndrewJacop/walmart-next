@@ -13,9 +13,6 @@ import {
 } from "@/lib/supabase/fetch-data";
 import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase/config";
-import {
-  calculateTotalPrice,
-} from "@/store/slices/totalPrice";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -33,7 +30,6 @@ export default function CartToggle() {
       const productsData = getProductsData().then((productsData) => {
         if (productsData) {
           setProducts(productsData);
-          dispatch(calculateTotalPrice({ products: productsData }));
         }
       });
     };
